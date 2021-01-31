@@ -1,0 +1,1 @@
+from qubo_nn.problems.number_partitioning import NumberPartitioning
