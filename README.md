@@ -12,7 +12,7 @@ Let's find out.
 ## Project structure
 
 |File|Purpose|
-|====|=======|
+|----|-------|
 |qubo\_nn.py|Main entry point|
 |pipeline.py|End to end training and testing of NNs on QUBO matrices|
 |qubo/|Will contain the generic QUBO library|
