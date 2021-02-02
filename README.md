@@ -9,7 +9,7 @@ Now, these matrices are quite an interesting construct.. Thus, a few questions a
 
 Let's find out.
 
-## Project structure
+## Project Structure
 
 |File|Purpose|
 |----|-------|
@@ -32,3 +32,7 @@ TODO
 ```
 Glover, Fred, Gary Kochenberger, and Yu Du. "A tutorial on formulating and using qubo models." arXiv preprint arXiv:1811.11538 (2018).
 ```
+
+## Related Work
+
+[Hadamard Gate Transformation for 3 or more QuBits](https://blog.xa0.de/post/Hadamard-Gate-Transformation-for-3-or-more-QuBits/)
