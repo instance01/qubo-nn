@@ -13,11 +13,18 @@ Let's find out.
 
 |File|Purpose|
 |----|-------|
-|qubo\_nn.py|Main entry point|
-|pipeline.py|End to end training and testing of NNs on QUBO matrices|
+|nn/|Contains neural network models|
+|problems/|Contains generators and evaluators for specific problems such as 3SAT or TSP|
 |qubo/|Will contain the generic QUBO library|
-|nn/|Will contain neural network models|
-|problems/|Will contain generators and evaluators for specific problems such as 3SAT or TSP|
+|config.py|Configuration (json) handling|
+|main.py|Main entry point|
+|pipeline.py|End to end training and testing of NNs on QUBO matrices|
+|simulations.json|All experiments and configurations|
+
+Problems implemented so far:
+
+* Number Partitioning
+* Maximum Cut
 
 ## Contributing
 
@@ -26,6 +33,12 @@ Pull requests are very welcome. Before submitting one, run all tests with `pytho
 ## Using
 
 TODO
+
+```
+usage: main.py [-h] type cmd cfg_id
+
+python3 -m qubo_nn.main classify train 1
+```
 
 ## References
 
