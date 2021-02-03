@@ -26,11 +26,11 @@ class TestNumberPartitioning(unittest.TestCase):
     def test_gen_problems(self):
         st0 = np.random.get_state()
         np.random.seed(1)
-        data = NumberPartitioning.gen_problems(20, 1)
+        data = NumberPartitioning.gen_problems(1, size=20)
         np.random.set_state(st0)
         self.assertCountEqual(data.tolist(), [
             [
-                235, 5192, 905, 7813, 2895, 5056, 144, 4225, 7751, 3462, 9394,
-                5396, 5374, 2962, 2516, 8444, 3562, 4764, 8093, 6542
+                37, 12, 72, 9, 75, 5, 79, 64, 16, 1, 76, 71, 6, 25, 50, 20, 18,
+                84, 11, 28
             ]
         ])
