@@ -24,10 +24,10 @@ class MaxCut(Problem):
         return Q
 
     @classmethod
-    def gen_problems(cls, problem_size, n_problems, seed=None):
+    def gen_problems(self, n_problems, size=20, seed=None, **kwargs):
         if seed is not None:
             return [
-                gnm_random_graph(*problem_size, seed=seed)
+                gnm_random_graph(*size, seed=seed)
                 for _ in range(n_problems)
             ]
-        return [gnm_random_graph(*problem_size) for _ in range(n_problems)]
+        return [gnm_random_graph(*size) for _ in range(n_problems)]
