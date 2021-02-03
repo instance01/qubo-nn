@@ -1,0 +1,26 @@
+{
+    "1": {
+        "problems": {
+            "dynamic_size_multiplier": false,
+            "n_problems": 10000,
+            "qubo_size": 20,
+            "NP": {
+                "size": 20
+            },
+            "MC": {
+                "size": [20, 25]
+            },
+            "problems": ["NP", "MC"]
+        },
+        "model": {
+            "network": "FC",
+            "n_epochs": 4,
+            "batch_size": 100,
+            "optimizer": "sgd",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.001,
+            "fc_sizes": [10, 2],
+            "train_eval_split": 0.9
+        }
+    }
+}
