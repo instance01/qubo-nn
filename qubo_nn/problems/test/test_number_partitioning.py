@@ -1,4 +1,5 @@
 import unittest
+import numpy as np
 from qubo_nn.problems import NumberPartitioning
 
 
@@ -21,3 +22,15 @@ class TestNumberPartitioning(unittest.TestCase):
             [250, 70, 130, 310, 420, 170, 210, -1560],
         ]
         self.assertCountEqual(matrix.tolist(), want)
+
+    def test_gen_problems(self):
+        st0 = np.random.get_state()
+        np.random.seed(1)
+        data = NumberPartitioning.gen_problems(20, 1)
+        np.random.set_state(st0)
+        self.assertCountEqual(data.tolist(), [
+            [
+                235, 5192, 905, 7813, 2895, 5056, 144, 4225, 7751, 3462, 9394,
+                5396, 5374, 2962, 2516, 8444, 3562, 4764, 8093, 6542
+            ]
+        ])

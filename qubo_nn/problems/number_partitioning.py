@@ -18,3 +18,7 @@ class NumberPartitioning(Problem):
                 else:
                     Q[i][j] = self.numbers[i] * self.numbers[j]
         return Q
+
+    @classmethod
+    def gen_problems(cls, problem_size, n_problems):
+        return np.random.randint(0, 10000, (n_problems, problem_size))
