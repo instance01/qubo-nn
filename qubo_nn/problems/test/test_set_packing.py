@@ -1,15 +1,15 @@
 import random
 import unittest
-from qubo_nn.problems import SetPartitioning
+from qubo_nn.problems import SetPacking
 
 
-class TestSetPartitioning(unittest.TestCase):
+class TestSetPacking(unittest.TestCase):
     def test_gen_qubo_matrix(self):
         """Test whether a correct QUBO is generated.
 
         Test case from: https://arxiv.org/pdf/1811.11538.pdf
         """
-        problem = SetPartitioning([1, 2], [[1, 2], [2], [1], [1]])
+        problem = SetPacking([1, 2], [[1, 2], [2], [1], [1]])
         matrix = problem.gen_qubo_matrix()
         want = [
             [1, -3, -3, -3],
@@ -22,7 +22,7 @@ class TestSetPartitioning(unittest.TestCase):
     def test_gen_problems(self):
         st0 = random.getstate()
         random.seed(1)
-        data = SetPartitioning.gen_problems(1, size=(20, 25))
+        data = SetPacking.gen_problems(1, size=(20, 25))
         random.setstate(st0)
         self.assertCountEqual(data, [
             (

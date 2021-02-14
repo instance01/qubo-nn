@@ -26,7 +26,7 @@ Problems implemented so far:
 * Number Partitioning
 * Maximum Cut
 * Minimum Vertex Cover
-* Set Partitioning
+* Set Packing
 
 ## Using
 
@@ -66,7 +66,7 @@ The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
     'NP': <class 'qubo_nn.problems.number_partitioning.NumberPartitioning'>,
     'MC': <class 'qubo_nn.problems.max_cut.MaxCut'>,
     'MVC': <class 'qubo_nn.problems.minimum_vertex_cover.MinimumVertexCover'>,
-    'SP': <class 'qubo_nn.problems.set_partitioning.SetPartitioning'>,
+    'SP': <class 'qubo_nn.problems.set_packing.SetPacking'>,
     ...
 }
 ```

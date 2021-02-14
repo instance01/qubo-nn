@@ -4,7 +4,7 @@ import numpy as np
 from qubo_nn.problems.problem import Problem
 
 
-class SetPartitioning(Problem):
+class SetPacking(Problem):
     def __init__(self, set_, subsets, P=6):
         self.set_ = set_
         self.subsets = subsets
