@@ -25,6 +25,8 @@ Problems implemented so far:
 
 * Number Partitioning
 * Maximum Cut
+* Minimum Vertex Cover
+* Set Partitioning
 
 ## Contributing
 
