@@ -27,6 +27,8 @@ Problems implemented so far:
 * Maximum Cut
 * Minimum Vertex Cover
 * Set Packing
+* Max 2-SAT
+* Set Partitioning
 
 ## Using
 

@@ -3,6 +3,7 @@ from qubo_nn.problems.max_cut import MaxCut
 from qubo_nn.problems.minimum_vertex_cover import MinimumVertexCover
 from qubo_nn.problems.set_packing import SetPacking
 from qubo_nn.problems.max2sat import Max2SAT
+from qubo_nn.problems.set_partitioning import SetPartitioning
 
 
 PROBLEM_REGISTRY = {
@@ -10,5 +11,6 @@ PROBLEM_REGISTRY = {
     "MC": MaxCut,
     "MVC": MinimumVertexCover,
     "SP": SetPacking,
-    "M2SAT": Max2SAT
+    "M2SAT": Max2SAT,
+    "SPP": SetPartitioning
 }
