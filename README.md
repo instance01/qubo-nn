@@ -28,19 +28,52 @@ Problems implemented so far:
 * Minimum Vertex Cover
 * Set Partitioning
 
-## Contributing
-
-Pull requests are very welcome. Before submitting one, run all tests with `python3 -m unittest` and make sure nothing is broken.
-
 ## Using
 
-TODO
+### Classification
 
 ```
 usage: main.py [-h] type cmd cfg_id
 
 python3 -m qubo_nn.main classify train 1
 ```
+
+TODO
+
+### Generating QUBOs for arbitrary problems
+
+This is an example on how to create a MaxCut instance and generate a QUBO matrix for it:
+
+```
+>>> graph = networkx.Graph([(1, 2), (1, 3), (2, 4), (3, 4), (4, 5), (3, 5)])
+>>> problem = MaxCut(graph)
+>>> matrix = problem.gen_qubo_matrix()
+[
+    [2, -1, -1, 0, 0],
+    [-1, 2, 0, -1, 0],
+    [-1, 0, 3, -1, -1],
+    [0, -1, -1, 3, -1],
+    [0, 0, -1, -1, 2]
+]
+```
+
+The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
+
+```
+>>> from qubo_nn.problems import PROBLEM_REGISTRY
+>>> PROBLEM_REGISTRY
+{
+    'NP': <class 'qubo_nn.problems.number_partitioning.NumberPartitioning'>,
+    'MC': <class 'qubo_nn.problems.max_cut.MaxCut'>,
+    'MVC': <class 'qubo_nn.problems.minimum_vertex_cover.MinimumVertexCover'>,
+    'SP': <class 'qubo_nn.problems.set_partitioning.SetPartitioning'>,
+    ...
+}
+```
+
+## Contributing
+
+Pull requests are very welcome. Before submitting one, run all tests with `./test.sh` and make sure nothing is broken.
 
 ## References
 
