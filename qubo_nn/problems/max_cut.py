@@ -8,9 +8,7 @@ class MaxCut(Problem):
         self.graph = graph
 
     def gen_qubo_matrix(self):
-
         n = self.graph.order()
-
         nodes = list(self.graph.nodes)
 
         Q = np.zeros((n, n))
