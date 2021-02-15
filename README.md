@@ -29,6 +29,7 @@ Problems implemented so far:
 * Set Packing
 * Max 2-SAT
 * Set Partitioning
+* Graph Coloring
 
 ## Using
 

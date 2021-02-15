@@ -23,6 +23,8 @@ class MaxCut(Problem):
 
     @classmethod
     def gen_problems(self, n_problems, size, seed=None, **kwargs):
+        # TODO: Note: This is used by a few other problems (GraphColoring,
+        # MinimumVertexCut) and thus should be refactored into a util file.
         if seed is not None:
             return [
                 gnm_random_graph(*size, seed=seed)

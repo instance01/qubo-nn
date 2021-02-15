@@ -4,6 +4,7 @@ from qubo_nn.problems.minimum_vertex_cover import MinimumVertexCover
 from qubo_nn.problems.set_packing import SetPacking
 from qubo_nn.problems.max2sat import Max2SAT
 from qubo_nn.problems.set_partitioning import SetPartitioning
+from qubo_nn.problems.graph_coloring import GraphColoring
 
 
 PROBLEM_REGISTRY = {
@@ -12,5 +13,6 @@ PROBLEM_REGISTRY = {
     "MVC": MinimumVertexCover,
     "SP": SetPacking,
     "M2SAT": Max2SAT,
-    "SPP": SetPartitioning
+    "SPP": SetPartitioning,
+    "GC": GraphColoring
 }
