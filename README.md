@@ -30,6 +30,7 @@ Problems implemented so far:
 * Max 2-SAT
 * Set Partitioning
 * Graph Coloring
+* Quadratic Assignment
 
 ## Using
 
