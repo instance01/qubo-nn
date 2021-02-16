@@ -10,7 +10,7 @@ class Config:
     def _update_cfg(self, base_cfg, new_cfg):
         # We support one level for now.
         for k in new_cfg.keys():
-            if k == 'base_cfg' or k == 'desc':
+            if k == 'base_cfg' or k == 'desc' or k == 'dataset_id':
                 continue
             base_cfg[k].update(new_cfg[k])
 

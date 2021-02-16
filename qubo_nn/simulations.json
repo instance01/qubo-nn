@@ -1,5 +1,6 @@
 {
     "1": {
+        "dataset_id": "1",
         "problems": {
             "dynamic_size_multiplier": false,
             "n_problems": 10000,
@@ -47,6 +48,7 @@
         }
     },
     "2": {
+        "dataset_id": "1",
         "base_cfg": "1",
         "model": {
             "n_epochs": 20,

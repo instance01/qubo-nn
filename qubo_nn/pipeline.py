@@ -61,7 +61,7 @@ class Classification:
         return data, labels
 
     def run_experiment(self):
-        with open('datasets/' + self.cfg['cfg_id'] + '.pickle', 'rb') as f:
+        with open('datasets/' + self.cfg['dataset_id'] + '.pickle', 'rb') as f:
             data, labels = pickle.load(f)
 
         optimizer = Optimizer(self.cfg, data, labels)
