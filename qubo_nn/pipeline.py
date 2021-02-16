@@ -1,3 +1,4 @@
+import gzip
 import pickle
 import numpy as np
 from qubo_nn.nn import Optimizer
@@ -55,13 +56,13 @@ class Classification:
             data[idx_start:idx_end, :, :] = qubo_matrices
             labels[idx_start:idx_end] = i
 
-        with open('datasets/' + self.cfg['cfg_id'] + '.pickle', 'wb+') as f:
+        with gzip.open('datasets/' + self.cfg['cfg_id'] + '.pickle.gz', 'wb+') as f:
             pickle.dump((data, labels), f)
 
         return data, labels
 
     def run_experiment(self):
-        with open('datasets/' + self.cfg['dataset_id'] + '.pickle', 'rb') as f:
+        with gzip.open('datasets/' + self.cfg['dataset_id'] + '.pickle.gz', 'rb') as f:
             data, labels = pickle.load(f)
 
         optimizer = Optimizer(self.cfg, data, labels)
