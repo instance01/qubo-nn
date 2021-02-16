@@ -78,15 +78,22 @@ class Optimizer:
                 self.optimizer.zero_grad()
 
                 outputs = self.net(inputs)
-                loss = self.criterion(outputs, labels)
+                try:
+                    loss = self.criterion(outputs, labels)
+                except IndexError:
+                    print(
+                        "Size of last layer should equal the number of "
+                        "problems you have"
+                    )
                 loss.backward()
                 self.optimizer.step()
 
                 # TODO!!! What if batch_size is not a factor of total size.
                 # Then the last term will be wrong.
                 batch_loss += loss.item() * self.batch_size
-                print('[%d, %5d] loss: %.3f' %
-                      (epoch + 1, i, batch_loss / (i + 1)))
+                if i % 10 == 0:
+                    print('[%d, %5d] loss: %.3f' %
+                          (epoch + 1, i, batch_loss / (i + 1)))
 
     def eval(self):
         total_loss = 0.0

@@ -40,7 +40,7 @@ class TestQuadraticAssignment(unittest.TestCase):
         data = QuadraticAssignment.gen_problems(1, size=4)
         np.random.set_state(st0)
         self.assertCountEqual(
-            data[0].tolist(),
+            data[0]["flow_matrix"].tolist(),
             [
                 [37, 43, 12,  8],
                 [ 9, 11,  5, 15],
@@ -49,7 +49,7 @@ class TestQuadraticAssignment(unittest.TestCase):
             ]
         )
         self.assertCountEqual(
-            data[1].tolist(),
+            data[0]["distance_matrix"].tolist(),
             [
                 [20, 37, 18, 20],
                 [11, 42, 28, 29],

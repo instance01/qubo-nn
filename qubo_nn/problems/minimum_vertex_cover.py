@@ -1,6 +1,6 @@
 import numpy as np
 from qubo_nn.problems.problem import Problem
-from qubo_nn.problems import MaxCut
+from qubo_nn.problems.util import gen_graph
 
 
 class MinimumVertexCover(Problem):
@@ -26,5 +26,6 @@ class MinimumVertexCover(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size=20, seed=None, **kwargs):
-        return MaxCut.gen_problems(n_problems, size, seed, kwargs)
+    def gen_problems(self, n_problems, size=(20, 25), seed=None, **kwargs):
+        graphs = gen_graph(n_problems, size, seed)
+        return [{"graph": graph} for graph in graphs]

@@ -35,16 +35,17 @@ class TestQuadraticKnapsack(unittest.TestCase):
         np.random.seed(1)
         data = QuadraticKnapsack.gen_problems(1, size=4)
         np.random.set_state(st0)
+
         self.assertCountEqual(
-            data[0].tolist(),
+            data[0]["projects"].tolist(),
             [
-                [37, 43, 12,  8],
+                [ 5, 11, 12,  8],
                 [ 9, 11,  5, 15],
                 [ 0, 16,  1, 12],
-                [ 7, 45,  6, 25]
+                [ 7, 13, 28,  6]
             ]
         )
         self.assertCountEqual(
-            data[1].tolist(),
-            [20, 37, 18, 20]
+            data[0]["budgets"].tolist(),
+            [25, 18, 20, 5]
         )

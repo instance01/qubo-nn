@@ -33,11 +33,14 @@ class SetPacking(Problem):
     @classmethod
     def gen_problems(self, n_problems, size=(20, 25), **kwargs):
         problems = []
-        set_ = list(range(size[0]))
         for _ in range(n_problems):
+            set_ = list(range(size[0]))
             subsets = []
             for _ in range(size[1]):
                 x = list(filter(lambda x: random.random() < 0.5, set_))
                 subsets.append(x)
             problems.append((set_, subsets))
-        return problems
+        return [
+            {"set_": set_, "subsets": subsets}
+            for (set_, subsets) in problems
+        ]

@@ -1,3 +1,4 @@
+import pickle
 import numpy as np
 from qubo_nn.nn import Optimizer
 from qubo_nn.problems import PROBLEM_REGISTRY
@@ -19,7 +20,7 @@ class Classification:
     def gen_qubo_matrices(self, cls, n_problems, **kwargs):
         problems = cls.gen_problems(n_problems, **kwargs)
         qubo_matrices = [
-            cls(problem).gen_qubo_matrix()
+            cls(**problem).gen_qubo_matrix()
             for problem in problems
         ]
         return qubo_matrices
@@ -42,6 +43,7 @@ class Classification:
                 cls, n_problems, **args
             )
             qubo_matrices = np.array(qubo_matrices)
+            print(cls, qubo_matrices.shape)
 
             # TODO DUBIOUS!!!
             # This should be an option. But for now without it the neural
@@ -53,9 +55,15 @@ class Classification:
             data[idx_start:idx_end, :, :] = qubo_matrices
             labels[idx_start:idx_end] = i
 
+        with open('datasets/' + self.cfg['cfg_id'] + '.pickle', 'wb+') as f:
+            pickle.dump((data, labels), f)
+
         return data, labels
 
     def run_experiment(self):
-        optimizer = Optimizer(self.cfg, *self.prep_data())
+        with open('datasets/' + self.cfg['cfg_id'] + '.pickle', 'rb') as f:
+            data, labels = pickle.load(f)
+
+        optimizer = Optimizer(self.cfg, data, labels)
         optimizer.train()
         optimizer.eval()

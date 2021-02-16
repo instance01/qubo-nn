@@ -1,6 +1,6 @@
 import numpy as np
-from networkx.generators.random_graphs import gnm_random_graph
 from qubo_nn.problems.problem import Problem
+from qubo_nn.problems.util import gen_graph
 
 
 class MaxCut(Problem):
@@ -23,11 +23,5 @@ class MaxCut(Problem):
 
     @classmethod
     def gen_problems(self, n_problems, size, seed=None, **kwargs):
-        # TODO: Note: This is used by a few other problems (GraphColoring,
-        # MinimumVertexCut) and thus should be refactored into a util file.
-        if seed is not None:
-            return [
-                gnm_random_graph(*size, seed=seed)
-                for _ in range(n_problems)
-            ]
-        return [gnm_random_graph(*size) for _ in range(n_problems)]
+        graphs = gen_graph(n_problems, size, seed)
+        return [{"graph": graph} for graph in graphs]

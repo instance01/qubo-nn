@@ -13,4 +13,7 @@ cfg = Config().get_cfg(args.cfg_id)
 
 if args.type == 'classify':
     print(args.cmd)
-    Classification(cfg).run_experiment()
+    if args.cmd == 'gendata':
+        Classification(cfg).prep_data()
+    elif args.cmd == 'train':
+        Classification(cfg).run_experiment()

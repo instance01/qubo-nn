@@ -45,6 +45,7 @@ class Max2SAT(Problem):
         # size: First is n_vars, second is number of clauses.
         # Want something like this:
         # [((1, True), (2, True)), ((1, True), (2, False))]
+        n_vars = size[0] - 1
         problems = []
         for _ in range(n_problems):
             problem = []
@@ -53,9 +54,9 @@ class Max2SAT(Problem):
                 # Each has TWO tuples!! But random vars and random value
                 # (True/False).
                 clause = (
-                    (int(round(random.random() * size[1])), bool(random.getrandbits(1))),
-                    (int(round(random.random() * size[1])), bool(random.getrandbits(1)))
+                    (int(round(random.random() * n_vars)), bool(random.getrandbits(1))),
+                    (int(round(random.random() * n_vars)), bool(random.getrandbits(1)))
                 )
                 problem.append(clause)
             problems.append(problem)
-        return problems
+        return [{"clauses": problem, "n_vars": size[0]} for problem in problems]

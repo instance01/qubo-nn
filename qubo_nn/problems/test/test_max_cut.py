@@ -25,7 +25,7 @@ class TestMaxCut(unittest.TestCase):
 
     def test_gen_problems(self):
         data = MaxCut.gen_problems(1, size=(20, 25), seed=1)
-        self.assertCountEqual(data[0].edges, [
+        self.assertCountEqual(data[0]["graph"].edges, [
             (0, 12), (0, 14), (0, 10), (0, 17), (0, 13), (0, 9), (2, 8),
             (3, 15), (3, 18), (3, 5), (3, 9), (4, 18), (6, 12), (6, 9), (7, 8),
             (7, 16), (7, 17), (7, 11), (7, 14), (9, 18), (10, 16), (13, 19),

@@ -21,4 +21,5 @@ class NumberPartitioning(Problem):
 
     @classmethod
     def gen_problems(self, n_problems, size=20, **kwargs):
-        return np.random.randint(0, 100, (n_problems, size))
+        problems = np.random.randint(0, 100, (n_problems, size))
+        return [{"numbers": problem} for problem in problems]

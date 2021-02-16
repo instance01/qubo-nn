@@ -3,24 +3,56 @@
         "problems": {
             "dynamic_size_multiplier": false,
             "n_problems": 10000,
-            "qubo_size": 20,
+            "qubo_size": 16,
             "NP": {
-                "size": 20
+                "size": 16
             },
             "MC": {
-                "size": [20, 25]
+                "size": [16, 25]
             },
-            "problems": ["NP", "MC"]
+            "MVC": {
+                "size": [16, 25]
+            },
+            "SP": {
+                "size": [10, 16]
+            },
+            "M2SAT": {
+                "size": [16, 25]
+            },
+            "SPP": {
+                "size": [10, 16]
+            },
+            "GC": {
+                "size": [4, 6],
+                "n_colors": 4
+            },
+            "QA": {
+                "size": 4
+            },
+            "QK": {
+                "size": 10,
+                "constraint": 40
+            },
+            "problems": ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK"]
         },
         "model": {
             "network": "FC",
-            "n_epochs": 4,
+            "n_epochs": 20,
             "batch_size": 100,
             "optimizer": "sgd",
             "optimizer_sgd_momentum": 0.9,
-            "lr": 0.001,
-            "fc_sizes": [10, 2],
+            "lr": 0.002,
+            "fc_sizes": [50, 9],
             "train_eval_split": 0.9
+        }
+    },
+    "2": {
+        "base_cfg": "1",
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 100,
+            "lr": 0.005,
+            "fc_sizes": [50, 9]
         }
     }
 }

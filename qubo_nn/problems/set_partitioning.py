@@ -49,4 +49,7 @@ class SetPartitioning(Problem):
                 subsets.append(x)
                 costs.append(int(random.random() * max_cost))
             problems.append((set_, subsets, costs))
-        return problems
+        return [
+            {"set_": set_, "subsets": subsets, "costs": costs}
+            for (set_, subsets, costs) in problems
+        ]

@@ -17,6 +17,6 @@ PROBLEM_REGISTRY = {
     "M2SAT": Max2SAT,
     "SPP": SetPartitioning,
     "GC": GraphColoring,
-    "GA": QuadraticAssignment,
-    "GK": QuadraticKnapsack
+    "QA": QuadraticAssignment,
+    "QK": QuadraticKnapsack
 }

@@ -28,9 +28,10 @@ class TestNumberPartitioning(unittest.TestCase):
         np.random.seed(1)
         data = NumberPartitioning.gen_problems(1, size=20)
         np.random.set_state(st0)
-        self.assertCountEqual(data.tolist(), [
+        self.assertCountEqual(
+            data[0]["numbers"].tolist(),
             [
                 37, 12, 72, 9, 75, 5, 79, 64, 16, 1, 76, 71, 6, 25, 50, 20, 18,
                 84, 11, 28
             ]
-        ])
+        )

@@ -3,7 +3,7 @@ from qubo_nn.problems.problem import Problem
 
 
 class QuadraticAssignment(Problem):
-    def __init__(self, flow_matrix, distance_matrix, P):
+    def __init__(self, flow_matrix, distance_matrix, P=200):
         self.flow_matrix = flow_matrix
         self.distance_matrix = distance_matrix
         self.P = P
@@ -30,7 +30,13 @@ class QuadraticAssignment(Problem):
     @classmethod
     def gen_problems(self, n_problems, size=3, **kwargs):
         # TODO: 50 is hardcoded !!!
-        return (
-            np.random.randint(low=0, high=50, size=(size, size)),
-            np.random.randint(low=0, high=50, size=(size, size))
-        )
+        problems = []
+        for _ in range(n_problems):
+            problems.append((
+                np.random.randint(low=0, high=50, size=(size, size)),
+                np.random.randint(low=0, high=50, size=(size, size))
+            ))
+        return [
+            {"flow_matrix": flow_matrix, "distance_matrix": distance_matrix}
+            for (flow_matrix, distance_matrix) in problems
+        ]

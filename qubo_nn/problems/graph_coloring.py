@@ -1,7 +1,7 @@
 import itertools
 import numpy as np
 from qubo_nn.problems.problem import Problem
-from qubo_nn.problems import MaxCut
+from qubo_nn.problems.util import gen_graph
 
 
 class GraphColoring(Problem):
@@ -37,5 +37,9 @@ class GraphColoring(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size, seed=None, **kwargs):
-        return MaxCut.gen_problems(n_problems, size, seed, kwargs)
+    def gen_problems(self, n_problems, size, n_colors, seed=None, **kwargs):
+        graphs = gen_graph(n_problems, size, seed)
+        return [
+            {"graph": graph, "n_colors": n_colors}
+            for graph in graphs
+        ]
