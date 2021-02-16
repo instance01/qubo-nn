@@ -31,6 +31,7 @@ Problems implemented so far:
 * Set Partitioning
 * Graph Coloring
 * Quadratic Assignment
+* Quadratic Knapsack
 
 ## Using
 
