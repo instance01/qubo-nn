@@ -1,3 +1,6 @@
+import socket
+import random
+import datetime
 import gzip
 import pickle
 import numpy as np
@@ -11,6 +14,7 @@ class Classification:
         self.n_problems = cfg['problems']['n_problems']
         self.qubo_size = cfg['problems']['qubo_size']
         self.problems = self._prep_problems()
+        self.model_fname = self.get_model_fname()
 
     def _prep_problems(self):
         ret = []
@@ -67,4 +71,23 @@ class Classification:
 
         optimizer = Optimizer(self.cfg, data, labels)
         optimizer.train()
+        optimizer.save(self.model_fname)
         optimizer.eval()
+
+    def eval(self, model_fname):
+        with gzip.open('datasets/' + self.cfg['dataset_id'] + '.pickle.gz', 'rb') as f:
+            data, labels = pickle.load(f)
+
+        optimizer = Optimizer(self.cfg, data, labels)
+        optimizer.load(model_fname)
+        optimizer.eval()
+
+    def get_model_fname(self):
+        rand_str = str(int(random.random() * 10e6))
+        model_fname = "-".join([
+            datetime.datetime.now().strftime("%y-%m-%d_%H:%M:%S"),
+            rand_str,
+            socket.gethostname(),
+            self.cfg['cfg_id']
+        ])
+        return model_fname

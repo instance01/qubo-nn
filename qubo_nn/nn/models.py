@@ -70,6 +70,7 @@ class Optimizer:
         )
 
     def train(self):
+        self.net.train()
         for epoch in range(self.n_epochs):
             batch_loss = 0.
             for i, data in enumerate(self.train_data_loader, 0):
@@ -96,6 +97,7 @@ class Optimizer:
                           (epoch + 1, i, batch_loss / (i + 1)))
 
     def eval(self):
+        self.net.eval()
         total_loss = 0.0
         for i, data in enumerate(self.test_data_loader, 0):
             inputs, labels = data
@@ -105,3 +107,10 @@ class Optimizer:
             total_loss += loss.item()
             if i % 10 == 0:
                 print('[%d] loss: %.3f' % (i, total_loss / (i + 1)))
+
+    def save(self, model_fname):
+        torch.save(self.net.state_dict(), 'models/' + model_fname)
+
+    def load(self, model_fname):
+        self.net = FCNet(self.cfg)
+        self.net.load_state_dict(torch.load(model_fname))
