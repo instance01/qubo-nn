@@ -1,3 +1,6 @@
+import json
+import collections
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -92,21 +95,31 @@ class Optimizer:
                 # TODO!!! What if batch_size is not a factor of total size.
                 # Then the last term will be wrong.
                 batch_loss += loss.item() * self.batch_size
-                if i % 10 == 0:
+                if i % 1000 == 0:
                     print('[%d, %5d] loss: %.3f' %
                           (epoch + 1, i, batch_loss / (i + 1)))
 
     def eval(self):
+        misclassifications = collections.defaultdict(int)
+
         self.net.eval()
         total_loss = 0.0
         for i, data in enumerate(self.test_data_loader, 0):
             inputs, labels = data
             outputs = self.net(inputs)
             loss = self.criterion(outputs, labels)
+            if torch.argmax(outputs) != labels:
+                misclassifications[labels.item()] += 1
+                # print(torch.argmax(outputs), labels)
 
             total_loss += loss.item()
-            if i % 10 == 0:
+            if i % 1000 == 0:
                 print('[%d] loss: %.3f' % (i, total_loss / (i + 1)))
+        print(
+            'Misclassification rate',
+            float(sum(misclassifications.values())) / len(self.test_data_loader)
+        )
+        return misclassifications
 
     def save(self, model_fname):
         torch.save(self.net.state_dict(), 'models/' + model_fname)

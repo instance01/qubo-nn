@@ -1,3 +1,4 @@
+import json
 import socket
 import random
 import datetime
@@ -72,7 +73,7 @@ class Classification:
         optimizer = Optimizer(self.cfg, data, labels)
         optimizer.train()
         optimizer.save(self.model_fname)
-        optimizer.eval()
+        self._eval(optimizer)
 
     def eval(self, model_fname):
         with gzip.open('datasets/' + self.cfg['dataset_id'] + '.pickle.gz', 'rb') as f:
@@ -80,7 +81,15 @@ class Classification:
 
         optimizer = Optimizer(self.cfg, data, labels)
         optimizer.load(model_fname)
-        optimizer.eval()
+        self._eval(optimizer)
+
+    def _eval(self, optimizer):
+        misclassifications = optimizer.eval()
+        mc_prob = {
+            self.cfg['problems']['problems'][int(k)]: v
+            for k, v in misclassifications.items()
+        }
+        print(json.dumps(mc_prob, indent=4))
 
     def get_model_fname(self):
         rand_str = str(int(random.random() * 10e6))
