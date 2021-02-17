@@ -115,7 +115,7 @@ class Optimizer:
                     self.logger.log_train(data, data_len * epoch + i)
 
             data = {}
-            misclassifications, test_loss = self.eval(False)
+            misclassifications, test_loss, tot_mc = self.eval(False)
             mc_prob = {
                 prob: misclassifications.get(i, 0)
                 for i, prob in enumerate(self.cfg['problems']['problems'])
@@ -124,7 +124,6 @@ class Optimizer:
             data['Problem_Misclassifications'] = {}
             for k, v in mc_prob.items():
                 data['Problem_Misclassifications'][k] = v
-            tot_mc = float(sum(misclassifications.values())) / data_len
             data['Total_Misclassifications'] = tot_mc
             self.logger.log_eval(data, epoch)
         print('')
@@ -148,12 +147,10 @@ class Optimizer:
                 sys.stdout.flush()
 
         data_len = len(self.test_data_loader)
+        tot_mc = float(sum(misclassifications.values())) / data_len
         if do_print:
-            print(
-                '\nMisclassification rate',
-                float(sum(misclassifications.values())) / data_len
-            )
-        return misclassifications, total_loss / data_len
+            print('\nMisclassification rate', tot_mc)
+        return misclassifications, total_loss / data_len, tot_mc
 
     def save(self, model_fname):
         torch.save(self.net.state_dict(), 'models/' + model_fname)

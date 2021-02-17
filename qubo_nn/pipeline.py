@@ -54,12 +54,15 @@ class Classification:
             qubo_matrices = np.array(qubo_matrices)
             print(cls, qubo_matrices.shape)
 
-            # TODO DUBIOUS!!!
-            # This should be an option. But for now without it the neural
-            # network won't learn.
-            qubo_matrices = (
-                qubo_matrices - np.mean(qubo_matrices)
-            ) / np.std(qubo_matrices)
+            if self.cfg["model"]["norm_data"]:
+                qubo_matrices /= np.max(np.abs(qubo_matrices))
+            else:
+                # TODO DUBIOUS!!!
+                # This should be an option. But for now without it the neural
+                # network won't learn.
+                qubo_matrices = (
+                    qubo_matrices - np.mean(qubo_matrices)
+                ) / np.std(qubo_matrices)
 
             data[idx_start:idx_end, :, :] = qubo_matrices
             labels[idx_start:idx_end] = i
@@ -87,7 +90,7 @@ class Classification:
         self._eval(optimizer)
 
     def _eval(self, optimizer):
-        misclassifications, _ = optimizer.eval()
+        misclassifications, _, _ = optimizer.eval()
         mc_prob = {
             self.cfg['problems']['problems'][int(k)]: v
             for k, v in misclassifications.items()
