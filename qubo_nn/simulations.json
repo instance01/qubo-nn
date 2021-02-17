@@ -3,7 +3,7 @@
         "dataset_id": "1",
         "problems": {
             "dynamic_size_multiplier": false,
-            "n_problems": 10000,
+            "n_problems": 100000,
             "qubo_size": 16,
             "NP": {
                 "size": 16
@@ -50,6 +50,19 @@
     "2": {
         "dataset_id": "1",
         "base_cfg": "1",
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 100,
+            "lr": 0.005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "3": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
         "model": {
             "n_epochs": 20,
             "batch_size": 100,
