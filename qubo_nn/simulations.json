@@ -37,6 +37,8 @@
             "problems": ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK"]
         },
         "model": {
+            "norm_data": false,
+            "shuffle_data": true,
             "network": "FC",
             "n_epochs": 20,
             "batch_size": 100,
@@ -94,6 +96,204 @@
             "batch_size": 100,
             "lr": 0.0005,
             "fc_sizes": [100, 50, 9]
+        }
+    },
+    "6": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 100,
+            "lr": 0.0005,
+            "fc_sizes": [20, 9]
+        }
+    },
+    "7": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 100,
+            "lr": 0.0005,
+            "fc_sizes": [9]
+        }
+    },
+    "8": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "9": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 1000,
+            "lr": 0.0005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "10": {
+        "dataset_id": "11",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "norm_data": true,
+            "n_epochs": 20,
+            "batch_size": 1000,
+            "lr": 0.0005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "11": {
+        "dataset_id": "11",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "norm_data": true,
+            "n_epochs": 20,
+            "batch_size": 400,
+            "lr": 0.0005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "8_1": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 600,
+            "lr": 0.0005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "8_2": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 400,
+            "lr": 0.0005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "8_3": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 600,
+            "lr": 0.0005,
+            "fc_sizes": [40, 9]
+        }
+    },
+    "8_4": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 400,
+            "lr": 0.0005,
+            "fc_sizes": [40, 9]
+        }
+    },
+    "8_5": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": [40, 9]
+        }
+    },
+    "8_6": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 600,
+            "lr": 0.0005,
+            "fc_sizes": [60, 9]
+        }
+    },
+    "8_7": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 400,
+            "lr": 0.0005,
+            "fc_sizes": [60, 9]
+        }
+    },
+    "8_8": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": [60, 9]
+        }
+    },
+    "8_norm": {
+        "dataset_id": "11",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "norm_data": true,
+            "n_epochs": 20,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": [50, 9]
         }
     }
 }
