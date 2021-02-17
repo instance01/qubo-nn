@@ -1,4 +1,4 @@
-import json
+import sys
 import collections
 
 import torch
@@ -33,9 +33,14 @@ class CNNNet(nn.Module):
     pass  # TODO
 
 
+class RNNNet(nn.Module):
+    pass  # TODO
+
+
 class Optimizer:
-    def __init__(self, cfg, data, labels):
+    def __init__(self, cfg, data, labels, logger):
         self.cfg = cfg
+        self.logger = logger
 
         # Load cfg variables.
         lr = cfg['model']['lr']
@@ -74,6 +79,7 @@ class Optimizer:
 
     def train(self):
         self.net.train()
+        data_len = len(self.train_data_loader)
         for epoch in range(self.n_epochs):
             batch_loss = 0.
             for i, data in enumerate(self.train_data_loader, 0):
@@ -96,10 +102,29 @@ class Optimizer:
                 # Then the last term will be wrong.
                 batch_loss += loss.item() * self.batch_size
                 if i % 1000 == 0:
-                    print('[%d, %5d] loss: %.3f' %
-                          (epoch + 1, i, batch_loss / (i + 1)))
+                    msg = '[%d, %5d] loss: %.3f' % (epoch + 1, i, batch_loss / (i + 1))
+                    sys.stdout.write('\r' + msg)
+                    sys.stdout.flush()
 
-    def eval(self):
+                    data = {
+                        "loss_train": batch_loss / (i + 1)
+                    }
+                    self.logger.log_train(data, data_len * epoch + i)
+
+            data = {}
+            misclassifications, test_loss = self.eval(False)
+            mc_prob = {
+                self.cfg['problems']['problems'][int(k)]: v
+                for k, v in misclassifications.items()
+            }
+            data['loss_eval'] = test_loss
+            data['Problem_Misclassifications'] = {}
+            for k, v in mc_prob.items():
+                data['Problem_Misclassifications'][k] = v
+            self.logger.log_eval(data, epoch)
+        print('')
+
+    def eval(self, do_print=True):
         misclassifications = collections.defaultdict(int)
 
         self.net.eval()
@@ -110,16 +135,20 @@ class Optimizer:
             loss = self.criterion(outputs, labels)
             if torch.argmax(outputs) != labels:
                 misclassifications[labels.item()] += 1
-                # print(torch.argmax(outputs), labels)
 
             total_loss += loss.item()
-            if i % 1000 == 0:
-                print('[%d] loss: %.3f' % (i, total_loss / (i + 1)))
-        print(
-            'Misclassification rate',
-            float(sum(misclassifications.values())) / len(self.test_data_loader)
-        )
-        return misclassifications
+            if do_print and i % 1000 == 0:
+                msg = '[%d] loss: %.3f' % (i, total_loss / (i + 1))
+                sys.stdout.write('\r' + msg)
+                sys.stdout.flush()
+
+        data_len = len(self.test_data_loader)
+        if do_print:
+            print(
+                '\nMisclassification rate',
+                float(sum(misclassifications.values())) / data_len
+            )
+        return misclassifications, total_loss / data_len
 
     def save(self, model_fname):
         torch.save(self.net.state_dict(), 'models/' + model_fname)

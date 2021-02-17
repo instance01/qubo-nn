@@ -1,11 +1,13 @@
+import gzip
 import json
 import socket
 import random
-import datetime
-import gzip
 import pickle
+import datetime
+
 import numpy as np
 from qubo_nn.nn import Optimizer
+from qubo_nn.logger import Logger
 from qubo_nn.problems import PROBLEM_REGISTRY
 
 
@@ -16,6 +18,7 @@ class Classification:
         self.qubo_size = cfg['problems']['qubo_size']
         self.problems = self._prep_problems()
         self.model_fname = self.get_model_fname()
+        self.logger = Logger(self.model_fname)
 
     def _prep_problems(self):
         ret = []
@@ -70,7 +73,7 @@ class Classification:
         with gzip.open('datasets/' + self.cfg['dataset_id'] + '.pickle.gz', 'rb') as f:
             data, labels = pickle.load(f)
 
-        optimizer = Optimizer(self.cfg, data, labels)
+        optimizer = Optimizer(self.cfg, data, labels, self.logger)
         optimizer.train()
         optimizer.save(self.model_fname)
         self._eval(optimizer)
@@ -79,12 +82,12 @@ class Classification:
         with gzip.open('datasets/' + self.cfg['dataset_id'] + '.pickle.gz', 'rb') as f:
             data, labels = pickle.load(f)
 
-        optimizer = Optimizer(self.cfg, data, labels)
+        optimizer = Optimizer(self.cfg, data, labels, self.logger)
         optimizer.load(model_fname)
         self._eval(optimizer)
 
     def _eval(self, optimizer):
-        misclassifications = optimizer.eval()
+        misclassifications, _ = optimizer.eval()
         mc_prob = {
             self.cfg['problems']['problems'][int(k)]: v
             for k, v in misclassifications.items()
@@ -100,3 +103,6 @@ class Classification:
             self.cfg['cfg_id']
         ])
         return model_fname
+
+    def close(self):
+        self.logger.close()

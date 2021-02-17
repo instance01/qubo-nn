@@ -1,0 +1,22 @@
+from torch.utils.tensorboard import SummaryWriter
+
+
+class Logger:
+    def __init__(self, model_fname):
+        self.model_fname = model_fname
+        self.writer = SummaryWriter(log_dir='runs/' + model_fname)
+
+    def log_train(self, data, n_iter):
+        self.writer.add_scalar('Loss/Train', data['loss_train'], n_iter)
+
+    def log_eval(self, data, n_iter):
+        self.writer.add_scalar('Loss/Eval', data['loss_eval'], n_iter)
+        for k, v in data['Problem_Misclassifications'].items():
+            self.writer.add_scalar(
+                'Problem_Misclassifications/' + k,
+                v,
+                n_iter
+            )
+
+    def close(self):
+        self.writer.close()

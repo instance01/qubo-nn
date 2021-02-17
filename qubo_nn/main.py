@@ -19,8 +19,14 @@ cfg = Config().get_cfg(args.cfg_id)
 
 if args.type == 'classify':
     if args.gendata:
-        Classification(cfg).prep_data()
+        c = Classification(cfg)
+        c.prep_data()
+        c.close()
     elif args.train:
-        Classification(cfg).run_experiment()
+        c = Classification(cfg)
+        c.run_experiment()
+        c.close()
     elif args.eval:
-        Classification(cfg).eval(args.model)
+        c = Classification(cfg)
+        c.eval(args.model)
+        c.close()
