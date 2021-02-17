@@ -69,5 +69,31 @@
             "lr": 0.005,
             "fc_sizes": [50, 9]
         }
+    },
+    "4": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 100,
+            "lr": 0.0005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "5": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "n_epochs": 20,
+            "batch_size": 100,
+            "lr": 0.0005,
+            "fc_sizes": [100, 50, 9]
+        }
     }
 }
