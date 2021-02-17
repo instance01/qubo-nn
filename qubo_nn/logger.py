@@ -19,6 +19,11 @@ class Logger:
                 v,
                 n_iter
             )
+        self.writer.add_scalar(
+            'Total_Misclassifications',
+            data['Total_Misclassifications'],
+            n_iter
+        )
 
     def close(self):
         self.writer.close()

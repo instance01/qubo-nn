@@ -71,10 +71,13 @@ class Optimizer:
         )
 
         self.train_data_loader = DataLoader(
-            train_dataset, batch_size=self.batch_size
+            train_dataset,
+            batch_size=self.batch_size,
+            shuffle=self.cfg['model']['shuffle_data']
         )
         self.test_data_loader = DataLoader(
-            test_dataset, batch_size=1
+            test_dataset,
+            batch_size=1
         )
 
     def train(self):
@@ -121,6 +124,8 @@ class Optimizer:
             data['Problem_Misclassifications'] = {}
             for k, v in mc_prob.items():
                 data['Problem_Misclassifications'][k] = v
+            tot_mc = float(sum(misclassifications.values())) / data_len
+            data['Total_Misclassifications'] = tot_mc
             self.logger.log_eval(data, epoch)
         print('')
 
