@@ -114,8 +114,8 @@ class Optimizer:
             data = {}
             misclassifications, test_loss = self.eval(False)
             mc_prob = {
-                self.cfg['problems']['problems'][int(k)]: v
-                for k, v in misclassifications.items()
+                prob: misclassifications.get(str(i), 0)
+                for i, prob in enumerate(self.cfg['problems']['problems'])
             }
             data['loss_eval'] = test_loss
             data['Problem_Misclassifications'] = {}
