@@ -51,7 +51,12 @@ class Optimizer:
 
         # Set it all up.
         self.net = FCNet(cfg)
-        self.criterion = nn.CrossEntropyLoss()
+        weights = cfg['model']['class_weights']
+        if weights:
+            weights = torch.FloatTensor(weights)
+            self.criterion = nn.CrossEntropyLoss(weight=weights)
+        else:
+            self.criterion = nn.CrossEntropyLoss()
         self.optimizer = optim.SGD(
             self.net.parameters(), lr=lr, momentum=sgd_momentum
         )

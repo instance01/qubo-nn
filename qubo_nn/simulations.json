@@ -37,6 +37,7 @@
             "problems": ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK"]
         },
         "model": {
+            "class_weights": [],
             "norm_data": false,
             "shuffle_data": true,
             "network": "FC",
@@ -290,6 +291,20 @@
         },
         "model": {
             "norm_data": true,
+            "n_epochs": 20,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "8_class_weights": {
+        "dataset_id": "3",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 1000000
+        },
+        "model": {
+            "class_weights": [1, 1, 2, 1, 1, 2, 2, 1, 2],
             "n_epochs": 20,
             "batch_size": 500,
             "lr": 0.0005,
