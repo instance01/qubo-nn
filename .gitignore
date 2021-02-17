@@ -4,3 +4,4 @@ __pycache__
 .pickle.gz
 qubo_nn/runs/*-*
 qubo_nn/models/*-*
+qubo_nn/datasets/*.gz
