@@ -18,7 +18,7 @@ class Classification:
         self.qubo_size = cfg['problems']['qubo_size']
         self.problems = self._prep_problems()
         self.model_fname = self.get_model_fname()
-        self.logger = Logger(self.model_fname)
+        self.logger = Logger(self.model_fname, cfg)
 
     def _prep_problems(self):
         ret = []

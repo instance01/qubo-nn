@@ -1,10 +1,12 @@
+import json
 from torch.utils.tensorboard import SummaryWriter
 
 
 class Logger:
-    def __init__(self, model_fname):
+    def __init__(self, model_fname, cfg):
         self.model_fname = model_fname
         self.writer = SummaryWriter(log_dir='runs/' + model_fname)
+        self.writer.add_text('Info/Config', json.dumps(cfg), 0)
 
     def log_train(self, data, n_iter):
         self.writer.add_scalar('Loss/Train', data['loss_train'], n_iter)
