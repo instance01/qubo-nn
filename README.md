@@ -1,5 +1,10 @@
 ## QUBO - NN
 
+<img alt="qubo heat map" src="qubo_nn/plots/qubo_map_singles.png">
+<p align="center">
+  9 problems and their respective QUBO matrices.
+</p>
+
 QUBO matrices are used to describe an optimization problem as a matrix such that a Quantum Annealer (such as a D-Wave QA) can solve it.
 
 Now, these matrices are quite an interesting construct.. Thus, a few questions arise:
