@@ -31,8 +31,8 @@ problems = ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK"]
 cmap_mod = truncate_colormap('Greens', minval=.3, maxval=.99)
 
 
-def plot(data):
-    fig, axs = plt.subplots(3, 3, figsize=(8, 8.0), constrained_layout=True)
+def plot(data, fname):
+    fig, axs = plt.subplots(3, 3, figsize=(9, 8), constrained_layout=True)
     for i in range(3):
         for j in range(3):
             idx = i * 3 + j
@@ -40,8 +40,9 @@ def plot(data):
             im = axs[i][j].imshow(data[idx], cmap=cmap_mod, vmin=-1, vmax=1)
             cbar = axs[i][j].figure.colorbar(im, ax=axs, aspect=60)
             axs[i][j].set_title(problems[idx])
+    fig.savefig(fname + ".png", bbox_inches='tight')
     plt.show()
 
 
-plot(medians)
-plot(singles)
+plot(medians, "qubo_map_medians")
+plot(singles, "qubo_map_singles")
