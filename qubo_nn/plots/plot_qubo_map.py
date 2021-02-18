@@ -40,6 +40,8 @@ def plot(data, fname):
             im = axs[i][j].imshow(data[idx], cmap=cmap_mod, vmin=-1, vmax=1)
             cbar = axs[i][j].figure.colorbar(im, ax=axs, aspect=60)
             axs[i][j].set_title(problems[idx])
+            axs[i][j].set_xticks([])
+            axs[i][j].set_yticks([])
     fig.savefig(fname + ".png", bbox_inches='tight')
     plt.show()
 
