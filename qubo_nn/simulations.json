@@ -336,5 +336,210 @@
             "lr": 0.0001,
             "fc_sizes": [50, 9]
         }
+    },
+    "12": {
+        "dataset_id": "12",
+        "problems": {
+            "dynamic_size_multiplier": false,
+            "n_problems": 270000,
+            "qubo_size": 64,
+            "NP": {
+                "size": 64
+            },
+            "MC": {
+                "size": [64, 90]
+            },
+            "MVC": {
+                "size": [64, 90]
+            },
+            "SP": {
+                "size": [40, 64]
+            },
+            "M2SAT": {
+                "size": [64, 90]
+            },
+            "SPP": {
+                "size": [40, 64]
+            },
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 4
+            },
+            "QA": {
+                "size": 8
+            },
+            "QK": {
+                "size": 58,
+                "constraint": 40
+            },
+            "problems": ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK"]
+        },
+        "model": {
+            "class_weights": [],
+            "norm_data": false,
+            "shuffle_data": true,
+            "network": "FC",
+            "n_epochs": 20,
+            "batch_size": 100,
+            "optimizer": "sgd",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.002,
+            "fc_sizes": [50, 9],
+            "train_eval_split": 0.9
+        }
+    },
+    "13": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "14": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": [1024, 128, 9]
+        }
+    },
+    "15": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": [70, 9]
+        }
+    },
+    "16": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": [30, 9]
+        }
+    },
+    "17": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "18": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 500,
+            "lr": 0.001,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "19": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 200,
+            "lr": 0.0001,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "20": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 200,
+            "lr": 0.001,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "21": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 800,
+            "lr": 0.001,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "22": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 800,
+            "lr": 0.0001,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "18_lr": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 50,
+            "batch_size": 500,
+            "lr": 0.005,
+            "fc_sizes": [50, 9]
+        }
     }
 }
