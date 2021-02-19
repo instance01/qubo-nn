@@ -13,6 +13,7 @@ class Config:
             if k == 'base_cfg' or k == 'desc' or k == 'dataset_id':
                 continue
             base_cfg[k].update(new_cfg[k])
+        base_cfg['dataset_id'] = new_cfg['dataset_id']
 
     def get_cfg(self, cfg_id):
         if cfg_id not in self.cfg:
