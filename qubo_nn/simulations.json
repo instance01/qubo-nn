@@ -5,6 +5,7 @@
             "dynamic_size_multiplier": false,
             "n_problems": 100000,
             "qubo_size": 16,
+            "chunks": 1,
             "NP": {
                 "size": 16
             },
@@ -343,6 +344,7 @@
             "dynamic_size_multiplier": false,
             "n_problems": 270000,
             "qubo_size": 64,
+            "chunks": 1,
             "NP": {
                 "size": 64
             },
@@ -539,6 +541,20 @@
             "n_epochs": 50,
             "batch_size": 500,
             "lr": 0.005,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "18_lr2": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.002,
             "fc_sizes": [50, 9]
         }
     }
