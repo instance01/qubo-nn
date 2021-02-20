@@ -3,7 +3,7 @@
         "dataset_id": "1",
         "problems": {
             "dynamic_size_multiplier": false,
-            "n_problems": 100000,
+            "n_problems": 1000,
             "qubo_size": 16,
             "chunks": 1,
             "NP": {
@@ -49,6 +49,16 @@
             "lr": 0.002,
             "fc_sizes": [50, 9],
             "train_eval_split": 0.9
+        }
+    },
+    "dbg": {
+        "dataset_id": "1",
+        "base_cfg": "1",
+        "model": {
+            "n_epochs": 1,
+            "batch_size": 100,
+            "lr": 0.005,
+            "fc_sizes": [50, 9]
         }
     },
     "2": {

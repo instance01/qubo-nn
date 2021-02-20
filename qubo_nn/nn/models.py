@@ -1,6 +1,7 @@
 import sys
 import collections
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -63,11 +64,9 @@ class Optimizer:
     def train(self):
         self.net.train()
         data_len = len(self.lmdb_loader.train_data_loader)
-        print(data_len)
         for epoch in range(self.n_epochs):
             batch_loss = 0.
             for i, data in enumerate(self.lmdb_loader.train_data_loader, 0):
-                print(i)
                 inputs, labels = data
 
                 self.optimizer.zero_grad()
@@ -98,7 +97,7 @@ class Optimizer:
 
             self.net.eval()
             data = {}
-            misclassifications, test_loss, tot_mc = self.eval(False)
+            misclassifications, test_loss, tot_mc, _ = self.eval(False)
             mc_prob = {
                 prob: misclassifications.get(i, 0)
                 for i, prob in enumerate(self.cfg['problems']['problems'])
@@ -114,15 +113,21 @@ class Optimizer:
 
     def eval(self, do_print=True):
         misclassifications = collections.defaultdict(int)
+        n_classes = len(self.cfg['problems']['problems'])
+        mc_table = np.zeros(shape=(n_classes, n_classes), dtype=np.float32)
+        n_class_labels = np.zeros(shape=(n_classes,), dtype=np.float32)
 
         self.net.eval()
         total_loss = 0.0
-        for i, data in enumerate(self.lmdb_loader.test_data_loader, 0):
+        for i, data in enumerate(self.lmdb_loader.test_data_loader):
             inputs, labels = data
             outputs = self.net(inputs)
             loss = self.criterion(outputs, labels)
-            if torch.argmax(outputs) != labels:
+            prediction = torch.argmax(outputs)
+            if prediction != labels:
                 misclassifications[labels.item()] += 1
+            mc_table[labels.item()][prediction.item()] += 1
+            n_class_labels[labels.item()] += 1
 
             total_loss += loss.item()
             if do_print and i % 1000 == 0:
@@ -131,10 +136,13 @@ class Optimizer:
                 sys.stdout.flush()
 
         data_len = len(self.lmdb_loader.test_data_loader)
+        mc_table /= n_class_labels[:, np.newaxis]
         tot_mc = float(sum(misclassifications.values())) / data_len
+
         if do_print:
             print('\nMisclassification rate', tot_mc)
-        return misclassifications, total_loss / data_len, tot_mc
+
+        return misclassifications, total_loss / data_len, tot_mc, mc_table
 
     def save(self, model_fname):
         torch.save(self.net.state_dict(), 'models/' + model_fname)

@@ -39,6 +39,7 @@ class Classification:
         return qubo_matrices
 
     def _gen_data(self, n_problems):
+        qubo_size = self.qubo_size
         data = np.zeros(
             shape=(len(self.problems) * n_problems, qubo_size, qubo_size),
             dtype=np.float32
@@ -84,7 +85,6 @@ class Classification:
 
     def gen_data_chunks(self):
         n_problems = self.n_problems
-        qubo_size = self.qubo_size
         for chunk in range(self.chunks):
             n_problems = self.n_problems // self.chunks
             data, labels = self._gen_data(n_problems)
@@ -98,22 +98,21 @@ class Classification:
         optimizer.train()
         optimizer.save(self.model_fname)
         self._eval(optimizer)
-        lmdb_loader.close()
 
     def eval(self, model_fname):
         lmdb_loader = LMDBDataLoader(self.cfg)
         optimizer = Optimizer(self.cfg, lmdb_loader, self.logger)
         optimizer.load(model_fname)
         self._eval(optimizer)
-        lmdb_loader.close()
 
     def _eval(self, optimizer):
-        misclassifications, _, _ = optimizer.eval()
+        misclassifications, _, _, mc_table = optimizer.eval()
         mc_prob = {
             self.cfg['problems']['problems'][int(k)]: v
             for k, v in misclassifications.items()
         }
         print(json.dumps(mc_prob, indent=4))
+        self.logger.log_confusion_matrix(mc_table)
 
     def get_model_fname(self):
         rand_str = str(int(random.random() * 10e6))
