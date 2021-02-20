@@ -20,7 +20,7 @@ cfg = Config().get_cfg(args.cfg_id)
 if args.type == 'classify':
     if args.gendata:
         c = Classification(cfg)
-        c.prep_data()
+        c.gen_data_lmdb()
         c.close()
     elif args.train:
         c = Classification(cfg)

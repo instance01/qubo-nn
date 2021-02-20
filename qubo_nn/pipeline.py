@@ -5,15 +5,19 @@ import random
 import pickle
 import datetime
 
+import pyxis as px
 import numpy as np
 from qubo_nn.nn import Optimizer
 from qubo_nn.logger import Logger
 from qubo_nn.problems import PROBLEM_REGISTRY
+from qubo_nn.data import ChunkedDataLoader
+from qubo_nn.data import LMDBDataLoader
 
 
 class Classification:
     def __init__(self, cfg):
         self.cfg = cfg
+        self.chunks = cfg['problems']['chunks']
         self.n_problems = cfg['problems']['n_problems']
         self.qubo_size = cfg['problems']['qubo_size']
         self.problems = self._prep_problems()
@@ -34,9 +38,7 @@ class Classification:
         ]
         return qubo_matrices
 
-    def prep_data(self):
-        n_problems = self.n_problems
-        qubo_size = self.qubo_size
+    def _gen_data(self, n_problems):
         data = np.zeros(
             shape=(len(self.problems) * n_problems, qubo_size, qubo_size),
             dtype=np.float32
@@ -67,27 +69,43 @@ class Classification:
             data[idx_start:idx_end, :, :] = qubo_matrices
             labels[idx_start:idx_end] = i
 
-        with gzip.open('datasets/' + self.cfg['cfg_id'] + '.pickle.gz', 'wb+') as f:
-            pickle.dump((data, labels), f)
-
         return data, labels
 
-    def run_experiment(self):
-        with gzip.open('datasets/' + self.cfg['dataset_id'] + '.pickle.gz', 'rb') as f:
-            data, labels = pickle.load(f)
+    def gen_data_gzip_pickle(self):
+        data, labels = self._gen_data(self.n_problems)
+        with gzip.open('datasets/%s.pickle.gz' % self.cfg['cfg_id'], 'wb+') as f:
+            pickle.dump((data, labels), f)
 
-        optimizer = Optimizer(self.cfg, data, labels, self.logger)
+    def gen_data_lmdb(self):
+        data, labels = self._gen_data(self.n_problems)
+        db = px.Writer(dirpath='datasets/%s/' % self.cfg['cfg_id'], map_size_limit=50000, ram_gb_limit=50)
+        db.put_samples('input', data, 'target', labels)
+        db.close()
+
+    def gen_data_chunks(self):
+        n_problems = self.n_problems
+        qubo_size = self.qubo_size
+        for chunk in range(self.chunks):
+            n_problems = self.n_problems // self.chunks
+            data, labels = self._gen_data(n_problems)
+
+            with gzip.open('datasets/%s.%d.pickle.gz' % (self.cfg['cfg_id'], chunk), 'wb+') as f:
+                pickle.dump((data, labels), f)
+
+    def run_experiment(self):
+        lmdb_loader = LMDBDataLoader(self.cfg)
+        optimizer = Optimizer(self.cfg, lmdb_loader, self.logger)
         optimizer.train()
         optimizer.save(self.model_fname)
         self._eval(optimizer)
+        lmdb_loader.close()
 
     def eval(self, model_fname):
-        with gzip.open('datasets/' + self.cfg['dataset_id'] + '.pickle.gz', 'rb') as f:
-            data, labels = pickle.load(f)
-
-        optimizer = Optimizer(self.cfg, data, labels, self.logger)
+        lmdb_loader = LMDBDataLoader(self.cfg)
+        optimizer = Optimizer(self.cfg, lmdb_loader, self.logger)
         optimizer.load(model_fname)
         self._eval(optimizer)
+        lmdb_loader.close()
 
     def _eval(self, optimizer):
         misclassifications, _, _ = optimizer.eval()
