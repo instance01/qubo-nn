@@ -5,3 +5,4 @@ __pycache__
 qubo_nn/runs/*-*
 qubo_nn/models/*-*
 qubo_nn/datasets/*.gz
+qubo_nn/datasets/*
