@@ -1,0 +1,5 @@
+https://github.com/vicolab/ml-pyxis/archive/master.zip
+numpy
+networkx
+torchvision
+torch

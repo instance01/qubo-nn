@@ -40,6 +40,13 @@ Problems implemented so far:
 * Quadratic Assignment
 * Quadratic Knapsack
 
+## Setup
+
+```
+pip3 install -r requirements.txt
+pip3 install -e .
+```
+
 ## Using
 
 ### Classification
