@@ -59,6 +59,7 @@ class Classification:
 
             if self.cfg["model"]["norm_data"]:
                 qubo_matrices /= np.max(np.abs(qubo_matrices))
+                qubo_matrices = (qubo_matrices + 1) / 2.
             else:
                 # TODO DUBIOUS!!!
                 # This should be an option. But for now without it the neural
@@ -93,6 +94,7 @@ class Classification:
                 pickle.dump((data, labels), f)
 
     def run_experiment(self):
+        self.logger.log_config()
         lmdb_loader = LMDBDataLoader(self.cfg)
         optimizer = Optimizer(self.cfg, lmdb_loader, self.logger)
         optimizer.train()
