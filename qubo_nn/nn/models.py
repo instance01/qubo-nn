@@ -13,11 +13,16 @@ class FCNet(nn.Module):
         super(FCNet, self).__init__()
         input_size = cfg['problems']['qubo_size'] ** 2
 
+        # TODO Improve this.
+        activation_cls = nn.ReLU
+        if cfg['model']['activation'] == "LeakyReLU":
+            activation_cls = nn.LeakyReLU
+
         net = []
         last_fc_size = input_size
         for size in cfg['model']['fc_sizes']:
             net.append(nn.Linear(last_fc_size, size))
-            net.append(nn.ReLU())
+            net.append(activation_cls())
             last_fc_size = size
 
         self.fc_net = nn.Sequential(*net)
@@ -72,6 +77,7 @@ class Optimizer:
                 self.optimizer.zero_grad()
 
                 outputs = self.net(inputs)
+
                 try:
                     loss = self.criterion(outputs, labels)
                 except IndexError:
@@ -79,17 +85,19 @@ class Optimizer:
                         "Size of last layer should equal the number of "
                         "problems you have"
                     )
+
                 loss.backward()
                 self.optimizer.step()
 
                 # TODO!!! What if batch_size is not a factor of total size.
                 # Then the last term will be wrong.
                 batch_loss += loss.item() * self.batch_size
-                if i % 1000 == 0:
+                if i % 100 == 0:
                     msg = '[%d, %5d] loss: %.3f' % (epoch + 1, i, batch_loss / (i + 1))
                     sys.stdout.write('\r' + msg)
                     sys.stdout.flush()
 
+                if i % 1000 == 0:
                     data = {
                         "loss_train": batch_loss / (i + 1)
                     }

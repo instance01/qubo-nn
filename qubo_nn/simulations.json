@@ -38,6 +38,7 @@
             "problems": ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK"]
         },
         "model": {
+            "activation": "ReLU",
             "class_weights": [],
             "norm_data": false,
             "shuffle_data": true,
@@ -562,6 +563,35 @@
             "n_problems": 270000
         },
         "model": {
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.002,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "dbg2": {
+        "dataset_id": "dbg2",
+        "base_cfg": "1",
+        "problems": {
+            "n_problems": 10000
+        },
+        "model": {
+            "norm_data": true,
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.002,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "18_lr2_leaky": {
+        "dataset_id": "12",
+        "base_cfg": "12",
+        "problems": {
+            "qubo_size": 64,
+            "n_problems": 270000
+        },
+        "model": {
+            "activation": "LeakyReLU",
             "n_epochs": 100,
             "batch_size": 500,
             "lr": 0.002,
