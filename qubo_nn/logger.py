@@ -29,9 +29,12 @@ def truncate_colormap(cmapIn='jet', minval=0.0, maxval=1.0, n=100):
 
 class Logger:
     def __init__(self, model_fname, cfg):
+        self.cfg = cfg
         self.model_fname = model_fname
         self.writer = SummaryWriter(log_dir='runs/' + model_fname)
-        self.writer.add_text('Info/Config', json.dumps(cfg), 0)
+
+    def log_config(self):
+        self.writer.add_text('Info/Config', json.dumps(self.cfg), 0)
 
     def log_train(self, data, n_iter):
         self.writer.add_scalar('Loss/Train', data['loss_train'], n_iter)
@@ -67,12 +70,15 @@ class Logger:
         buf = io.BytesIO()
         plt.savefig(buf, format='jpeg')
 
+        problems = self.cfg['problems']['problems']
+        plt.xticks(list(range(len(problems))), problems)
+        plt.yticks(list(range(len(problems))), problems)
+
         plt.close(fig)
         buf.seek(0)
         image = PIL.Image.open(buf)
         image = ToTensor()(image).unsqueeze(0)
         image = image.reshape((3, 1000, 1000))
-
 
         self.writer.add_image('Info/Confusion_matrix', image, 0)
 
