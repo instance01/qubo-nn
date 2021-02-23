@@ -39,6 +39,7 @@ Problems implemented so far:
 * Graph Coloring
 * Quadratic Assignment
 * Quadratic Knapsack
+* Max 3-SAT
 
 ## Setup
 

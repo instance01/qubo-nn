@@ -7,6 +7,7 @@ from qubo_nn.problems.set_partitioning import SetPartitioning
 from qubo_nn.problems.graph_coloring import GraphColoring
 from qubo_nn.problems.quadratic_assignment import QuadraticAssignment
 from qubo_nn.problems.quadratic_knapsack import QuadraticKnapsack
+from qubo_nn.problems.max3sat import Max3SAT
 
 
 PROBLEM_REGISTRY = {
@@ -18,5 +19,6 @@ PROBLEM_REGISTRY = {
     "SPP": SetPartitioning,
     "GC": GraphColoring,
     "QA": QuadraticAssignment,
-    "QK": QuadraticKnapsack
+    "QK": QuadraticKnapsack,
+    "M3SAT": Max3SAT
 }
