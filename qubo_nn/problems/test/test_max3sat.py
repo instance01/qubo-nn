@@ -7,7 +7,7 @@ class TestMax3SAT(unittest.TestCase):
     def test_gen_qubo_matrix(self):
         """Test whether a correct QUBO is generated.
 
-        Test case from: https://arxiv.org/pdf/1811.11538.pdf
+        Test case from: https://canvas.auckland.ac.nz/courses/14782/files/574983/download?verifier=1xqRikUjTEBwm8PnObD8YVmKdeEhZ9Ui8axW8HwP&wrap=1
         """
         problem = Max3SAT(
             [
