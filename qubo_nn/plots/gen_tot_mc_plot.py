@@ -6,9 +6,14 @@ from collections import defaultdict
 
 import numpy as np
 import tensorflow as tf
+import matplotlib as mpl
 from matplotlib import pyplot as plt
 from tensorflow.core.util import event_pb2
 from tensorflow.python.lib.io import tf_record
+
+
+mpl.font_manager._rebuild()
+plt.rc('font', family='Raleway')
 
 
 def my_summary_iterator(path):
@@ -36,7 +41,9 @@ def aggregate_multi(arr1):
 
     sub_plot(arr1, 'c')
     plt.ylabel("Misclassification rate")
+    plt.xlabel("Epoch")
     plt.show()
+    fig.savefig('tot_mc.png')
 
 
 def aggregate(paths):
@@ -84,7 +91,7 @@ def aggregate(paths):
 
 
 def run():
-    plot = False
+    plot = True
     if not plot:
         paths = glob.glob('../runs/*-18_lr2_leaky')
         print(len(paths))
