@@ -121,6 +121,7 @@ Pull requests are very welcome. Before submitting one, run all tests with `./tes
 
 ```
 Glover, Fred, Gary Kochenberger, and Yu Du. "A tutorial on formulating and using qubo models." arXiv preprint arXiv:1811.11538 (2018).
+Michael J. Dinneen, "Maximum 3-SAT as QUBO" https://canvas.auckland.ac.nz/courses/14782/files/574983/download?verifier=1xqRikUjTEBwm8PnObD8YVmKdeEhZ9Ui8axW8HwP&wrap=1
 ```
 
 ## Related Work
