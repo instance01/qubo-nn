@@ -104,6 +104,14 @@ The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
 }
 ```
 
+## Results
+
+### Classification
+
+Using parameter configuration `18_lr2_leaky` (see `simulations.json`), the average total misclassification rate over 38 models goes to zero.
+
+<img alt="Avg total misclassification rate" src="qubo_nn/plots/tot_mc.png">
+
 ## Contributing
 
 Pull requests are very welcome. Before submitting one, run all tests with `./test.sh` and make sure nothing is broken.
