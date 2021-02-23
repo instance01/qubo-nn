@@ -40,6 +40,7 @@ Problems implemented so far:
 * Quadratic Assignment
 * Quadratic Knapsack
 * Max 3-SAT
+* Travelling Salesman (TSP)
 
 ## Setup
 
@@ -101,6 +102,13 @@ The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
     'MC': <class 'qubo_nn.problems.max_cut.MaxCut'>,
     'MVC': <class 'qubo_nn.problems.minimum_vertex_cover.MinimumVertexCover'>,
     'SP': <class 'qubo_nn.problems.set_packing.SetPacking'>,
+    'M2SAT': <class 'qubo_nn.problems.max2sat.Max2SAT'>,
+    'SPP': <class 'qubo_nn.problems.set_partitioning.SetPartitioning'>,
+    'GC': <class 'qubo_nn.problems.graph_coloring.GraphColoring'>,
+    'QA': <class 'qubo_nn.problems.quadratic_assignment.QuadraticAssignment'>,
+    'QK': <class 'qubo_nn.problems.quadratic_knapsack.QuadraticKnapsack'>,
+    'M3SAT': <class 'qubo_nn.problems.max3sat.Max3SAT'>,
+    'TSP': <class 'qubo_nn.problems.tsp.TSP'>
     ...
 }
 ```

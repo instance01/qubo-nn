@@ -8,6 +8,7 @@ from qubo_nn.problems.graph_coloring import GraphColoring
 from qubo_nn.problems.quadratic_assignment import QuadraticAssignment
 from qubo_nn.problems.quadratic_knapsack import QuadraticKnapsack
 from qubo_nn.problems.max3sat import Max3SAT
+from qubo_nn.problems.tsp import TSP
 
 
 PROBLEM_REGISTRY = {
@@ -20,5 +21,6 @@ PROBLEM_REGISTRY = {
     "GC": GraphColoring,
     "QA": QuadraticAssignment,
     "QK": QuadraticKnapsack,
-    "M3SAT": Max3SAT
+    "M3SAT": Max3SAT,
+    "TSP": TSP
 }
