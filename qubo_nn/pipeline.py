@@ -80,7 +80,7 @@ class Classification:
 
     def gen_data_lmdb(self):
         data, labels = self._gen_data(self.n_problems)
-        db = px.Writer(dirpath='datasets/%s/' % self.cfg['cfg_id'], map_size_limit=50000, ram_gb_limit=50)
+        db = px.Writer(dirpath='datasets/%s/' % self.cfg['cfg_id'], map_size_limit=60000, ram_gb_limit=60)
         db.put_samples('input', data, 'target', labels)
         db.close()
 

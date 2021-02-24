@@ -597,5 +597,75 @@
             "lr": 0.002,
             "fc_sizes": [50, 9]
         }
+    },
+    "23": {
+        "dataset_id": "23",
+        "base_cfg": "12",
+        "model": {
+            "activation": "LeakyReLU",
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.002,
+            "fc_sizes": [50, 9]
+        }
+    },
+    "23": {
+        "dataset_id": "23",
+        "problems": {
+            "dynamic_size_multiplier": false,
+            "n_problems": 200000,
+            "qubo_size": 64,
+            "chunks": 1,
+            "NP": {
+                "size": 64
+            },
+            "MC": {
+                "size": [64, 90]
+            },
+            "MVC": {
+                "size": [64, 90]
+            },
+            "SP": {
+                "size": [40, 64]
+            },
+            "M2SAT": {
+                "size": [64, 90]
+            },
+            "SPP": {
+                "size": [40, 64]
+            },
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 4
+            },
+            "QA": {
+                "size": 8
+            },
+            "QK": {
+                "size": 58,
+                "constraint": 40
+            },
+            "M3SAT": {
+                "size": [20, 44]
+            },
+            "TSP": {
+                "size": 8
+            },
+            "problems": ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK", "M3SAT", "TSP"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "class_weights": [],
+            "norm_data": false,
+            "shuffle_data": true,
+            "network": "FC",
+            "n_epochs": 100,
+            "batch_size": 500,
+            "optimizer": "sgd",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.002,
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
     }
 }
