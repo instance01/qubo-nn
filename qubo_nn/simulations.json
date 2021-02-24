@@ -600,17 +600,6 @@
     },
     "23": {
         "dataset_id": "23",
-        "base_cfg": "12",
-        "model": {
-            "activation": "LeakyReLU",
-            "n_epochs": 100,
-            "batch_size": 500,
-            "lr": 0.002,
-            "fc_sizes": [50, 9]
-        }
-    },
-    "23": {
-        "dataset_id": "23",
         "problems": {
             "dynamic_size_multiplier": false,
             "n_problems": 200000,
