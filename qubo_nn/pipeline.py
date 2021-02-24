@@ -93,13 +93,14 @@ class Classification:
             with gzip.open('datasets/%s.%d.pickle.gz' % (self.cfg['cfg_id'], chunk), 'wb+') as f:
                 pickle.dump((data, labels), f)
 
-    def run_experiment(self):
+    def run_experiment(self, n_runs=1):
         self.logger.log_config()
         lmdb_loader = LMDBDataLoader(self.cfg)
-        optimizer = Optimizer(self.cfg, lmdb_loader, self.logger)
-        optimizer.train()
-        optimizer.save(self.model_fname)
-        self._eval(optimizer)
+        for _ in range(n_runs):
+            optimizer = Optimizer(self.cfg, lmdb_loader, self.logger)
+            optimizer.train()
+            optimizer.save(self.model_fname)
+            self._eval(optimizer)
 
     def eval(self, model_fname):
         lmdb_loader = LMDBDataLoader(self.cfg)
