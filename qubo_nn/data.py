@@ -85,9 +85,11 @@ class LMDBDataLoader:
         self.train_data_loader = DataLoader(
             train_dataset,
             batch_size=self.batch_size,
-            shuffle=cfg['model']['shuffle_data']
+            shuffle=cfg['model']['shuffle_data'],
+            num_workers=4
         )
         self.test_data_loader = DataLoader(
             test_dataset,
-            batch_size=1
+            batch_size=1,
+            num_workers=4
         )
