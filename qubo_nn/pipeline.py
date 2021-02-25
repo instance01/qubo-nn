@@ -21,8 +21,6 @@ class Classification:
         self.n_problems = cfg['problems']['n_problems']
         self.qubo_size = cfg['problems']['qubo_size']
         self.problems = self._prep_problems()
-        self.model_fname = self.get_model_fname()
-        self.logger = Logger(self.model_fname, cfg)
 
     def _prep_problems(self):
         ret = []
@@ -94,19 +92,25 @@ class Classification:
                 pickle.dump((data, labels), f)
 
     def run_experiment(self, n_runs=1):
-        self.logger.log_config()
         lmdb_loader = LMDBDataLoader(self.cfg)
         for _ in range(n_runs):
+            self.model_fname = self.get_model_fname()
+            self.logger = Logger(self.model_fname, self.cfg)
+            self.logger.log_config()
             optimizer = Optimizer(self.cfg, lmdb_loader, self.logger)
             optimizer.train()
             optimizer.save(self.model_fname)
             self._eval(optimizer)
+            self.logger.close()
 
     def eval(self, model_fname):
         lmdb_loader = LMDBDataLoader(self.cfg)
+        self.model_fname = self.get_model_fname()
+        self.logger = Logger(self.model_fname, self.cfg)
         optimizer = Optimizer(self.cfg, lmdb_loader, self.logger)
         optimizer.load(model_fname)
         self._eval(optimizer)
+        self.logger.close()
 
     def _eval(self, optimizer):
         misclassifications, _, _, mc_table = optimizer.eval()
@@ -128,4 +132,4 @@ class Classification:
         return model_fname
 
     def close(self):
-        self.logger.close()
+        pass  # TODO (logger.close is now handled elsewhere)
