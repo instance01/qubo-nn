@@ -91,9 +91,10 @@ def aggregate(paths):
 
 
 def run():
-    plot = True
+    plot = False
     if not plot:
-        paths = glob.glob('../runs/*-18_lr2_leaky')
+        # paths = glob.glob('../runs/*-18_lr2_leaky')
+        paths = glob.glob('../runs/*-23')
         print(len(paths))
         arr1 = aggregate(paths)
         with open('tot_mc.pickle', 'wb+') as f:
