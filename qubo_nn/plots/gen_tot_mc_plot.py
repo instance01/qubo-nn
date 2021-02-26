@@ -91,7 +91,7 @@ def aggregate(paths):
 
 
 def run():
-    plot = False
+    plot = True
     if not plot:
         # paths = glob.glob('../runs/*-18_lr2_leaky')
         paths = glob.glob('../runs/*-23')
