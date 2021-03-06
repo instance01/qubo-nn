@@ -121,6 +121,29 @@ Using parameter configuration `18_lr2_leaky` (see `simulations.json`), the avera
 
 <img alt="Avg total misclassification rate" src="qubo_nn/plots/tot_mc.png">
 
+### Reversability
+
+This shows whether we can deduce the parameters that led to a QUBO matrix, given we predicted the problem beforehand.
+A lot of the graph based problems are easily reversable since the graph structure is kept intact in the QUBO matrix. Thus we can recreate the graph and other input parameters given a GraphColoring QUBO matrix.
+
+This is still WIP - needs testing. These are hypotheses.
+
+Reversing some problems like Quadratic Knapsack might be possible - an algorithm is an idea, but one could also make their life easy and try fitting a NN model to it.
+
+|Problem|Reversability|Comment|
+|-------|-------------|-------|
+|Graph Coloring|+|Likely trivial.|
+|Maximum 2-SAT|-|Multiple inputs lead to the same output (see `qubo_nn.contrib.non_reversible`).|
+|Maximum 3-SAT|-|Multiple inputs lead to the same output (see `qubo_nn.contrib.non_reversible`).|
+|Maximum Cut|+|Likely trivial.|
+|Minimum Vertex Cover|+|Likely trivial.|
+|Number Partitioning|+|Easy, create equation system from the upper triangular part of the matrix (triu).|
+|Quadratic Assignment|-|Needs factoring. Sometimes possible for integers, but in case of floats impossible.|
+|Quadratic Knapsack|?|Budgets can be deduced easily (Find argmin in first row. This column contains all the budgets.), rest possibly but not easily.|
+|Set Packing|?|No idea. TODO|
+|Set Partitioning|-|P and costs cannot be deduced from one number.|
+|Travelling Salesman|+|Find a quadrant with non-zero entries (w/ an identical diagonal), transpose, the entries are the distance matrix. Norm result to between 0 and 1.|
+
 ## Contributing
 
 Pull requests are very welcome. Before submitting one, run all tests with `./test.sh` and make sure nothing is broken.
