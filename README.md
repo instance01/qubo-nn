@@ -132,17 +132,17 @@ Reversing some problems like Quadratic Knapsack might be possible - an algorithm
 
 |Problem|Reversability|Comment|
 |-------|-------------|-------|
-|Graph Coloring|+|Likely trivial.|
-|Maximum 2-SAT|-|Multiple inputs lead to the same output (see `qubo_nn.contrib.non_reversible`).|
-|Maximum 3-SAT|-|Multiple inputs lead to the same output (see `qubo_nn.contrib.non_reversible`).|
-|Maximum Cut|+|Likely trivial.|
-|Minimum Vertex Cover|+|Likely trivial.|
-|Number Partitioning|+|Easy, create equation system from the upper triangular part of the matrix (triu).|
-|Quadratic Assignment|-|Needs factoring. Sometimes possible for integers, but in case of floats impossible.|
-|Quadratic Knapsack|?|Budgets can be deduced easily (Find argmin in first row. This column contains all the budgets.), rest possibly but not easily.|
-|Set Packing|?|No idea. TODO|
-|Set Partitioning|-|P and costs cannot be deduced from one number.|
-|Travelling Salesman|+|Find a quadrant with non-zero entries (w/ an identical diagonal), transpose, the entries are the distance matrix. Norm result to between 0 and 1.|
+|Graph Coloring|**+**|Likely trivial.|
+|Maximum 2-SAT|**-**|Multiple inputs lead to the same output (see `qubo_nn.contrib.non_reversible`).|
+|Maximum 3-SAT|**-**|Multiple inputs lead to the same output (see `qubo_nn.contrib.non_reversible`).|
+|Maximum Cut|**+**|Likely trivial.|
+|Minimum Vertex Cover|**+**|Likely trivial.|
+|Number Partitioning|**+**|Easy, create equation system from the upper triangular part of the matrix (triu).|
+|Quadratic Assignment|**-**|Needs factoring. Sometimes possible for integers, but in case of floats impossible.|
+|Quadratic Knapsack|**?**|Budgets can be deduced easily (Find argmin in first row. This column contains all the budgets.), rest possibly but not easily.|
+|Set Packing|**?**|No idea. TODO|
+|Set Partitioning|**-**|P and costs cannot be deduced from one number.|
+|Travelling Salesman|**+**|Find a quadrant with non-zero entries (w/ an identical diagonal), transpose, the entries are the distance matrix. Norm result to between 0 and 1.|
 
 ## Contributing
 
