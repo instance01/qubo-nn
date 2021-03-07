@@ -656,5 +656,26 @@
             "fc_sizes": [50, 11],
             "train_eval_split": 0.9
         }
+    },
+    "24": {
+        "dataset_id": "24",
+        "base_cfg": "23",
+        "problems": {
+            "n_problems": 10000
+        }
+    },
+    "25": {
+        "dataset_id": "25",
+        "base_cfg": "23",
+        "problems": {
+            "n_problems": 50000
+        }
+    },
+    "26": {
+        "dataset_id": "26",
+        "base_cfg": "23",
+        "problems": {
+            "n_problems": 100000
+        }
     }
 }
