@@ -1,7 +1,6 @@
 import gzip
 import pickle
 
-import pyxis.torch as pxt
 import pyxis as px
 import torch
 from torch.utils.data import DataLoader
@@ -21,7 +20,10 @@ class ChunkedDataLoader:
         self.last_loaded_chunk = -1
 
     def _load_chunk(self):
-        with gzip.open('datasets/%s.%d.pickle.gz' % (self.dataset_id, self.current_chunk), 'rb') as f:
+        fname = 'datasets/%s.%d.pickle.gz' % (
+            self.dataset_id, self.current_chunk
+        )
+        with gzip.open(fname, 'rb') as f:
             data, labels = pickle.load(f)
 
         tensor_x = torch.Tensor(data)
@@ -58,14 +60,38 @@ class ChunkedDataLoader:
         return True
 
 
-class LMDBDataSet(pxt.TorchDataset):
+# Environment can't be pickled.
+# class LMDBDataSet(pxt.TorchDataset):
+#     def __init__(self, cfg):
+#         self.dataset_id = cfg['dataset_id']
+#         super(LMDBDataSet, self).__init__('datasets/' + self.dataset_id)
+#
+#     def __getitem__(self, idx):
+#         sample = self.db[idx]
+#         return sample['input'], sample['target']
+
+
+class LMDBDataSet(torch.utils.data.Dataset):
     def __init__(self, cfg):
         self.dataset_id = cfg['dataset_id']
-        super(LMDBDataSet, self).__init__('datasets/' + self.dataset_id)
+        self.dirpath = 'datasets/' + self.dataset_id
 
-    def __getitem__(self, idx):
-        sample = self.db[idx]
+    def __len__(self):
+        if not hasattr(self, "len_"):
+            db = px.Reader(self.dirpath, lock=False)
+            self.len_ = len(db)
+            db.close()
+        return self.len_
+
+    def __getitem__(self, key):
+        if not hasattr(self, "db"):
+            self.db = px.Reader(self.dirpath, lock=False)
+
+        sample = self.db[key]
         return sample['input'], sample['target']
+
+    def __repr__(self):
+        return str(self.db)
 
 
 class LMDBDataLoader:
