@@ -8,9 +8,9 @@ import datetime
 import pyxis as px
 import numpy as np
 from qubo_nn.nn import Optimizer
+from qubo_nn.nn import AutoEncoderOptimizer
 from qubo_nn.logger import Logger
 from qubo_nn.problems import PROBLEM_REGISTRY
-from qubo_nn.data import ChunkedDataLoader
 from qubo_nn.data import LMDBDataLoader
 
 
@@ -73,12 +73,17 @@ class Classification:
 
     def gen_data_gzip_pickle(self):
         data, labels = self._gen_data(self.n_problems)
-        with gzip.open('datasets/%s.pickle.gz' % self.cfg['cfg_id'], 'wb+') as f:
+        fname = 'datasets/%s.pickle.gz' % self.cfg['cfg_id']
+        with gzip.open(fname, 'wb+') as f:
             pickle.dump((data, labels), f)
 
     def gen_data_lmdb(self):
         data, labels = self._gen_data(self.n_problems)
-        db = px.Writer(dirpath='datasets/%s/' % self.cfg['cfg_id'], map_size_limit=60000, ram_gb_limit=60)
+        db = px.Writer(
+            dirpath='datasets/%s/' % self.cfg['cfg_id'],
+            map_size_limit=60000,
+            ram_gb_limit=60
+        )
         db.put_samples('input', data, 'target', labels)
         db.close()
 
@@ -88,7 +93,8 @@ class Classification:
             n_problems = self.n_problems // self.chunks
             data, labels = self._gen_data(n_problems)
 
-            with gzip.open('datasets/%s.%d.pickle.gz' % (self.cfg['cfg_id'], chunk), 'wb+') as f:
+            fname = 'datasets/%s.%d.pickle.gz' % (self.cfg['cfg_id'], chunk)
+            with gzip.open(fname, 'wb+') as f:
                 pickle.dump((data, labels), f)
 
     def run_experiment(self, n_runs=1):
@@ -131,5 +137,21 @@ class Classification:
         ])
         return model_fname
 
-    def close(self):
-        pass  # TODO (logger.close is now handled elsewhere)
+    def auto_encoder_prototype(self):
+        # TODO Refactor this into its own class.
+
+        # Prepare data.
+        lmdb_loader = LMDBDataLoader(self.cfg)
+
+        # TODO Support n_runs later.
+        # for _ in range(n_runs):
+
+        self.model_fname = self.get_model_fname()
+        self.logger = Logger(self.model_fname, self.cfg)
+        self.logger.log_config()
+
+        optimizer = AutoEncoderOptimizer(self.cfg, lmdb_loader, self.logger)
+        optimizer.train()
+        optimizer.save(self.model_fname)
+
+        self.logger.close()

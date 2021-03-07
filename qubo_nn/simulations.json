@@ -677,5 +677,15 @@
         "problems": {
             "n_problems": 100000
         }
+    },
+    "ae24_1": {
+        "dataset_id": "24",
+        "base_cfg": "23",
+        "problems": {
+            "n_problems": 10000
+        },
+        "model": {
+            "batch_size": 100
+        }
     }
 }
