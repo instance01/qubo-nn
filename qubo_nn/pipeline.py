@@ -20,6 +20,7 @@ class Classification:
         self.chunks = cfg['problems']['chunks']
         self.n_problems = cfg['problems']['n_problems']
         self.qubo_size = cfg['problems']['qubo_size']
+        self.scramble_qubos = cfg['problems']['scramble_qubos']
         self.problems = self._prep_problems()
 
     def _prep_problems(self):
@@ -52,16 +53,21 @@ class Classification:
             qubo_matrices = self.gen_qubo_matrices(
                 cls, n_problems, **args
             )
+            if self.scramble_qubos:
+                for j in range(n_problems):
+                    if random.random() > .5:
+                        rand_idx1 = random.randint(0, self.qubo_size - 1)
+                        rand_idx2 = random.randint(0, self.qubo_size - 1)
+                        val = qubo_matrices[j][[rand_idx2, rand_idx1]]
+                        qubo_matrices[j][[rand_idx1, rand_idx2]] = val
             qubo_matrices = np.array(qubo_matrices)
             print(cls, qubo_matrices.shape)
 
+            # Without normalization of some sort the NN won't learn.
             if self.cfg["model"]["norm_data"]:
                 qubo_matrices /= np.max(np.abs(qubo_matrices))
                 qubo_matrices = (qubo_matrices + 1) / 2.
             else:
-                # TODO DUBIOUS!!!
-                # This should be an option. But for now without it the neural
-                # network won't learn.
                 qubo_matrices = (
                     qubo_matrices - np.mean(qubo_matrices)
                 ) / np.std(qubo_matrices)

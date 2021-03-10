@@ -246,8 +246,10 @@ class AutoEncoderOptimizer:
                 solutions_outputs = self.solve_qubo(outputs)
 
                 try:
-                    loss = self.criterion(solutions_outputs, solutions_inputs)
-                    loss.requires_grad = True
+                    # TODO: Mar 8, 10:20 , qbsolv breaks autograd. Lets do a normal AE first.
+                    # loss = self.criterion(solutions_outputs, solutions_inputs)
+                    # loss.requires_grad = True
+                    loss = self.criterion(inputs, outputs)
                 except IndexError:
                     print(
                         "Size of last layer should equal the number of "
