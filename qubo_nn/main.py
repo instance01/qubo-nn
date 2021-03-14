@@ -1,4 +1,5 @@
 from qubo_nn.pipeline import Classification
+from qubo_nn.pipeline import ReverseClassification
 from qubo_nn.config import Config
 import argparse
 
@@ -32,3 +33,10 @@ if __name__ == '__main__':
         if args.train:
             c = Classification(cfg)
             c.auto_encoder_prototype()
+    elif args.type == 'reverse':
+        if args.gendata:
+            c = ReverseClassification(cfg)
+            c.gen_data_lmdb()
+        elif args.train:
+            c = ReverseClassification(cfg)
+            c.run_experiment(args.nruns)

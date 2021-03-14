@@ -53,6 +53,15 @@ class Logger:
             n_iter
         )
 
+    def log_eval_reverse(self, data, n_iter):
+        self.writer.add_scalar('Loss/Eval', data['loss_eval'], n_iter)
+        for k, v in data['problem_losses'].items():
+            self.writer.add_scalar(
+                'Problem_Loss/' + k,
+                v,
+                n_iter
+            )
+
     def log_confusion_matrix(self, mc_table):
         cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
         fig, ax = plt.subplots(figsize=(10, 10))

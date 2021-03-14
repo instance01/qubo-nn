@@ -72,9 +72,10 @@ class ChunkedDataLoader:
 
 
 class LMDBDataSet(torch.utils.data.Dataset):
-    def __init__(self, cfg):
+    def __init__(self, cfg, reverse):
         self.dataset_id = cfg['dataset_id']
         self.dirpath = 'datasets/' + self.dataset_id
+        self.reverse = reverse
 
     def __len__(self):
         if not hasattr(self, "len_"):
@@ -88,17 +89,20 @@ class LMDBDataSet(torch.utils.data.Dataset):
             self.db = px.Reader(self.dirpath, lock=False)
 
         sample = self.db[key]
-        return sample['input'], sample['target']
+        if self.reverse:
+            return sample['input'], sample['target'], sample['prob']
+        else:
+            return sample['input'], sample['target']
 
     def __repr__(self):
         return str(self.db)
 
 
 class LMDBDataLoader:
-    def __init__(self, cfg):
+    def __init__(self, cfg, reverse=False):
         self.cfg = cfg
         self.dataset_id = cfg['dataset_id']
-        self.dataset = LMDBDataSet(cfg)
+        self.dataset = LMDBDataSet(cfg, reverse)
         self.batch_size = cfg['model']['batch_size']
         self.train_eval_split = cfg['model']['train_eval_split']
 

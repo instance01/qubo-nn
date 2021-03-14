@@ -698,5 +698,18 @@
             "scramble_qubos": true,
             "n_problems": 100000
         }
+    },
+    "dbg3": {
+        "dataset_id": "dbg3",
+        "base_cfg": "23",
+        "problems": {
+            "n_problems": 3000
+        },
+        "model": {
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.005,
+            "fc_sizes": [6000, 6000]
+        }
     }
 }
