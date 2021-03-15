@@ -15,9 +15,10 @@ class FCNet(nn.Module):
         super(FCNet, self).__init__()
         input_size = cfg['problems']['qubo_size'] ** 2
 
-        # TODO Improve this.
-        activation_cls = nn.ReLU
-        if cfg['model']['activation'] == "LeakyReLU":
+        activation_type = cfg['model']['activation']
+        if activation_type == "ReLU":
+            activation_cls = nn.ReLU
+        elif activation_type == "LeakyReLU":
             activation_cls = nn.LeakyReLU
 
         net = []
@@ -68,9 +69,10 @@ class ReverseFCNet(nn.Module):
         super(ReverseFCNet, self).__init__()
         input_size = cfg['problems']['qubo_size'] ** 2
 
-        # TODO Improve this.
-        activation_cls = nn.ReLU
-        if cfg['model']['activation'] == "LeakyReLU":
+        activation_type = cfg['model']['activation']
+        if activation_type == "ReLU":
+            activation_cls = nn.ReLU
+        elif activation_type == "LeakyReLU":
             activation_cls = nn.LeakyReLU
 
         fc_sizes = cfg['model']['fc_sizes'] + [output_size]
@@ -82,7 +84,9 @@ class ReverseFCNet(nn.Module):
             net.append(activation_cls())
             last_fc_size = size
 
+        net.pop(-1)
         self.fc_net = nn.Sequential(*net)
+        print(self.fc_net)
 
     def forward(self, x):
         x = torch.flatten(x, 1)
@@ -127,7 +131,7 @@ class Optimizer:
         data_len = len(self.lmdb_loader.train_data_loader)
         for epoch in range(self.n_epochs):
             batch_loss = 0.
-            for i, data in enumerate(self.lmdb_loader.train_data_loader, 0):
+            for i, data in enumerate(self.lmdb_loader.train_data_loader):
                 inputs, labels = data
 
                 self.optimizer.zero_grad()
@@ -263,7 +267,7 @@ class AutoEncoderOptimizer:
         data_len = len(self.lmdb_loader.train_data_loader)
         for epoch in range(self.n_epochs):
             batch_loss = 0.
-            for i, data in enumerate(self.lmdb_loader.train_data_loader, 0):
+            for i, data in enumerate(self.lmdb_loader.train_data_loader):
                 inputs, labels = data
                 solutions_inputs = self.solve_qubo(inputs)
 
@@ -330,6 +334,7 @@ class ReverseOptimizer(Optimizer):
         # Set it all up.
         self.net = ReverseFCNet(cfg, output_size)
         self.criterion = nn.MSELoss()
+        # self.criterion = nn.L1Loss()
         self.optimizer = optim.SGD(
             self.net.parameters(), lr=lr, momentum=sgd_momentum
         )
@@ -339,21 +344,14 @@ class ReverseOptimizer(Optimizer):
         data_len = len(self.lmdb_loader.train_data_loader)
         for epoch in range(self.n_epochs):
             batch_loss = 0.
-            for i, data in enumerate(self.lmdb_loader.train_data_loader, 0):
+            for i, data in enumerate(self.lmdb_loader.train_data_loader):
                 inputs, labels, problem = data
 
                 self.optimizer.zero_grad()
 
                 outputs = self.net(inputs)
 
-                try:
-                    loss = self.criterion(outputs, problem.float())
-                except IndexError:
-                    print(
-                        "Size of last layer should equal the number of "
-                        "problems you have"
-                    )
-
+                loss = self.criterion(outputs, problem.float())
                 loss.backward()
                 self.optimizer.step()
 
@@ -361,6 +359,14 @@ class ReverseOptimizer(Optimizer):
                 # Then the last term will be wrong.
                 batch_loss += loss.item() * self.batch_size
                 if i % 100 == 0:
+                    print('')
+                    print(outputs.tolist()[-1][:50])
+                    print(problem.float().tolist()[-1][:50])
+                    print('')
+                    for param in self.net.parameters():
+                        print(param.data)
+                        print(param.shape)
+                    print('')
                     avg_loss = batch_loss / (i + 1)
                     msg = '[%d, %5d] loss: %.3f' % (epoch + 1, i, avg_loss)
                     sys.stdout.write('\r' + msg)
