@@ -41,6 +41,7 @@
         "model": {
             "activation": "ReLU",
             "class_weights": [],
+            "no_norm": false,
             "norm_data": false,
             "shuffle_data": true,
             "network": "FC",
@@ -703,13 +704,689 @@
         "dataset_id": "dbg3",
         "base_cfg": "23",
         "problems": {
+            "scramble_qubos": false,
             "n_problems": 3000
         },
         "model": {
             "n_epochs": 100,
             "batch_size": 500,
             "lr": 0.005,
-            "fc_sizes": [6000, 6000]
+            "fc_sizes": [10000, 10000, 10000]
+        }
+    },
+    "dbg4": {
+        "dataset_id": "dbg4",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 300
+        },
+        "model": {
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.005,
+            "fc_sizes": [10000, 10000, 10000]
+        }
+    },
+    "dbg5": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "norm_data": true,
+            "part": [10000, 20000],
+            "n_epochs": 200,
+            "batch_size": 500,
+            "lr": 0.005,
+            "fc_sizes": [2000, 2000]
+        }
+    },
+    "dbg6": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000
+        },
+        "model": {
+            "part": [10000, 20000],
+            "n_epochs": 200,
+            "batch_size": 500,
+            "lr": 0.009,
+            "fc_sizes": [2000, 2000]
+        }
+    },
+    "dbg7": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000
+        },
+        "model": {
+            "part": [10000, 20000],
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [2000, 2000]
+        }
+    },
+    "dbg8": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000
+        },
+        "model": {
+            "part": [10000, 20000],
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.03,
+            "fc_sizes": [2000, 2000]
+        }
+    },
+    "dbg9": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000
+        },
+        "model": {
+            "part": [10000, 20000],
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": [2000, 2000]
+        }
+    },
+    "dbg10": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000
+        },
+        "model": {
+            "part": [10000, 20000],
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [5000, 5000, 5000]
+        }
+    },
+    "dbg11": {
+        "dataset_id": "dbg11",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000
+        },
+        "model": {
+            "norm_data": true,
+            "part": [50000, 100000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.005,
+            "fc_sizes": [10000, 10000]
+        }
+    },
+    "dbg12": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000
+        },
+        "model": {
+            "part": [10000, 20000],
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [2000, 2000, 2000, 2000, 2000]
+        }
+    },
+    "dbg13": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000
+        },
+        "model": {
+            "part": [10000, 20000],
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.005,
+            "fc_sizes": [1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000]
+        }
+    },
+    "miniagain": {
+        "dataset_id": "miniagain",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100
+        },
+        "model": {
+            "part": [100, 200],
+            "n_epochs": 1000,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [20000, 20000, 20000]
+        }
+    },
+    "miniagain2": {
+        "dataset_id": "miniagain2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10
+        },
+        "model": {
+            "part": [10, 20],
+            "n_epochs": 1000,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [4000, 4000, 4000]
+        }
+    },
+    "miniagain2_1": {
+        "dataset_id": "miniagain2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10
+        },
+        "model": {
+            "part": [10, 20],
+            "n_epochs": 1000,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [10000, 10000]
+        }
+    },
+    "c11": {
+        "dataset_id": "dbg11",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000
+        },
+        "model": {
+            "part": [50000, 100000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.001,
+            "fc_sizes": [20000, 20000]
+        }
+    },
+    "c12": {
+        "dataset_id": "dbg11",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000
+        },
+        "model": {
+            "part": [50000, 100000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.001,
+            "fc_sizes": [50000, 50000]
+        }
+    },
+    "c13": {
+        "dataset_id": "dbg11",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000
+        },
+        "model": {
+            "part": [50000, 100000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000, 10000]
+        }
+    },
+    "c14": {
+        "dataset_id": "dbg11",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000
+        },
+        "model": {
+            "part": [50000, 100000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [100000, 10000]
+        }
+    },
+    "c15": {
+        "dataset_id": "dbg11",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000
+        },
+        "model": {
+            "part": [50000, 100000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [20000, 20000, 20000, 20000, 20000, 20000, 20000, 20000, 20000, 20000]
+        }
+    },
+    "c16_180cutoff": {
+        "dataset_id": "dbg11",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000
+        },
+        "model": {
+            "part": [50000, 100000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [5000, 5000, 5000, 5000, 5000]
+        }
+    },
+    "a15": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MC"]
+        },
+        "model": {
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [10000, 10000, 10000, 10000]
+        }
+    },
+    "a16": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MC"]
+        },
+        "model": {
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": [20000, 20000, 20000, 10000, 10000, 10000, 10000]
+        }
+    },
+    "a17": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MC"]
+        },
+        "model": {
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": [5000, 5000]
+        }
+    },
+    "a18": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MC"]
+        },
+        "model": {
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.5,
+            "fc_sizes": [5000, 5000]
+        }
+    },
+    "a19": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 1.0,
+            "fc_sizes": []
+        }
+    },
+    "a20": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [180]
+        }
+    },
+    "np1": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.00005,
+            "fc_sizes": []
+        }
+    },
+    "np2": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.00005,
+            "fc_sizes": [128]
+        }
+    },
+    "np3": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.001,
+            "fc_sizes": [128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128]
+        }
+    },
+    "np4": {
+        "dataset_id": "np4",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128]
+        }
+    },
+    "np5": {
+        "dataset_id": "np4",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64]
+        }
+    },
+    "np6": {
+        "dataset_id": "np4",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256, 256]
+        }
+    },
+    "np7": {
+        "dataset_id": "np4",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 2000,
+            "batch_size": 500,
+            "lr": 0.001,
+            "fc_sizes": []
+        }
+    },
+    "np8": {
+        "dataset_id": "np4",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 2000,
+            "batch_size": 500,
+            "lr": 0.001,
+            "fc_sizes": [1024, 64]
+        }
+    },
+    "np9": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 3000,
+            "batch_size": 500,
+            "lr": 0.001,
+            "fc_sizes": [1024, 64]
+        }
+    },
+    "np10": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 3000,
+            "batch_size": 500,
+            "lr": 0.001,
+            "fc_sizes": [2048, 64]
+        }
+    },
+    "np11": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 0.001,
+            "fc_sizes": []
+        }
+    },
+    "np12": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 3000,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": []
+        }
+    },
+    "np13": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 3000,
+            "batch_size": 500,
+            "lr": 0.0005,
+            "fc_sizes": [32]
+        }
+    },
+    "np14": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 0.002,
+            "fc_sizes": []
+        }
+    },
+    "np15": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 0.004,
+            "fc_sizes": []
+        }
+    },
+    "np16": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 0.008,
+            "fc_sizes": []
+        }
+    },
+    "np17": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 0.01,
+            "fc_sizes": []
         }
     }
 }
