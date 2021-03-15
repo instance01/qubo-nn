@@ -68,13 +68,14 @@ class Classification:
             print(cls, qubo_matrices.shape)
 
             # Without normalization of some sort the NN won't learn.
-            if self.cfg["model"]["norm_data"]:
-                qubo_matrices /= np.max(np.abs(qubo_matrices))
-                qubo_matrices = (qubo_matrices + 1) / 2.
-            else:
-                qubo_matrices = (
-                    qubo_matrices - np.mean(qubo_matrices)
-                ) / np.std(qubo_matrices)
+            if not self.cfg["model"]["no_norm"]:
+                if self.cfg["model"]["norm_data"]:
+                    qubo_matrices /= np.max(np.abs(qubo_matrices))
+                    qubo_matrices = (qubo_matrices + 1) / 2.
+                else:
+                    qubo_matrices = (
+                        qubo_matrices - np.mean(qubo_matrices)
+                    ) / np.std(qubo_matrices)
 
             data[idx_start:idx_end, :, :] = qubo_matrices
             labels[idx_start:idx_end] = i
@@ -164,7 +165,9 @@ class ReverseClassification(Classification):
                 curr_problem_result = []
                 for part in problem:
                     if isinstance(part, nx.classes.graph.Graph):
-                        curr_problem_result.extend(list(np.asarray(part.edges).flat))
+                        # A = np.asarray(sorted(part.edges))
+                        A = nx.to_numpy_matrix(part)
+                        curr_problem_result.extend(list(A.flat))
                     elif isinstance(part, int) or isinstance(part, float):
                         curr_problem_result.append(part)
                     elif isinstance(part[0], list) or isinstance(part[0], tuple) or isinstance(part[0], np.ndarray):
@@ -194,6 +197,15 @@ class ReverseClassification(Classification):
 
         all_problems_flat = np.array(all_problems_flat, dtype=float)
 
+        print(data.shape, labels.shape, all_problems_flat.shape)
+
+        if not self.cfg["model"]["no_norm"]:
+            all_problems_flat /= np.max(np.abs(all_problems_flat))
+            all_problems_flat = (all_problems_flat + 1) / 2.
+        # all_problems_flat = (
+        #     all_problems_flat - np.mean(all_problems_flat)
+        # ) / np.std(all_problems_flat)
+
         db = px.Writer(
             dirpath='datasets/%s/' % self.cfg['cfg_id'],
             map_size_limit=60000,
@@ -206,7 +218,11 @@ class ReverseClassification(Classification):
             pickle.dump(output_size, f)
 
     def run_experiment(self, n_runs=1):
-        lmdb_loader = LMDBDataLoader(self.cfg, reverse=True)
+        part = self.cfg["model"]["part"]
+        if part:
+            lmdb_loader = LMDBDataLoader(self.cfg, reverse=True, part=part)
+        else:
+            lmdb_loader = LMDBDataLoader(self.cfg, reverse=True)
 
         with open('datasets/%s/cfg.pickle' % self.cfg['dataset_id'], 'rb') as f:
             output_size = pickle.load(f)

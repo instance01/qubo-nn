@@ -90,6 +90,8 @@ class LMDBDataSet(torch.utils.data.Dataset):
 
         sample = self.db[key]
         if self.reverse:
+            if isinstance(sample, list):
+                return [(s['input'], s['target'], s['prob']) for s in sample]
             return sample['input'], sample['target'], sample['prob']
         else:
             return sample['input'], sample['target']
@@ -99,10 +101,12 @@ class LMDBDataSet(torch.utils.data.Dataset):
 
 
 class LMDBDataLoader:
-    def __init__(self, cfg, reverse=False):
+    def __init__(self, cfg, reverse=False, part=None):
         self.cfg = cfg
         self.dataset_id = cfg['dataset_id']
         self.dataset = LMDBDataSet(cfg, reverse)
+        if part is not None:
+            self.dataset = self.dataset[slice(*part)]
         self.batch_size = cfg['model']['batch_size']
         self.train_eval_split = cfg['model']['train_eval_split']
 
