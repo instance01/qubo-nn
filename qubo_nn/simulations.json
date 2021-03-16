@@ -1423,6 +1423,23 @@
             "fc_sizes": []
         }
     },
+    "np19_LONG": {
+        "dataset_id": "np1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 0.03,
+            "fc_sizes": []
+        }
+    },
     "gc1": {
         "dataset_id": "gc1",
         "base_cfg": "23",
@@ -1454,6 +1471,40 @@
             "n_epochs": 1000,
             "batch_size": 500,
             "lr": 0.2,
+            "fc_sizes": []
+        }
+    },
+    "mvc2": {
+        "dataset_id": "mvc1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 1000,
+            "batch_size": 500,
+            "lr": 0.5,
+            "fc_sizes": []
+        }
+    },
+    "mvc3": {
+        "dataset_id": "mvc1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 1000,
+            "batch_size": 500,
+            "lr": 1.0,
             "fc_sizes": []
         }
     }
