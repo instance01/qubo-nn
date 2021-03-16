@@ -51,7 +51,8 @@
             "optimizer_sgd_momentum": 0.9,
             "lr": 0.002,
             "fc_sizes": [50, 9],
-            "train_eval_split": 0.9
+            "train_eval_split": 0.9,
+            "gen_edges": false
         }
     },
     "dbg": {
@@ -401,7 +402,8 @@
             "optimizer_sgd_momentum": 0.9,
             "lr": 0.002,
             "fc_sizes": [50, 9],
-            "train_eval_split": 0.9
+            "train_eval_split": 0.9,
+            "gen_edges": false
         }
     },
     "13": {
@@ -658,7 +660,8 @@
             "optimizer_sgd_momentum": 0.9,
             "lr": 0.002,
             "fc_sizes": [50, 11],
-            "train_eval_split": 0.9
+            "train_eval_split": 0.9,
+            "gen_edges": false
         }
     },
     "24": {
@@ -1506,6 +1509,24 @@
             "batch_size": 500,
             "lr": 1.0,
             "fc_sizes": []
+        }
+    },
+    "a19_gen_edges": {
+        "dataset_id": "dbg5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 1.0,
+            "fc_sizes": [],
+            "gen_edges": true
         }
     }
 }

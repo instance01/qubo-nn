@@ -157,6 +157,8 @@ class ReverseClassification(Classification):
 
         # TODO: Absolutely horrendous.
 
+        gen_edges = self.cfg["model"]["gen_edges"]
+
         output_size = 0
         result = []
         for problem_class_params in all_problems:
@@ -165,8 +167,10 @@ class ReverseClassification(Classification):
                 curr_problem_result = []
                 for part in problem:
                     if isinstance(part, nx.classes.graph.Graph):
-                        # A = np.asarray(sorted(part.edges))
-                        A = nx.to_numpy_matrix(part)
+                        if gen_edges:
+                            A = np.asarray(sorted(part.edges))
+                        else:
+                            A = nx.to_numpy_matrix(part)
                         curr_problem_result.extend(list(A.flat))
                     elif isinstance(part, int) or isinstance(part, float):
                         curr_problem_result.append(part)
