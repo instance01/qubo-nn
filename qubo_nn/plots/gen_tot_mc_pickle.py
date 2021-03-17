@@ -1,19 +1,10 @@
 import os
-import sys
 import glob
 import pickle
-from collections import defaultdict
 
 import numpy as np
-import tensorflow as tf
-import matplotlib as mpl
-from matplotlib import pyplot as plt
 from tensorflow.core.util import event_pb2
 from tensorflow.python.lib.io import tf_record
-
-
-mpl.font_manager._rebuild()
-plt.rc('font', family='Raleway')
 
 
 def my_summary_iterator(path):
@@ -27,26 +18,9 @@ def smooth(y, box_pts):
     return y_smooth
 
 
-def aggregate_multi(arr1):
-    fig, ax = plt.subplots()
+def aggregate(base_path, id_):
+    paths = glob.glob('%s*-%s' % (base_path, id_))
 
-    def sub_plot(arr, col):
-        mean = np.mean(arr, axis=0)
-        x = np.arange(mean.shape[0])
-        # TODO Use scipy here.. no idea if this is correct.
-        ci = 1.96 * np.std(arr, axis=0) / np.mean(arr, axis=0)
-
-        ax.plot(x, mean, color=col)
-        # ax.fill_between(x, (mean - ci), (mean + ci), color=col, alpha=.1)
-
-    sub_plot(arr1, 'c')
-    plt.ylabel("Misclassification rate")
-    plt.xlabel("Epoch")
-    plt.show()
-    fig.savefig('tot_mc.png')
-
-
-def aggregate(paths):
     aggregated = []
     for path in paths:
         path = glob.glob(os.path.join(path, "events.out.tfevents.*"))
@@ -65,12 +39,11 @@ def aggregate(paths):
                 # print(val)
                 data.append(val)
 
-        if len(data) < 30:
+        if len(data) < 40:
             continue
         # data = smooth(data, 20)[10:-9]
         # data = smooth(data, 60)[30:-29]
-        data = data[:30]
-        print(len(data))
+        data = data[:40]
         aggregated.append(data)
 
     if not aggregated:
@@ -87,22 +60,17 @@ def aggregate(paths):
             )
         )
     arr = np.array(aggregated_)
+
+    with open('tot_misclassifications_%s.pickle' % id_, 'wb+') as f:
+        pickle.dump(arr, f)
+
     return arr
 
 
 def run():
-    plot = True
-    if not plot:
-        # paths = glob.glob('../runs/*-18_lr2_leaky')
-        paths = glob.glob('../runs/*-23')
-        print(len(paths))
-        arr1 = aggregate(paths)
-        with open('tot_mc.pickle', 'wb+') as f:
-            pickle.dump(arr1, f)
-    else:
-        with open('tot_mc.pickle', 'rb') as f:
-            arr1 = pickle.load(f)
-        aggregate_multi(arr1)
+    aggregate('../runs/', '27_scramble_100k')
+    aggregate('../runs2/', '18_lr2_leaky')
+    aggregate('../runs2/', '23')
 
 
 if __name__ == '__main__':
