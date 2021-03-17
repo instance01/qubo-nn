@@ -1529,5 +1529,22 @@
             "fc_sizes": [],
             "gen_edges": true
         }
+    },
+    "tsp1": {
+        "dataset_id": "tsp1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["TSP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.001,
+            "fc_sizes": []
+        }
     }
 }
