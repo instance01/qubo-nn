@@ -51,29 +51,34 @@ pip3 install -e .
 
 ## Using
 
-### Classification
+### Classification / Reverse regression
 
 ```
-usage: main.py [-h] [-t TYPE] [--eval] [--gendata] [--train] [-c CFG_ID] [-m [MODEL]]
+usage: main.py [-h] [-t TYPE] [--eval] [--gendata] [--train] [-c CFG_ID] [-m [MODEL]] [-n [NRUNS]]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -t TYPE, --type TYPE  Type (classify)
+  -t TYPE, --type TYPE  Type (classify, reverse)
   --eval
   --gendata
   --train
   -c CFG_ID, --cfg_id CFG_ID
                         cfg_id
   -m [MODEL], --model [MODEL]
+  -n [NRUNS], --nruns [NRUNS]
 ```
 
-Examples:
+Examples for classification:
 ```
 python3 -m qubo_nn.main -t classify -c 2 --train
 python3 -m qubo_nn.main -t classify -c 2 --eval -m models/21-02-16_20\:28\:42-9893713-instances-MacBook-Pro.local-2 
 ```
 
-TODO
+Examples for reverse regression:
+```
+python3 -m qubo_nn.main -t reverse -c tsp1 --gendata
+python3 -m qubo_nn.main -t reverse -c tsp1 --train -n 1
+```
 
 ### Generating QUBOs for arbitrary problems
 

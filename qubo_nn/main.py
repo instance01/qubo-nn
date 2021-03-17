@@ -6,7 +6,7 @@ import argparse
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-t", "--type", nargs=None, help="Type (classify)", default='classify')
+    parser.add_argument("-t", "--type", nargs=None, help="Type (classify, reverse)", default='classify')
     parser.add_argument("--eval", action="store_true")
     parser.add_argument("--gendata", action="store_true")
     parser.add_argument("--train", action="store_true")
