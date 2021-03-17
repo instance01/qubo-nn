@@ -1070,7 +1070,7 @@
         }
     },
     "a19": {
-        "dataset_id": "dbg5",
+        "dataset_id": "a19",
         "base_cfg": "23",
         "problems": {
             "scramble_qubos": false,
@@ -1078,9 +1078,10 @@
             "problems": ["MC"]
         },
         "model": {
+            "no_norm": true,
             "activation": "ReLU",
             "part": [0, 10000],
-            "n_epochs": 500,
+            "n_epochs": 2000,
             "batch_size": 500,
             "lr": 1.0,
             "fc_sizes": []
@@ -1512,7 +1513,7 @@
         }
     },
     "a19_gen_edges": {
-        "dataset_id": "dbg5",
+        "dataset_id": "a19_gen_edges",
         "base_cfg": "23",
         "problems": {
             "scramble_qubos": false,
@@ -1522,7 +1523,7 @@
         "model": {
             "activation": "ReLU",
             "part": [0, 10000],
-            "n_epochs": 500,
+            "n_epochs": 2000,
             "batch_size": 500,
             "lr": 1.0,
             "fc_sizes": [],
