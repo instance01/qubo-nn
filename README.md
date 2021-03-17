@@ -122,9 +122,19 @@ The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
 
 ### Classification
 
-Using parameter configuration `18_lr2_leaky` (see `simulations.json`), the average total misclassification rate over 38 models goes to zero.
+Using parameter configuration `18_lr2_leaky` (see `simulations.json`), the average total misclassification rate over 38 models goes to near zero. The figure includes the 95% confidence interval.
 
-<img alt="Avg total misclassification rate" src="qubo_nn/plots/tot_mc.png">
+<img alt="Avg total misclassification rate" src="qubo_nn/plots/tot_mc_18_lr2_leaky.png">
+
+Using parameter configuration `27_scramble_100k` (see `simulations.json`), the average total misclassification rate over 20 models goes to near zero. This includes QUBO scrambling (randomly switching out columns or rows, i.e. `renaming` QuBits). The figure includes the 95% confidence interval.
+
+<img alt="Avg total misclassification rate" src="qubo_nn/plots/tot_mc_27_scramble_100k.png">
+
+### Reverse regression
+
+This is preliminary. Some of the problems are easily learned by a neural network regressor. Each line represents 20 models and includes the 95% confidence interval.
+
+<img alt="Reversal regression losses over multiple problems" src="qubo_nn/plots/reversal_loss.png">
 
 ### Reversability
 
