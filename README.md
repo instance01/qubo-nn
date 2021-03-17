@@ -134,7 +134,7 @@ Using parameter configuration `27_scramble_100k` (see `simulations.json`), the a
 
 This is preliminary. Some of the problems are easily learned by a neural network regressor. Each line represents 20 models and includes the 95% confidence interval.
 
-<img alt="Reversal regression losses over multiple problems" src="qubo_nn/plots/reversal_loss.png">
+<img alt="Reversal regression losses over multiple problems" src="qubo_nn/plots/reverse_loss.png">
 
 ### Reversability
 
