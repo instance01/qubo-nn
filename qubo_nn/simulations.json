@@ -1525,7 +1525,7 @@
             "part": [0, 10000],
             "n_epochs": 2000,
             "batch_size": 500,
-            "lr": 1.0,
+            "lr": 0.1,
             "fc_sizes": [],
             "gen_edges": true
         }
