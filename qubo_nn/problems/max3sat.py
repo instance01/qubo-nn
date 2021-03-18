@@ -83,6 +83,6 @@ class Max3SAT(Problem):
                     (int(round(random.random() * n_vars)), bool(random.getrandbits(1))),
                     (int(round(random.random() * n_vars)), bool(random.getrandbits(1)))
                 )
-                problem.append(clause)
-            problems.append(problem)
+                problem.append(sorted(clause))
+            problems.append(sorted(problem))
         return [{"clauses": problem, "n_vars": size[0]} for problem in problems]
