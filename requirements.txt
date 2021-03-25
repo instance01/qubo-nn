@@ -3,3 +3,4 @@ numpy
 networkx
 torchvision
 torch
+dwave-qbsolv
