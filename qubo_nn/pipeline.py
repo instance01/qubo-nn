@@ -187,8 +187,56 @@ class ReverseClassification(Classification):
                 output_size = max(output_size, len(curr_problem_result))
         return result, output_size
 
+    def gen_apply_m2sat_customization(self, all_problems):
+        """Apply a different labelling for M2SAT.
+
+        Specifically, given the QUBO size is 64, we end up with a 64x64 label
+        where all fields that have 1 denote a (T,T) clause, all fields that
+        have (F,F) have 2, and so on (see code below).
+
+        The original idea was to have the label consist of 4 of those 64x64
+        matrices, but this ends up being very tough to train, with a ~16k
+        dimensional output..
+
+        Note that while I call this label, this is simply the NN output we
+        train against.
+        """
+        for i, p in enumerate(all_problems[0]):
+            clauses = p["clauses"]
+            new_p = np.zeros(
+                # shape=(4, self.qubo_size, self.qubo_size),
+                shape=(1, self.qubo_size, self.qubo_size),
+                dtype=np.float32
+            )
+            for clause in clauses:
+                if clause[0][1] and clause[1][1]:
+                    new_p[0][clause[0][0]][clause[1][0]] += 1
+                    new_p[0][clause[1][0]][clause[0][0]] += 1
+                if not clause[0][1] and not clause[1][1]:
+                    # new_p[1][clause[0][0]][clause[1][0]] = 1
+                    # new_p[1][clause[1][0]][clause[0][0]] = 1
+                    new_p[0][clause[0][0]][clause[1][0]] += 2
+                    new_p[0][clause[1][0]][clause[0][0]] += 2
+                if clause[0][1] and not clause[1][1]:
+                    # new_p[2][clause[0][0]][clause[1][0]] = 1
+                    # new_p[2][clause[1][0]][clause[0][0]] = 1
+                    new_p[0][clause[0][0]][clause[1][0]] += 4
+                    new_p[0][clause[1][0]][clause[0][0]] += 4
+                if not clause[0][1] and clause[1][1]:
+                    # new_p[3][clause[0][0]][clause[1][0]] = 1
+                    # new_p[3][clause[1][0]][clause[0][0]] = 1
+                    new_p[0][clause[0][0]][clause[1][0]] += 8
+                    new_p[0][clause[1][0]][clause[0][0]] += 8
+            all_problems[0][i]["clauses"] = list(new_p.flat)
+
     def gen_data_lmdb(self):
         data, labels, all_problems = self._gen_data(self.n_problems)
+
+        if self.cfg['problems']['problems'] == ["M2SAT"]:
+            self.gen_apply_m2sat_customization(all_problems)
+            print(data[0])
+            print(all_problems[0][0]["clauses"])
+
         all_problems_flat, output_size = self.flatten_problem_parameters(all_problems)
 
         for i, prob in enumerate(all_problems_flat):
@@ -203,9 +251,12 @@ class ReverseClassification(Classification):
 
         print(data.shape, labels.shape, all_problems_flat.shape)
 
+        # NOTE: We are using min max normalization here.. Not standardization
+        # like with classification.
         if not self.cfg["model"]["no_norm"]:
             all_problems_flat /= np.max(np.abs(all_problems_flat))
             all_problems_flat = (all_problems_flat + 1) / 2.
+
         # all_problems_flat = (
         #     all_problems_flat - np.mean(all_problems_flat)
         # ) / np.std(all_problems_flat)
@@ -238,27 +289,7 @@ class ReverseClassification(Classification):
             optimizer = ReverseOptimizer(self.cfg, lmdb_loader, self.logger, output_size)
             optimizer.train()
             optimizer.save(self.model_fname)
-            # self._eval(optimizer)  # TODO !!!!!!!1
             self.logger.close()
-
-    # TODO !!!!!!!11
-    # def eval(self, model_fname):
-    #     lmdb_loader = LMDBDataLoader(self.cfg)
-    #     self.model_fname = self.get_model_fname()
-    #     self.logger = Logger(self.model_fname, self.cfg)
-    #     optimizer = Optimizer(self.cfg, lmdb_loader, self.logger)
-    #     optimizer.load(model_fname)
-    #     self._eval(optimizer)
-    #     self.logger.close()
-
-    # def _eval(self, optimizer):
-    #     misclassifications, _, _, mc_table = optimizer.eval()
-    #     mc_prob = {
-    #         self.cfg['problems']['problems'][int(k)]: v
-    #         for k, v in misclassifications.items()
-    #     }
-    #     print(json.dumps(mc_prob, indent=4))
-    #     self.logger.log_confusion_matrix(mc_table)
 
 
 class AutoEncoder(Classification):
