@@ -3,7 +3,7 @@ from qubo_nn.problems.problem import Problem
 
 
 class TSP(Problem):
-    def __init__(self, dist_matrix, constraint, P=10):
+    def __init__(self, cfg, dist_matrix, constraint, P=10):
         self.dist_matrix = dist_matrix
         self.constraint = constraint
         self.P = 10
@@ -41,7 +41,7 @@ class TSP(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size=4, **kwargs):
+    def gen_problems(self, cfg, n_problems, size=4, **kwargs):
         # TODO: 200 and 100 (contraint) is hardcoded !!
         problems = []
         for _ in range(n_problems):

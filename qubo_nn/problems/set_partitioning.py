@@ -5,7 +5,7 @@ from qubo_nn.problems.problem import Problem
 
 
 class SetPartitioning(Problem):
-    def __init__(self, set_, subsets, costs, P=10):
+    def __init__(self, cfg, set_, subsets, costs, P=10):
         self.set_ = set_
         self.subsets = subsets
         self.costs = costs
@@ -38,7 +38,7 @@ class SetPartitioning(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size=(20, 25), max_cost=10, **kwargs):
+    def gen_problems(self, cfg, n_problems, size=(20, 25), max_cost=10, **kwargs):
         problems = []
         set_ = list(range(size[0]))
         for _ in range(n_problems):

@@ -6,7 +6,7 @@ from qubo_nn.problems.problem import Problem
 
 
 class Max3SAT(Problem):
-    def __init__(self, clauses, n_vars):
+    def __init__(self, cfg, clauses, n_vars):
         self.clauses = clauses
         self.n_vars = n_vars
 
@@ -66,7 +66,7 @@ class Max3SAT(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size=(20, 25), **kwargs):
+    def gen_problems(self, cfg, n_problems, size=(20, 25), **kwargs):
         # size: First is n_vars, second is number of clauses.
         # Want something like this:
         # [((1, True), (2, True), (3, True)), ((1, True), (2, False), (4, False))]

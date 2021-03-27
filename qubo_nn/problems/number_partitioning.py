@@ -3,7 +3,7 @@ from qubo_nn.problems.problem import Problem
 
 
 class NumberPartitioning(Problem):
-    def __init__(self, numbers):
+    def __init__(self, cfg, numbers):
         self.numbers = numbers
 
     def gen_qubo_matrix(self):
@@ -20,6 +20,6 @@ class NumberPartitioning(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size=20, **kwargs):
+    def gen_problems(self, cfg, n_problems, size=20, **kwargs):
         problems = np.random.randint(0, 100, (n_problems, size))
         return [{"numbers": problem} for problem in problems]

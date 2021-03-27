@@ -4,7 +4,7 @@ from qubo_nn.problems.util import gen_graph
 
 
 class MaxCut(Problem):
-    def __init__(self, graph):
+    def __init__(self, cfg, graph):
         self.graph = graph
 
     def gen_qubo_matrix(self):
@@ -22,6 +22,6 @@ class MaxCut(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size, seed=None, **kwargs):
+    def gen_problems(self, cfg, n_problems, size, seed=None, **kwargs):
         graphs = gen_graph(n_problems, size, seed)
         return [{"graph": graph} for graph in graphs]

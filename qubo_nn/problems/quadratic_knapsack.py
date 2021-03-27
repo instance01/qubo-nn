@@ -3,7 +3,7 @@ from qubo_nn.problems.problem import Problem
 
 
 class QuadraticKnapsack(Problem):
-    def __init__(self, projects, budgets, constraint, P=10):
+    def __init__(self, cfg, projects, budgets, constraint, P=10):
         self.projects = projects
         self.budgets = budgets.tolist()
         self.constraint = constraint
@@ -28,7 +28,7 @@ class QuadraticKnapsack(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size=4, constraint=30, **kwargs):
+    def gen_problems(self, cfg, n_problems, size=4, constraint=30, **kwargs):
         # TODO: 30, 50 is hardcoded !!!
         problems = []
         for _ in range(n_problems):

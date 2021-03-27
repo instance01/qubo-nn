@@ -32,9 +32,9 @@ class Classification:
         return ret
 
     def gen_qubo_matrices(self, cls, n_problems, **kwargs):
-        problems = cls.gen_problems(n_problems, **kwargs)
+        problems = cls.gen_problems(self.cfg, n_problems, **kwargs)
         qubo_matrices = [
-            cls(**problem).gen_qubo_matrix()
+            cls(self.cfg, **problem).gen_qubo_matrix()
             for problem in problems
         ]
         return problems, qubo_matrices

@@ -4,7 +4,7 @@ from qubo_nn.problems.util import gen_graph
 
 
 class MinimumVertexCover(Problem):
-    def __init__(self, graph, P=8):
+    def __init__(self, cfg, graph, P=8):
         self.graph = graph
         self.P = P
 
@@ -26,6 +26,6 @@ class MinimumVertexCover(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size=(20, 25), seed=None, **kwargs):
+    def gen_problems(self, cfg, n_problems, size=(20, 25), seed=None, **kwargs):
         graphs = gen_graph(n_problems, size, seed)
         return [{"graph": graph} for graph in graphs]

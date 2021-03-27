@@ -5,7 +5,7 @@ from qubo_nn.problems.problem import Problem
 
 
 class SetPacking(Problem):
-    def __init__(self, set_, subsets, P=6):
+    def __init__(self, cfg, set_, subsets, P=6):
         self.set_ = set_
         self.subsets = subsets
         self.P = P
@@ -31,7 +31,7 @@ class SetPacking(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size=(20, 25), **kwargs):
+    def gen_problems(self, cfg, n_problems, size=(20, 25), **kwargs):
         problems = []
         for _ in range(n_problems):
             set_ = list(range(size[0]))
