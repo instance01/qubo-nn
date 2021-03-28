@@ -62,6 +62,9 @@ class Logger:
                 n_iter
             )
 
+    def log_custom_reverse_kpi(self, kpi, data, n_iter):
+        self.writer.add_scalar('Custom/' + kpi, data, n_iter)
+
     def log_confusion_matrix(self, mc_table):
         cmap_mod = truncate_colormap('Greens', minval=.4, maxval=.99)
         fig, ax = plt.subplots(figsize=(10, 10))
