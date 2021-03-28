@@ -2941,5 +2941,221 @@
             "fc_sizes": [1028, 257],
             "optimizer_sgd_momentum": 0.5
         }
+    },
+    "m2sat_16x16_5_3": {
+        "dataset_id": "m2sat_16x16_5",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 5]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 10000,
+            "batch_size": 100,
+            "lr": 6.0,
+            "fc_sizes": [1028, 514],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_16x16_5_4": {
+        "dataset_id": "m2sat_16x16_5",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 5]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 10000,
+            "batch_size": 100,
+            "lr": 7.0,
+            "fc_sizes": [1028, 257, 257],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_16x16_5_5": {
+        "dataset_id": "m2sat_16x16_5",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 5]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 10000,
+            "batch_size": 100,
+            "lr": 6.0,
+            "fc_sizes": [1028, 1028],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_16x16_5_F": {
+        "dataset_id": "m2sat_16x16_5",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 5]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 2000,
+            "batch_size": 100,
+            "lr": 6.0,
+            "fc_sizes": [3084, 2056],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_16x16_10_F": {
+        "dataset_id": "m2sat_16x16_10",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 10]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 2000,
+            "batch_size": 100,
+            "lr": 6.0,
+            "fc_sizes": [3084, 2056],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_16x16_15_F": {
+        "dataset_id": "m2sat_16x16_15",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 15]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 2000,
+            "batch_size": 100,
+            "lr": 6.0,
+            "fc_sizes": [3084, 2056],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_16x16_20_F": {
+        "dataset_id": "m2sat_16x16_20",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 20]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 2000,
+            "batch_size": 100,
+            "lr": 6.0,
+            "fc_sizes": [3084, 2056],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_16x16_25_F": {
+        "dataset_id": "m2sat_16x16_25_F",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 25]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 2000,
+            "batch_size": 100,
+            "lr": 6.0,
+            "fc_sizes": [3084, 2056],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_16x16_30_F": {
+        "dataset_id": "m2sat_16x16_30_F",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 30]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 2000,
+            "batch_size": 100,
+            "lr": 6.0,
+            "fc_sizes": [3084, 2056],
+            "optimizer_sgd_momentum": 0.5
+        }
     }
 }
