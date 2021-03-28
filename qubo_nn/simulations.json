@@ -2267,5 +2267,415 @@
             "lr": 10.0,
             "fc_sizes": [3072]
         }
+    },
+    "m2sat_dbg3_11_64x64_5_again2": {
+        "dataset_id": "m2sat_dbg3_11_64x64_5_again",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 64,
+            "M2SAT": {
+                "size": [64, 70]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 10.0,
+            "fc_sizes": [2048]
+        }
+    },
+    "test": {
+        "dataset_id": "test",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000,
+            "qubo_size": 64,
+            "M2SAT": {
+                "size": [64, 70],
+                "check_duplicates": true
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 10.0,
+            "fc_sizes": [2048]
+        }
+    },
+    "m2sat_dbg3_11_64x64_5_again3": {
+        "dataset_id": "m2sat_dbg3_11_64x64_5_again",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 64,
+            "M2SAT": {
+                "size": [64, 70]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 10.0,
+            "fc_sizes": [1024]
+        }
+    },
+    "m2sat_dbg3_11_64x64_5_again4": {
+        "dataset_id": "m2sat_dbg3_11_64x64_5_again4",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 64,
+            "M2SAT": {
+                "size": [64, 70],
+                "check_duplicates": true
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 5.0,
+            "fc_sizes": [256, 64]
+        }
+    },
+    "m2sat_dbg3_11_64x64_5_again_200k": {
+        "dataset_id": "m2sat_dbg3_11_64x64_5_again4",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 64,
+            "M2SAT": {
+                "size": [64, 70],
+                "check_duplicates": true
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 10.0,
+            "fc_sizes": [3072]
+        }
+    },
+    "m2sat_dbg3_11_64x64_5_again_200k_2": {
+        "dataset_id": "m2sat_dbg3_11_64x64_5_again4",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 64,
+            "M2SAT": {
+                "size": [64, 70]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 5.0,
+            "fc_sizes": [4096]
+        }
+    },
+    "m2sat_32x32": {
+        "dataset_id": "m2sat_32x32",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "size": [32, 50]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 5.0,
+            "fc_sizes": [1025]
+        }
+    },
+    "m2sat_32x32_1": {
+        "dataset_id": "m2sat_32x32",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "size": [32, 50]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 2.0,
+            "fc_sizes": [2048]
+        }
+    },
+    "m2sat_32x32_2": {
+        "dataset_id": "m2sat_32x32",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "size": [32, 50]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": [1025, 1025]
+        }
+    },
+    "m2sat_32x32_3": {
+        "dataset_id": "m2sat_32x32",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "size": [32, 50]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": [512, 512]
+        }
+    },
+    "m2sat_32x32_4": {
+        "dataset_id": "m2sat_32x32",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "size": [32, 50]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": [512]
+        }
+    },
+    "m2sat_32x32_5": {
+        "dataset_id": "m2sat_32x32",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "size": [32, 50]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": [2048, 1025]
+        }
+    },
+    "m2sat_32x32_easier": {
+        "dataset_id": "m2sat_32x32_easier",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [32, 30]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [1025]
+        }
+    },
+    "m2sat_32x32_easier_2": {
+        "dataset_id": "m2sat_32x32_easier",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [32, 30]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [1025],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_32x32_easier_3": {
+        "dataset_id": "m2sat_32x32_easier",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [32, 30]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 100,
+            "lr": 1.0,
+            "fc_sizes": [2048, 1025],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_32x32_easier_4": {
+        "dataset_id": "m2sat_32x32_easier",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [32, 30]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 100,
+            "lr": 1.0,
+            "fc_sizes": [],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_32x32_easier_newdata_5": {
+        "dataset_id": "m2sat_32x32_easier",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [32, 30]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 100,
+            "lr": 20.0,
+            "fc_sizes": [4100],
+            "optimizer_sgd_momentum": 0.5
+        }
+    },
+    "m2sat_32x32_easier_newdata_6": {
+        "dataset_id": "m2sat_32x32_easier",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 32,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [32, 30]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 10000,
+            "batch_size": 100,
+            "lr": 20.0,
+            "fc_sizes": [16400],
+            "optimizer_sgd_momentum": 0.5
+        }
     }
 }
