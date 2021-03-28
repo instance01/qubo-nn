@@ -340,6 +340,8 @@ class ReverseOptimizer(Optimizer):
         )
 
     def train(self):
+        is_m2sat = self.cfg['problems']['problems'] == ["M2SAT"]
+
         self.net.train()
         data_len = len(self.lmdb_loader.train_data_loader)
         for epoch in range(self.n_epochs):
@@ -359,14 +361,22 @@ class ReverseOptimizer(Optimizer):
                 # Then the last term will be wrong.
                 batch_loss += loss.item() * self.batch_size
                 if i % 100 == 0:
+                    X = problem.float().tolist()[-1][:200]
+                    Y = outputs.detach().tolist()[-1][:200]
                     print('')
-                    print(outputs.tolist()[-1][:50])
-                    print(problem.float().tolist()[-1][:50])
-                    print('')
-                    for param in self.net.parameters():
-                        print(param.data)
-                        print(param.shape)
-                    print('')
+                    for m in range(200):
+                        if X[m] > 0 or X[m] < 0:
+                            print(X[m], round(Y[m], 3))
+                    # print([round(x, 2) for x in outputs.detach().tolist()[-1][:100]])
+                    # print(problem.float().tolist()[-1][:100])
+                    print('#')
+
+                    # Debug print weights and biases.
+                    # for param in self.net.parameters():
+                    #     print(param.data)
+                    #     print(param.shape)
+                    # print('')
+
                     avg_loss = batch_loss / (i + 1)
                     msg = '[%d, %5d] loss: %.3f' % (epoch + 1, i, avg_loss)
                     sys.stdout.write('\r' + msg)
@@ -380,7 +390,7 @@ class ReverseOptimizer(Optimizer):
 
             self.net.eval()
             data = {}
-            test_loss, problem_losses = self.eval(False)
+            test_loss, problem_losses = self.eval(epoch, do_print=False, debug=epoch % 10 == 0)
             problem_losses = {
                 prob: problem_losses[i]
                 for i, prob in enumerate(self.cfg['problems']['problems'])
@@ -391,10 +401,17 @@ class ReverseOptimizer(Optimizer):
             self.net.train()
         print('')
 
-    def eval(self, do_print=True):
+    def eval(self, epoch, do_print=True, debug=False):
+        is_m2sat = self.cfg['problems']['problems'] == ["M2SAT"]
+
         n_classes = len(self.cfg['problems']['problems'])
         problem_losses = np.zeros(shape=(n_classes,), dtype=np.float32)
         n_class_labels = np.zeros(shape=(n_classes,), dtype=np.float32)
+
+        wrong_regressions3 = 0
+        tot3_fp = 0
+        tot3_fn = 0
+        tot3 = 0
 
         self.net.eval()
         total_loss = 0.0
@@ -402,6 +419,46 @@ class ReverseOptimizer(Optimizer):
             inputs, labels, prob = data
             outputs = self.net(inputs)
             loss = self.criterion(outputs, prob)
+
+            def print_debug(cutoff):
+                output = outputs[0].detach().numpy()[:]
+
+                if not is_m2sat:
+                    # Useful for all except M2SAT.
+                    output[np.where(output >= cutoff)] = 1.
+
+                output = output.round() + 0
+
+                if is_m2sat:
+                    output[-1] = self.cfg['problems']['qubo_size']
+
+                diff = output - prob[0].numpy()
+
+                if not is_m2sat:
+                    FP = np.count_nonzero(diff == 1.)
+                    FN = np.count_nonzero(diff == -1.)
+                    TOT = np.count_nonzero(prob[0].numpy())
+                else:
+                    FP = np.count_nonzero(diff >= 1)
+                    FN = np.count_nonzero(diff <= -1)
+                    TOT = np.count_nonzero(prob[0].numpy())
+
+                # Debugging - What data/labels are problematic for the optimizer?
+                # if diff.sum() < 0:
+                #     a = outputs[0].detach().numpy()[:-1].reshape((4, 8, 8))
+                #     b = prob[0].numpy()[:-1].reshape((4, 8, 8))
+
+                #     import pdb; pdb.set_trace()
+
+                return FP, FN, TOT
+
+            if debug:
+                FP, FN, TOT = print_debug(.3)
+                if (FP + FN) > 0:
+                    wrong_regressions3 += 1
+                tot3_fp += FP
+                tot3_fn += FN
+                tot3 += TOT
 
             problem_losses[labels.item()] += loss
             n_class_labels[labels.item()] += 1
@@ -413,6 +470,11 @@ class ReverseOptimizer(Optimizer):
                 sys.stdout.flush()
 
         data_len = len(self.lmdb_loader.test_data_loader)
+
+        if debug:
+            print('\n~~~~~ EVAL ~~~~~')
+            print('.3', tot3_fp, tot3_fn, tot3, (tot3_fp + tot3_fn) / tot3, wrong_regressions3, data_len)
+            self.logger.log_custom_reverse_kpi("FPFN_TOT_Ratio", (tot3_fp + tot3_fn) / tot3, epoch)
 
         for c in range(n_classes):
             problem_losses[c] /= n_class_labels[c]
