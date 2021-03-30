@@ -18,6 +18,8 @@ class FCNet(nn.Module):
         activation_type = cfg['model']['activation']
         if activation_type == "ReLU":
             activation_cls = nn.ReLU
+        elif activation_type == "ELU":
+            activation_cls = nn.ELU
         elif activation_type == "LeakyReLU":
             activation_cls = nn.LeakyReLU
 
@@ -72,6 +74,8 @@ class ReverseFCNet(nn.Module):
         activation_type = cfg['model']['activation']
         if activation_type == "ReLU":
             activation_cls = nn.ReLU
+        elif activation_type == "ELU":
+            activation_cls = nn.ELU
         elif activation_type == "LeakyReLU":
             activation_cls = nn.LeakyReLU
 
@@ -335,12 +339,18 @@ class ReverseOptimizer(Optimizer):
         self.net = ReverseFCNet(cfg, output_size)
         self.criterion = nn.MSELoss()
         # self.criterion = nn.L1Loss()
-        self.optimizer = optim.SGD(
-            self.net.parameters(), lr=lr, momentum=sgd_momentum
-        )
+        if cfg['model']['optimizer'] == 'sgd':
+            self.optimizer = optim.SGD(
+                self.net.parameters(), lr=lr, momentum=sgd_momentum
+            )
+        elif cfg['model']['optimizer'] == 'Adam':
+            self.optimizer = optim.Adam(
+                self.net.parameters(), lr=lr
+            )
 
     def train(self):
-        is_m2sat = self.cfg['problems']['problems'] == ["M2SAT"]
+        save_fpfn = self.cfg['problems']['problems'] == ["M2SAT"] or \
+            self.cfg['problems']['problems'] == ["M3SAT"]
 
         self.net.train()
         data_len = len(self.lmdb_loader.train_data_loader)
@@ -390,7 +400,7 @@ class ReverseOptimizer(Optimizer):
 
             self.net.eval()
             data = {}
-            test_loss, problem_losses = self.eval(epoch, do_print=False, debug=epoch % 10 == 0)
+            test_loss, problem_losses, _, _, _ = self.eval(epoch, do_print=False, debug=epoch % 10 == 0)
             problem_losses = {
                 prob: problem_losses[i]
                 for i, prob in enumerate(self.cfg['problems']['problems'])
@@ -402,7 +412,8 @@ class ReverseOptimizer(Optimizer):
         print('')
 
     def eval(self, epoch, do_print=True, debug=False):
-        is_m2sat = self.cfg['problems']['problems'] == ["M2SAT"]
+        save_fpfn = self.cfg['problems']['problems'] == ["M2SAT"] or \
+            self.cfg['problems']['problems'] == ["M3SAT"]
 
         n_classes = len(self.cfg['problems']['problems'])
         problem_losses = np.zeros(shape=(n_classes,), dtype=np.float32)
@@ -413,6 +424,10 @@ class ReverseOptimizer(Optimizer):
         tot3_fn = 0
         tot3 = 0
 
+        sse = 0
+        ssm_mean = None
+        n = 0
+
         self.net.eval()
         total_loss = 0.0
         for i, data in enumerate(self.lmdb_loader.test_data_loader):
@@ -420,21 +435,28 @@ class ReverseOptimizer(Optimizer):
             outputs = self.net(inputs)
             loss = self.criterion(outputs, prob)
 
+            sse += ((prob.numpy() - outputs[0].detach().numpy()) ** 2).sum()
+            if ssm_mean is None:
+                ssm_mean = prob.numpy()
+            else:
+                ssm_mean += prob.numpy()
+            n += 1
+
             def print_debug(cutoff):
                 output = outputs[0].detach().numpy()[:]
 
-                if not is_m2sat:
+                if not save_fpfn:
                     # Useful for all except M2SAT.
                     output[np.where(output >= cutoff)] = 1.
 
                 output = output.round() + 0
 
-                if is_m2sat:
+                if save_fpfn:
                     output[-1] = self.cfg['problems']['qubo_size']
 
                 diff = output - prob[0].numpy()
 
-                if not is_m2sat:
+                if not save_fpfn:
                     FP = np.count_nonzero(diff == 1.)
                     FN = np.count_nonzero(diff == -1.)
                     TOT = np.count_nonzero(prob[0].numpy())
@@ -469,21 +491,30 @@ class ReverseOptimizer(Optimizer):
                 sys.stdout.write('\r' + msg)
                 sys.stdout.flush()
 
+        ssm_mean /= n
+        ssm = 0
+        for i, data in enumerate(self.lmdb_loader.test_data_loader):
+            inputs, labels, prob = data
+            ssm += ((prob.numpy() - ssm_mean) ** 2).sum()
+        R2 = 1 - (sse / ssm)
+        print("R2", R2)
+        self.logger.log_custom_reverse_kpi("R2", R2, epoch)
+
         data_len = len(self.lmdb_loader.test_data_loader)
+
+        for c in range(n_classes):
+            problem_losses[c] /= n_class_labels[c]
 
         if debug:
             print('\n~~~~~ EVAL ~~~~~')
             print('.3', tot3_fp, tot3_fn, tot3, (tot3_fp + tot3_fn) / tot3, wrong_regressions3, data_len)
             self.logger.log_custom_reverse_kpi("FPFN_TOT_Ratio", (tot3_fp + tot3_fn) / tot3, epoch)
 
-        for c in range(n_classes):
-            problem_losses[c] /= n_class_labels[c]
-
-        return total_loss / data_len, problem_losses
+        return total_loss / data_len, problem_losses, tot3_fp, tot3_fn, tot3
 
     def save(self, model_fname):
         torch.save(self.net.state_dict(), 'models/' + model_fname)
 
-    def load(self, model_fname):
-        self.net = FCNet(self.cfg)
+    def load(self, model_fname, output_size):
+        self.net = ReverseFCNet(self.cfg, output_size)
         self.net.load_state_dict(torch.load(model_fname))
