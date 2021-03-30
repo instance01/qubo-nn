@@ -4,6 +4,7 @@ import socket
 import random
 import pickle
 import datetime
+import itertools
 
 import pyxis as px
 import numpy as np
@@ -77,7 +78,10 @@ class Classification:
                         qubo_matrices - np.mean(qubo_matrices)
                     ) / np.std(qubo_matrices)
 
-            data[idx_start:idx_end, :, :] = qubo_matrices
+            if qubo_matrices.shape[0] < n_problems:
+                data[idx_start:idx_start + qubo_matrices.shape[0], :, :] = qubo_matrices
+            else:
+                data[idx_start:idx_end, :, :] = qubo_matrices
             labels[idx_start:idx_end] = i
 
         return data, labels, all_problems
@@ -208,25 +212,75 @@ class ReverseClassification(Classification):
                 shape=(1, self.qubo_size, self.qubo_size),
                 dtype=np.float32
             )
+
+            # TODO REMOVE !
+            # for clause in clauses:
+            #     if clause[0][1] and clause[1][1]:
+            #         new_p[0][clause[0][0]][clause[1][0]] -= 2
+            #         new_p[0][clause[1][0]][clause[0][0]] -= 2
+            #     if not clause[0][1] and not clause[1][1]:
+            #         # new_p[1][clause[0][0]][clause[1][0]] = 1
+            #         # new_p[1][clause[1][0]][clause[0][0]] = 1
+            #         new_p[0][clause[0][0]][clause[1][0]] -= 1
+            #         new_p[0][clause[1][0]][clause[0][0]] -= 1
+            #     if clause[0][1] and not clause[1][1]:
+            #         # new_p[2][clause[0][0]][clause[1][0]] = 1
+            #         # new_p[2][clause[1][0]][clause[0][0]] = 1
+            #         new_p[0][clause[0][0]][clause[1][0]] += 1
+            #         new_p[0][clause[1][0]][clause[0][0]] += 1
+            #     if not clause[0][1] and clause[1][1]:
+            #         # new_p[3][clause[0][0]][clause[1][0]] = 1
+            #         # new_p[3][clause[1][0]][clause[0][0]] = 1
+            #         new_p[0][clause[0][0]][clause[1][0]] += 2
+            #         new_p[0][clause[1][0]][clause[0][0]] += 2
+
             for clause in clauses:
                 if clause[0][1] and clause[1][1]:
+                    new_p[0][clause[0][0]][clause[1][0]] -= 2
+                    new_p[0][clause[1][0]][clause[0][0]] -= 2
+                if not clause[0][1] and not clause[1][1]:
                     new_p[0][clause[0][0]][clause[1][0]] += 1
                     new_p[0][clause[1][0]][clause[0][0]] += 1
-                if not clause[0][1] and not clause[1][1]:
-                    # new_p[1][clause[0][0]][clause[1][0]] = 1
-                    # new_p[1][clause[1][0]][clause[0][0]] = 1
+                if clause[0][1] and not clause[1][1]:
+                    new_p[0][clause[0][0]][clause[1][0]] -= 1
+                    new_p[0][clause[1][0]][clause[0][0]] -= 1
+                if not clause[0][1] and clause[1][1]:
                     new_p[0][clause[0][0]][clause[1][0]] += 2
                     new_p[0][clause[1][0]][clause[0][0]] += 2
-                if clause[0][1] and not clause[1][1]:
-                    # new_p[2][clause[0][0]][clause[1][0]] = 1
-                    # new_p[2][clause[1][0]][clause[0][0]] = 1
-                    new_p[0][clause[0][0]][clause[1][0]] += 4
-                    new_p[0][clause[1][0]][clause[0][0]] += 4
-                if not clause[0][1] and clause[1][1]:
-                    # new_p[3][clause[0][0]][clause[1][0]] = 1
-                    # new_p[3][clause[1][0]][clause[0][0]] = 1
-                    new_p[0][clause[0][0]][clause[1][0]] += 8
-                    new_p[0][clause[1][0]][clause[0][0]] += 8
+            all_problems[0][i]["clauses"] = list(new_p.flat)
+
+    def gen_apply_m3sat_customization(self, all_problems):
+        """Apply a different labelling for M3SAT."""
+        for i, p in enumerate(all_problems[0]):
+            clauses = p["clauses"]
+            new_p = np.zeros(
+                shape=(1, self.qubo_size, self.qubo_size, self.qubo_size),
+                dtype=np.float32
+            )
+
+            for clause in clauses:
+                if clause[0][1] and clause[1][1] and clause[2][1]:
+                    value = -4
+                if clause[0][1] and not clause[1][1] and clause[2][1]:
+                    value = -3
+                if clause[0][1] and clause[1][1] and not clause[2][1]:
+                    value = -2
+                if clause[0][1] and not clause[1][1] and not clause[2][1]:
+                    value = -1
+                if not clause[0][1] and clause[1][1] and clause[2][1]:
+                    value = 1
+                if not clause[0][1] and not clause[1][1] and clause[2][1]:
+                    value = 2
+                if not clause[0][1] and not clause[1][1] and not clause[2][1]:
+                    value = 3
+                if not clause[0][1] and clause[1][1] and not clause[2][1]:
+                    value = 4
+
+                for permutation in itertools.permutations(clause, 3):
+                    x = permutation[0][0]
+                    y = permutation[1][0]
+                    z = permutation[2][0]
+                    new_p[0][x][y][z] += value
             all_problems[0][i]["clauses"] = list(new_p.flat)
 
     def gen_data_lmdb(self):
@@ -236,6 +290,26 @@ class ReverseClassification(Classification):
             self.gen_apply_m2sat_customization(all_problems)
             print(data[0])
             print(all_problems[0][0]["clauses"])
+
+        if self.cfg['problems']['problems'] == ["M3SAT"]:
+            len_ = len(all_problems[0])
+            data = data[:len_]
+            labels = labels[:len_]
+
+            self.gen_apply_m3sat_customization(all_problems)
+            print(data[0])
+            print(all_problems[0][0]["clauses"])
+
+            # TODO: REMOVE (checking for duplicates)
+            # for i, prob1 in enumerate(all_problems[0]):
+            #     for j, prob2 in enumerate(all_problems[0]):
+            #         if i == j:
+            #             continue
+
+            #         if prob1["clauses"] == prob2["clauses"]:
+            #             print(i, j)
+            #             print(prob1, prob2)
+            #             import pdb; pdb.set_trace()
 
         all_problems_flat, output_size = self.flatten_problem_parameters(all_problems)
 
@@ -250,6 +324,8 @@ class ReverseClassification(Classification):
         all_problems_flat = np.array(all_problems_flat, dtype=float)
 
         print(data.shape, labels.shape, all_problems_flat.shape)
+
+        print("NORM?", not self.cfg["model"]["no_norm"])
 
         # NOTE: We are using min max normalization here.. Not standardization
         # like with classification.
@@ -290,6 +366,29 @@ class ReverseClassification(Classification):
             optimizer.train()
             optimizer.save(self.model_fname)
             self.logger.close()
+
+    def eval(self, model_fname):
+        part = self.cfg["model"]["part"]
+        if part:
+            lmdb_loader = LMDBDataLoader(self.cfg, reverse=True, part=part)
+        else:
+            lmdb_loader = LMDBDataLoader(self.cfg, reverse=True)
+
+        with open('datasets/%s/cfg.pickle' % self.cfg['dataset_id'], 'rb') as f:
+            output_size = pickle.load(f)
+
+        self.model_fname = self.get_model_fname()
+        self.logger = Logger(self.model_fname, self.cfg)
+        optimizer = ReverseOptimizer(self.cfg, lmdb_loader, self.logger, output_size)
+        optimizer.load(model_fname, output_size)
+        self._eval(optimizer)
+        self.logger.close()
+
+    def _eval(self, optimizer):
+        avg_loss, problem_losses, tot3_fp, tot3_fn, tot3 = optimizer.eval(0, debug=True)
+        print(avg_loss, problem_losses)
+        print(tot3_fp, tot3_fn, tot3)
+        print((tot3_fp + tot3_fn) / tot3)
 
 
 class AutoEncoder(Classification):

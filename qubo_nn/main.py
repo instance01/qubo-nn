@@ -40,3 +40,6 @@ if __name__ == '__main__':
         elif args.train:
             c = ReverseClassification(cfg)
             c.run_experiment(args.nruns)
+        elif args.eval:
+            c = ReverseClassification(cfg)
+            c.eval(args.model)
