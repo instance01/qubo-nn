@@ -67,7 +67,7 @@ def run():
     min_len = 1000
     base_path = '../runs/'
     # problems = ['a19', 'a19_gen_edges', 'mvc3', 'gc1', 'np19_LONG']
-    problems = ['a19', 'mvc3', 'gc1', 'np19_LONG']
+    problems = ['a19', 'mvc3', 'gc1', 'np19_LONG', 'tsp1']
     kv = {}
     for problem in problems:
         print(problem)
