@@ -136,7 +136,7 @@ This is preliminary. Some of the problems are easily learned by a neural network
 
 <img alt="Reversal regression losses over multiple problems" src="qubo_nn/plots/reverse_loss.png">
 
-### Reversability
+### Reversibility
 
 This shows whether we can deduce the parameters that led to a QUBO matrix, given we predicted the problem beforehand.
 A lot of the graph based problems are easily reversable since the graph structure is kept intact in the QUBO matrix. Thus we can recreate the graph and other input parameters given a GraphColoring QUBO matrix.
@@ -145,11 +145,11 @@ This is still WIP - needs testing. These are hypotheses.
 
 Reversing some problems like Quadratic Knapsack might be possible - an algorithm is an idea, but one could also make their life easy and try fitting a NN model to it.
 
-|Problem|Reversability|Comment|
+|Problem|Reversibility|Comment|
 |-------|-------------|-------|
 |Graph Coloring|**+**|Likely trivial.|
-|Maximum 2-SAT|**-**|Multiple inputs lead to the same output (see `qubo_nn.contrib.non_reversible`).|
-|Maximum 3-SAT|**-**|Multiple inputs lead to the same output (see `qubo_nn.contrib.non_reversible`).|
+|Maximum 2-SAT|**?**|Very complex to learn, but possible?|
+|Maximum 3-SAT|**?**|Very complex to learn, but possible?|
 |Maximum Cut|**+**|Likely trivial.|
 |Minimum Vertex Cover|**+**|Likely trivial.|
 |Number Partitioning|**+**|Easy, create equation system from the upper triangular part of the matrix (triu).|
