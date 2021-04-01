@@ -4005,7 +4005,7 @@
             "no_norm": true,
             "activation": "ReLU",
             "part": [0, 10000],
-            "n_epochs": 2000,
+            "n_epochs": 500,
             "batch_size": 500,
             "lr": 3.0,
             "fc_sizes": []
