@@ -10,7 +10,7 @@ QUBO matrices are used to describe an optimization problem as a matrix such that
 Now, these matrices are quite an interesting construct.. Thus, a few questions arise:
 
 * Is it possible to classify the problem class based on the QUBO matrix?
-* What is the exact trade-off when auto-encoding QUBO matrices, i.e. who far can one go before the solution quality drops significantly?
+* Is it possible to reverse-engineer the problem parameters that led to a QUBO matrix?
 
 Let's find out.
 
@@ -119,6 +119,12 @@ The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
 ```
 
 ## Results
+
+The pipeline of interest is as follows.
+
+<img alt="Reverse-engineering pipeline/architecture." src="qubo_nn/plots/architecture.png">
+
+Given some QUBO matrix that was generated using a set of problem parameters, we first classify the problem in step a and then predict the parameters in step b.
 
 ### Classification
 
