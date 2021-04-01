@@ -4078,5 +4078,25 @@
             "lr": 0.011,
             "fc_sizes": [256]
         }
+    },
+
+    "a19_2_r2_gen_edges": {
+        "dataset_id": "a19_gen_edges",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": [],
+            "gen_edges": true
+        }
     }
 }
