@@ -37,7 +37,8 @@ def aggregate_single(paths, desired_tag, min_len, len_):
 
         # data = smooth(data, 20)[10:-9]
         # data = smooth(data, 60)[30:-29]
-        if len(data) == len_ or len(data) == (len_ // 10 + 1):
+        # if len(data) == len_ or len(data) == (len_ // 10 + 1):
+        if len(data) > 0:
             print(len(data), desired_tag)
             aggregated.append(data)
 
@@ -67,13 +68,21 @@ def aggregate(paths, min_len, len_):
 def run():
     min_len = 201
     base_path = '../runs/'
+    # problems = [
+    #     ('m2sat_16x16_5_F', 201),
+    #     ('m2sat_16x16_10_F', 61),
+    #     ('m2sat_16x16_15_F', 51),
+    #     ('m2sat_16x16_20_F', 51),
+    #     ('m2sat_16x16_25_F', 31),
+    #     ('m2sat_16x16_30_F', 31)
+    # ]
     problems = [
-        ('m2sat_16x16_5_F', 201),
-        ('m2sat_16x16_10_F', 61),
-        ('m2sat_16x16_15_F', 51),
-        ('m2sat_16x16_20_F', 51),
-        ('m2sat_16x16_25_F', 31),
-        ('m2sat_16x16_30_F', 31)
+        ('m2sat_16x16_5_F_v2', 201),
+        ('m2sat_16x16_10_F_v2', 61),
+        ('m2sat_16x16_15_F_v2', 51),
+        ('m2sat_16x16_20_F_v2', 51),
+        ('m2sat_16x16_25_F_v2', 31),
+        ('m2sat_16x16_30_F_v2', 31)
     ]
     kv = {}
     for problem in problems:

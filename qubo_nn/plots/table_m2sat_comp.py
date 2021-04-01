@@ -10,12 +10,12 @@ import numpy as np
 
 def plot(kv):
     tags = {
-        'm2sat_16x16_5_F': 'Maximum Cut',
-        'm2sat_16x16_5_F': 'Number Partitioning',
-        'm2sat_16x16_5_F': 'Graph Coloring',
-        'm2sat_16x16_5_F': 'Minimum Vertex Cover',
-        'm2sat_16x16_5_F': 'Maximum Cut - edges',
-        'm2sat_16x16_5_F': 'Maximum Cut - edges'
+        'm2sat_16x16_5_F_v2': 'Maximum Cut',
+        'm2sat_16x16_5_F_v2': 'Number Partitioning',
+        'm2sat_16x16_5_F_v2': 'Graph Coloring',
+        'm2sat_16x16_5_F_v2': 'Minimum Vertex Cover',
+        'm2sat_16x16_5_F_v2': 'Maximum Cut - edges',
+        'm2sat_16x16_5_F_v2': 'Maximum Cut - edges'
     }
 
     def calc_ci(key, arr):
