@@ -7,6 +7,8 @@ from matplotlib import pyplot as plt
 import cycler
 
 
+np.seterr(divide='ignore', invalid='ignore')
+
 mpl.font_manager._rebuild()
 plt.rc('font', family='Raleway')
 
@@ -26,7 +28,7 @@ def smooth(y, box_pts):
 
 
 def plot(kv):
-    fig, axs = plt.subplots(1, 5, figsize=(12, 2))
+    fig, axs = plt.subplots(1, 5, figsize=(10, 2.0))
     axs = axs.flatten()
 
     tags = {
@@ -58,7 +60,8 @@ def plot(kv):
         # sub_plot(k, v[0])  # This is eval
         sub_plot(axs[i], k, v[1])  # This is train
         # ax.legend()
-        axs[i].set_ylabel("Train Loss")
+        if i == 0:
+            axs[i].set_ylabel("Train Loss")
         axs[i].set_xlabel("Epoch")
         axs[i].set_ylim([-.5, 10])
         axs[i].set_title(tags[k])
@@ -70,7 +73,7 @@ def plot(kv):
 
 
 def plot_r2(kv):
-    fig, axs = plt.subplots(1, 5, figsize=(12, 2))
+    fig, axs = plt.subplots(1, 5, figsize=(10, 2.0))
     axs = axs.flatten()
 
     tags = {
@@ -83,7 +86,7 @@ def plot_r2(kv):
     }
 
     def sub_plot_r2(ax, key, arr):
-        arr = arr[:, :5000]
+        # arr = arr[:, :5000]
 
         mean = np.mean(arr, axis=0)
         x = np.arange(mean.shape[0])
@@ -96,12 +99,14 @@ def plot_r2(kv):
 
         ax.plot(x, mean, label=tags[key])
         ax.fill_between(x, ci[0], ci[1], alpha=.2)
+        print("R2", key, mean[-1], "+-", mean[-1] - ci[0][-1])
 
     for i, (k, v) in enumerate(kv.items()):
         # sub_plot(k, v[0])  # This is eval
         sub_plot_r2(axs[i], k, v[2])  # This is R**2
         # axs[i].legend()
-        axs[i].set_ylabel(r'$R^2$')
+        if i == 0:
+            axs[i].set_ylabel(r'$R^2$')
         axs[i].set_xlabel("Epoch")
         axs[i].set_ylim([0, 1.1])
         axs[i].set_title(tags[k])

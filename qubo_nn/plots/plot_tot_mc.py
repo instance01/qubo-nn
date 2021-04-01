@@ -16,7 +16,7 @@ def plot(id_):
     with open('tot_misclassifications_%s.pickle' % id_, 'rb') as f:
         arr1 = pickle.load(f)
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(3.5, 3))
 
     def sub_plot(arr, col):
         mean = np.mean(arr, axis=0)
@@ -35,6 +35,7 @@ def plot(id_):
     sub_plot(arr1, 'c')
     plt.ylabel("Misclassification ratio")
     plt.xlabel("Epoch")
+    plt.tight_layout()
     plt.show()
     fig.savefig('tot_mc_%s.png' % id_)
     fig.savefig('tot_mc_%s.pdf' % id_)
