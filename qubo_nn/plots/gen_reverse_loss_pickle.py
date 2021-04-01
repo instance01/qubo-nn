@@ -60,14 +60,15 @@ def aggregate_single(paths, desired_tag, min_len):
 def aggregate(paths, min_len):
     arr_eval = aggregate_single(paths, 'Loss/Eval', min_len)
     arr_train = aggregate_single(paths, 'Loss/Train', min_len)
-    return arr_eval, arr_train
+    arr_r2 = aggregate_single(paths, 'Custom/R2', min_len)
+    return arr_eval, arr_train, arr_r2
 
 
 def run():
     min_len = 1000
     base_path = '../runs/'
     # problems = ['a19', 'a19_gen_edges', 'mvc3', 'gc1', 'np19_LONG']
-    problems = ['a19', 'mvc3', 'gc1', 'np19_LONG', 'tsp1']
+    problems = ['a19_2_r2', 'mvc3_r2', 'gc1_r2', 'np19_LONG_r2', 'tsp2_r2']
     kv = {}
     for problem in problems:
         print(problem)
