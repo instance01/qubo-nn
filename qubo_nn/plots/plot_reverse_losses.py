@@ -61,6 +61,7 @@ def plot(kv):
         axs[i].set_ylabel("Train Loss")
         axs[i].set_xlabel("Epoch")
         axs[i].set_ylim([-.5, 10])
+        axs[i].set_title(tags[k])
 
     plt.tight_layout()
     plt.show()
