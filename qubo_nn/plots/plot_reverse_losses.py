@@ -1,8 +1,4 @@
-import os
-import sys
-import glob
 import pickle
-from collections import defaultdict
 
 import numpy as np
 import scipy.stats as st
@@ -30,7 +26,8 @@ def smooth(y, box_pts):
 
 
 def plot(kv):
-    fig, ax = plt.subplots()
+    fig, axs = plt.subplots(1, 5, figsize=(12, 2))
+    axs = axs.flatten()
 
     tags = {
         'a19_2_r2': 'Maximum Cut',
@@ -41,31 +38,38 @@ def plot(kv):
         # 'a19_gen_edges': 'Maximum Cut - edges'
     }
 
-    def sub_plot(key, arr):
-        arr = arr[:, 1:1000]
+    def sub_plot(ax, key, arr):
+        arr = arr[:, :1000]
+        next(ax._get_lines.prop_cycler)['color']
 
         mean = np.mean(arr, axis=0)
         x = np.arange(mean.shape[0])
-        ci = 1.96 * np.std(arr, axis=0) / np.mean(arr, axis=0)
+        ci = st.t.interval(
+            0.95,
+            len(arr) - 1,
+            loc=np.mean(arr, axis=0),
+            scale=st.sem(arr, axis=0)
+        )
 
         ax.plot(x, mean, label=tags[key])
-        ax.fill_between(x, (mean - ci), (mean + ci), alpha=.2)
+        ax.fill_between(x, ci[0], ci[1], alpha=.2)
 
-    for k, v in kv.items():
+    for i, (k, v) in enumerate(kv.items()):
         # sub_plot(k, v[0])  # This is eval
-        sub_plot(k, v[1])  # This is train
+        sub_plot(axs[i], k, v[1])  # This is train
+        # ax.legend()
+        axs[i].set_ylabel("Train Loss")
+        axs[i].set_xlabel("Epoch")
+        axs[i].set_ylim([-.5, 10])
 
-    ax.legend()
-    plt.ylabel("NN Regression Loss")
-    plt.xlabel("Epoch")
-    plt.ylim([-.5, 10])
+    plt.tight_layout()
     plt.show()
     fig.savefig('reverse_loss.png')
     fig.savefig('reverse_loss.pdf')
 
 
 def plot_r2(kv):
-    fig, axs = plt.subplots(1, 5, figsize=(12, 3))
+    fig, axs = plt.subplots(1, 5, figsize=(12, 2))
     axs = axs.flatten()
 
     tags = {
@@ -78,7 +82,7 @@ def plot_r2(kv):
     }
 
     def sub_plot_r2(ax, key, arr):
-        arr = arr[:, 2:5000]
+        arr = arr[:, :5000]
 
         mean = np.mean(arr, axis=0)
         x = np.arange(mean.shape[0])
@@ -96,11 +100,12 @@ def plot_r2(kv):
         # sub_plot(k, v[0])  # This is eval
         sub_plot_r2(axs[i], k, v[2])  # This is R**2
         # axs[i].legend()
-        axs[i].set_ylabel("R**2")
+        axs[i].set_ylabel(r'$R^2$')
         axs[i].set_xlabel("Epoch")
         axs[i].set_ylim([0, 1.1])
         axs[i].set_title(tags[k])
 
+    plt.tight_layout()
     plt.show()
     fig.savefig('reverse_r2.png')
     fig.savefig('reverse_r2.pdf')
@@ -109,7 +114,7 @@ def plot_r2(kv):
 def run():
     with open('reverse_losses.pickle', 'rb') as f:
         kv = pickle.load(f)
-    # plot(kv)
+    plot(kv)
     plot_r2(kv)
 
 
