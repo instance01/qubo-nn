@@ -371,15 +371,15 @@ class ReverseOptimizer(Optimizer):
                 # Then the last term will be wrong.
                 batch_loss += loss.item() * self.batch_size
                 if i % 100 == 0:
-                    X = problem.float().tolist()[-1][:200]
-                    Y = outputs.detach().tolist()[-1][:200]
-                    print('')
-                    for m in range(200):
-                        if X[m] > 0 or X[m] < 0:
-                            print(X[m], round(Y[m], 3))
-                    # print([round(x, 2) for x in outputs.detach().tolist()[-1][:100]])
-                    # print(problem.float().tolist()[-1][:100])
-                    print('#')
+                    X = problem.float().tolist()[-1]#[:200]
+                    Y = outputs.detach().tolist()[-1]#[:200]
+                    # print('')
+                    # for m in range(len(X)):
+                    #     if X[m] > 0 or X[m] < 0:
+                    #         print(X[m], round(Y[m], 3))
+                    # # print([round(x, 2) for x in outputs.detach().tolist()[-1][:100]])
+                    # # print(problem.float().tolist()[-1][:100])
+                    # print('#')
 
                     # Debug print weights and biases.
                     # for param in self.net.parameters():
@@ -472,6 +472,23 @@ class ReverseOptimizer(Optimizer):
 
                 #     import pdb; pdb.set_trace()
 
+                # TODO Used for comparison plot (QUBO, problem/label, predicted problem)
+                # import matplotlib.pyplot as plt
+                # xxx = inputs
+                # yyy = prob
+                # fig, axs = plt.subplots(1, 3, figsize=(12, 6))
+                # # im = ax.imshow(xxx.numpy(), cmap=cmap_mod, vmin=0, vmax=1)
+                # min_ = min([xxx.numpy().min(), yyy.detach().numpy()[0][:-1].min(), output[:-1].min()])
+                # max_ = min([xxx.numpy().max(), yyy.detach().numpy()[0][:-1].max(), output[:-1].max()])
+                # im = axs[0].imshow(xxx.numpy()[0], vmin=min_, vmax=max_)
+                # im2 = axs[1].imshow(yyy.detach().numpy()[0][:-1].reshape((16,16)), vmin=min_, vmax=max_)
+                # im3 = axs[2].imshow(output[:-1].reshape((16,16)), vmin=min_, vmax=max_)
+                # axs[0].set_xlabel('QUBO', rotation=0, va="top", fontsize=9)
+                # axs[1].set_xlabel('Problem (label)', rotation=0, va="top", fontsize=9)
+                # axs[2].set_xlabel('Predicted Problem (output)', rotation=0, va="top", fontsize=9)
+                # plt.show()
+                # # import pdb; pdb.set_trace()
+
                 return FP, FN, TOT
 
             if debug:
@@ -497,6 +514,7 @@ class ReverseOptimizer(Optimizer):
             inputs, labels, prob = data
             ssm += ((prob.numpy() - ssm_mean) ** 2).sum()
         R2 = 1 - (sse / ssm)
+        print(" ", sse, ssm)
         print("R2", R2)
         self.logger.log_custom_reverse_kpi("R2", R2, epoch)
 
@@ -518,3 +536,235 @@ class ReverseOptimizer(Optimizer):
     def load(self, model_fname, output_size):
         self.net = ReverseFCNet(self.cfg, output_size)
         self.net.load_state_dict(torch.load(model_fname))
+
+
+class RNN(nn.Module):
+    def __init__(self, cfg, output_size):
+        super(RNN, self).__init__()
+        self.cfg = cfg
+
+        input_size = cfg['problems']['qubo_size']
+
+        activation_type = cfg['model']['activation']
+        non_linearity = 'tanh'
+        if activation_type == "ReLU":
+            non_linearity = 'relu'
+
+        # self.rnn = nn.RNN(
+        #     input_size=input_size,
+        #     hidden_size=cfg['model']['fc_sizes'][0],
+        #     num_layers=len(cfg['model']['fc_sizes']),
+        #     nonlinearity=non_linearity,
+        #     batch_first=True,
+        # )
+        self.rnn = nn.LSTM(
+            input_size=input_size,
+            hidden_size=cfg['model']['fc_sizes'][0],
+            num_layers=len(cfg['model']['fc_sizes']),
+            batch_first=True,
+        )
+
+        self.out = nn.Linear(cfg['model']['fc_sizes'][-1], input_size)
+
+    def forward(self, x, h_state):
+        r_out, h_state = self.rnn(x, h_state)
+
+        outs = []
+        for time_step in range(r_out.size(1)):
+            outs.append(self.out(r_out[:, time_step, :]))
+        return torch.stack(outs, dim=1), h_state
+
+    def init_hidden(self, batch_size):
+        weight = next(self.parameters()).data
+        # 1 stands for n_layers
+        hidden_dim = self.cfg['model']['fc_sizes'][0]
+        hidden = (
+            weight.new(1, batch_size, hidden_dim).zero_(),
+            weight.new(1, batch_size, hidden_dim).zero_()
+        )
+        return hidden
+
+
+class RNNOptimizer(Optimizer):
+    def __init__(self, cfg, lmdb_loader, logger, output_size):
+        self.cfg = cfg
+        self.lmdb_loader = lmdb_loader
+        self.logger = logger
+
+        # Load cfg variables.
+        lr = cfg['model']['lr']
+        sgd_momentum = cfg['model']['optimizer_sgd_momentum']
+        self.batch_size = cfg['model']['batch_size']
+        self.n_epochs = cfg['model']['n_epochs']
+        self.train_eval_split = cfg['model']['train_eval_split']
+
+        # Set it all up.
+        self.net = RNN(cfg, output_size)
+        self.criterion = nn.MSELoss()
+        if cfg['model']['optimizer'] == 'sgd':
+            self.optimizer = optim.SGD(
+                self.net.parameters(), lr=lr, momentum=sgd_momentum
+            )
+        elif cfg['model']['optimizer'] == 'Adam':
+            self.optimizer = optim.Adam(
+                self.net.parameters(), lr=lr
+            )
+
+    def train(self):
+        save_fpfn = self.cfg['problems']['problems'] == ["M2SAT"] or \
+            self.cfg['problems']['problems'] == ["M3SAT"]
+
+        self.net.train()
+        data_len = len(self.lmdb_loader.train_data_loader)
+        for epoch in range(self.n_epochs):
+            batch_loss = 0.
+
+            h_state = self.net.init_hidden(self.batch_size)
+
+            for i, data in enumerate(self.lmdb_loader.train_data_loader):
+                inputs, labels, problem = data
+
+                problem = problem[:, :-1].reshape((-1, 16, 16))
+
+                self.optimizer.zero_grad()
+
+                h_state = tuple([e.data for e in h_state])
+                outputs, h_state = self.net(inputs, h_state)
+
+                loss = self.criterion(outputs, problem.float())
+                loss.backward()
+                self.optimizer.step()
+
+                # TODO!!! What if batch_size is not a factor of total size.
+                # Then the last term will be wrong.
+                batch_loss += loss.item() * self.batch_size
+                if i % 100 == 0:
+                    X = problem.float()[-1].flatten().tolist()[:200]
+                    Y = outputs.detach()[-1].flatten().tolist()[:200]
+                    print('')
+                    for m in range(200):
+                        if X[m] > 0 or X[m] < 0:
+                            print(X[m], round(Y[m], 3))
+                    print('#')
+
+                    avg_loss = batch_loss / (i + 1)
+                    msg = '[%d, %5d] loss: %.3f' % (epoch + 1, i, avg_loss)
+                    sys.stdout.write('\r' + msg)
+                    sys.stdout.flush()
+
+                if i % 1000 == 0:
+                    data = {
+                        "loss_train": batch_loss / (i + 1)
+                    }
+                    self.logger.log_train(data, data_len * epoch + i)
+
+            self.net.eval()
+            data = {}
+            test_loss, problem_losses, _, _, _ = self.eval(epoch, do_print=False, debug=epoch % 10 == 0)
+            problem_losses = {
+                prob: problem_losses[i]
+                for i, prob in enumerate(self.cfg['problems']['problems'])
+            }
+            data['loss_eval'] = test_loss
+            data['problem_losses'] = problem_losses
+            self.logger.log_eval_reverse(data, epoch)
+            self.net.train()
+        print('')
+
+    def eval(self, epoch, do_print=True, debug=False):
+        save_fpfn = self.cfg['problems']['problems'] == ["M2SAT"] or \
+            self.cfg['problems']['problems'] == ["M3SAT"]
+
+        n_classes = len(self.cfg['problems']['problems'])
+        problem_losses = np.zeros(shape=(n_classes,), dtype=np.float32)
+        n_class_labels = np.zeros(shape=(n_classes,), dtype=np.float32)
+
+        wrong_regressions3 = 0
+        tot3_fp = 0
+        tot3_fn = 0
+        tot3 = 0
+
+        sse = 0
+        ssm_mean = None
+        n = 0
+
+        self.net.eval()
+        total_loss = 0.0
+        for i, data in enumerate(self.lmdb_loader.test_data_loader):
+            inputs, labels, prob = data
+            outputs, h_state = self.net(inputs, None)
+
+            prob = prob[:, :-1].reshape((-1, 16, 16))
+
+            loss = self.criterion(outputs, prob)
+
+            sse += ((prob.numpy() - outputs[0].detach().numpy()) ** 2).sum()
+            if ssm_mean is None:
+                ssm_mean = prob.numpy()
+            else:
+                ssm_mean += prob.numpy()
+            n += 1
+
+            def print_debug(cutoff):
+                output = outputs[0].detach().numpy()[:]
+
+                if not save_fpfn:
+                    # Useful for all except M2SAT.
+                    output[np.where(output >= cutoff)] = 1.
+
+                output = output.round() + 0
+
+                if save_fpfn:
+                    output[-1] = self.cfg['problems']['qubo_size']
+
+                diff = output - prob[0].numpy()
+
+                if not save_fpfn:
+                    FP = np.count_nonzero(diff == 1.)
+                    FN = np.count_nonzero(diff == -1.)
+                    TOT = np.count_nonzero(prob[0].numpy())
+                else:
+                    FP = np.count_nonzero(diff >= 1)
+                    FN = np.count_nonzero(diff <= -1)
+                    TOT = np.count_nonzero(prob[0].numpy())
+
+                return FP, FN, TOT
+
+            if debug:
+                FP, FN, TOT = print_debug(.3)
+                if (FP + FN) > 0:
+                    wrong_regressions3 += 1
+                tot3_fp += FP
+                tot3_fn += FN
+                tot3 += TOT
+
+            problem_losses[labels.item()] += loss
+            n_class_labels[labels.item()] += 1
+
+            total_loss += loss.item()
+            if do_print and i % 1000 == 0:
+                msg = '[%d] loss: %.3f' % (i, total_loss / (i + 1))
+                sys.stdout.write('\r' + msg)
+                sys.stdout.flush()
+
+        ssm_mean /= n
+        ssm = 0
+        for i, data in enumerate(self.lmdb_loader.test_data_loader):
+            inputs, labels, prob = data
+            prob = prob[:, :-1].reshape((-1, 16, 16))
+            ssm += ((prob.numpy() - ssm_mean) ** 2).sum()
+        R2 = 1 - (sse / ssm)
+        print("R2", R2)
+        self.logger.log_custom_reverse_kpi("R2", R2, epoch)
+
+        data_len = len(self.lmdb_loader.test_data_loader)
+
+        for c in range(n_classes):
+            problem_losses[c] /= n_class_labels[c]
+
+        if debug:
+            print('\n~~~~~ EVAL ~~~~~')
+            print('.3', tot3_fp, tot3_fn, tot3, (tot3_fp + tot3_fn) / tot3, wrong_regressions3, data_len)
+            self.logger.log_custom_reverse_kpi("FPFN_TOT_Ratio", (tot3_fp + tot3_fn) / tot3, epoch)
+
+        return total_loss / data_len, problem_losses, tot3_fp, tot3_fn, tot3

@@ -12,6 +12,7 @@ import networkx as nx
 from qubo_nn.nn import Optimizer
 from qubo_nn.nn import ReverseOptimizer
 from qubo_nn.nn import AutoEncoderOptimizer
+from qubo_nn.nn import RNNOptimizer
 from qubo_nn.logger import Logger
 from qubo_nn.problems import PROBLEM_REGISTRY
 from qubo_nn.data import LMDBDataLoader
@@ -363,6 +364,7 @@ class ReverseClassification(Classification):
             self.logger = Logger(self.model_fname, self.cfg)
             self.logger.log_config()
             optimizer = ReverseOptimizer(self.cfg, lmdb_loader, self.logger, output_size)
+            # optimizer = RNNOptimizer(self.cfg, lmdb_loader, self.logger, output_size)
             optimizer.train()
             optimizer.save(self.model_fname)
             self.logger.close()
