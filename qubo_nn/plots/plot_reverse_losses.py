@@ -21,12 +21,6 @@ plt.rc('font', family='Raleway')
 plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.Set2.colors)
 
 
-def smooth(y, box_pts):
-    box = np.ones(box_pts) / box_pts
-    y_smooth = np.convolve(y, box, mode='same')
-    return y_smooth
-
-
 def plot(kv):
     fig, axs = plt.subplots(1, 5, figsize=(10, 2.0))
     axs = axs.flatten()
