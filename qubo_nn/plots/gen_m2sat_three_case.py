@@ -15,7 +15,7 @@ def aggregate(paths, min_len, cutoff=False):
 
 
 def run():
-    min_len = 100
+    min_len = 500
     base_path = '../runs/'
     problems = ['m2sat_16x16_5_F_v2', 'm2sat_16x16_5_F_v2_no_dupl_chk']
     kv = {}
