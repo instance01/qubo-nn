@@ -17,7 +17,7 @@ def smooth(y, box_pts):
     return y_smooth
 
 
-def aggregate_single(paths, desired_tag, min_len):
+def aggregate_single(paths, desired_tag, min_len, cutoff=None):
     aggregated = []
     for path in paths:
         path = glob.glob(os.path.join(path, "events.out.tfevents.*"))
@@ -37,6 +37,8 @@ def aggregate_single(paths, desired_tag, min_len):
         # data = smooth(data, 20)[10:-9]
         # data = smooth(data, 60)[30:-29]
         print(len(data))
+        if cutoff is not None:
+            data = data[:cutoff]
         aggregated.append(data)
 
     if not aggregated:
