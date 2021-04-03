@@ -22,6 +22,13 @@ def run():
     for problem in problems:
         print(problem)
         paths = glob.glob('../runs/*-' + problem)
+
+        paths = [path for path in paths if path not in [
+            '../runs/21-04-03_13:01:10-8112457-datolith.cip.ifi.lmu.de-m2sat_16x16_5_F_v2',
+            '../runs/21-04-02_07:40:21-3067619-feueropal.cip.ifi.lmu.de-m2sat_16x16_5_F_v2'
+        ]]
+
+        print(paths)
         if problem == 'm2sat_16x16_5_F_v2_no_dupl_chk':
             data = aggregate(paths, min_len, True)
         else:
