@@ -29,12 +29,15 @@ class QuadraticAssignment(Problem):
 
     @classmethod
     def gen_problems(self, cfg, n_problems, size=3, **kwargs):
-        # TODO: 50 is hardcoded !!!
+        high = cfg["problems"]["QA"].get("high", 50)
+
+        print("Using high", high)
+
         problems = []
         for _ in range(n_problems):
             problems.append((
-                np.random.randint(low=0, high=50, size=(size, size)),
-                np.random.randint(low=0, high=50, size=(size, size))
+                np.random.randint(low=1, high=high, size=(size, size)),
+                np.random.randint(low=1, high=high, size=(size, size))
             ))
         return [
             {"flow_matrix": flow_matrix, "distance_matrix": distance_matrix}
