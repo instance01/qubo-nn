@@ -4143,5 +4143,388 @@
             "fc_sizes": [6168, 6168],
             "optimizer": "Adam"
         }
+    },
+
+    "qa1": {
+        "dataset_id": "qa1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": []
+        }
+    },
+    "qa2": {
+        "dataset_id": "qa1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [180]
+        }
+    },
+    "qa3": {
+        "dataset_id": "qa1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 200,
+            "lr": 0.5,
+            "fc_sizes": []
+        }
+    },
+    "qa4": {
+        "dataset_id": "qa4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": []
+        }
+    },
+    "qa5": {
+        "dataset_id": "qa4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [4096]
+        }
+    },
+    "qa6": {
+        "dataset_id": "qa4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [128]
+        }
+    },
+    "qa7": {
+        "dataset_id": "qa7",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": []
+        }
+    },
+    "qa8": {
+        "dataset_id": "qa7",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [4096]
+        }
+    },
+    "qa5_1": {
+        "dataset_id": "qa4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.5,
+            "fc_sizes": [4096]
+        }
+    },
+    "qa5_2": {
+        "dataset_id": "qa4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 1500,
+            "batch_size": 500,
+            "lr": 0.7,
+            "fc_sizes": [4096]
+        }
+    },
+    "qa8_1": {
+        "dataset_id": "qa7",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 1500,
+            "batch_size": 500,
+            "lr": 0.5,
+            "fc_sizes": [4096]
+        }
+    },
+
+    "qa_16x16": {
+        "dataset_id": "qa_16x16",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 2000,
+            "batch_size": 500,
+            "lr": 0.5,
+            "fc_sizes": [32]
+        }
+    },
+    "qa_test": {
+        "dataset_id": "qa_test",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000,
+            "qubo_size": 4,
+            "QA": {
+                "size": 2
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 1000],
+            "n_epochs": 1500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": []
+        }
+    },
+
+    "qa_256x256": {
+        "dataset_id": "qa_256x256",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 256,
+            "QA": {
+                "size": 16
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": []
+        }
+    },
+    "qa_256x256_2": {
+        "dataset_id": "qa_256x256_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "qubo_size": 256,
+            "QA": {
+                "size": 16
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": []
+        }
+    },
+
+    "qa4_diffnorm": {
+        "dataset_id": "qa4_diffnorm",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": []
+        }
+    },
+    "qa4_diffnorm2": {
+        "dataset_id": "qa4_diffnorm",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 1.0,
+            "fc_sizes": [100]
+        }
+    },
+    "qa4_diffnorm_v2": {
+        "dataset_id": "qa4_diffnorm_v2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [16000]
+        }
+    },
+    "qa4_diffnorm_v2_2": {
+        "dataset_id": "qa4_diffnorm_v2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [32000]
+        }
+    },
+
+    "qa_256x256_3": {
+        "dataset_id": "qa_256x256_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "qubo_size": 256,
+            "QA": {
+                "size": 16
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [16000]
+        }
+    },
+    "qa_256x256_4_diffnorm_v2": {
+        "dataset_id": "qa_256x256_4_diffnorm_v2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "qubo_size": 256,
+            "QA": {
+                "size": 16
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [16000]
+        }
     }
 }
