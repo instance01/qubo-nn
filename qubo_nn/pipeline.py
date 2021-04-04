@@ -55,8 +55,6 @@ class Classification:
         for i, (cls, args) in enumerate(self.problems):
             idx_start = i * n_problems
             idx_end = (i + 1) * n_problems
-            print(args)
-            print(self.problems)
             problems, qubo_matrices = self.gen_qubo_matrices(
                 cls, n_problems, **args
             )
