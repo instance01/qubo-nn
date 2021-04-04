@@ -73,8 +73,11 @@ class ChunkedDataLoader:
 
 class LMDBDataSet(torch.utils.data.Dataset):
     def __init__(self, cfg, reverse):
+        dirpath = 'datasets/'
+        if cfg["use_big"]:
+            dirpath = '/big/r/ratke/qubo_datasets/'
         self.dataset_id = cfg['dataset_id']
-        self.dirpath = 'datasets/' + self.dataset_id
+        self.dirpath = dirpath + self.dataset_id
         self.reverse = reverse
 
     def __len__(self):
