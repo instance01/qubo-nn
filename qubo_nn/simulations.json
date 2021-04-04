@@ -652,6 +652,7 @@
             "activation": "LeakyReLU",
             "class_weights": [],
             "norm_data": false,
+            "norm_multiply": 1.0,
             "shuffle_data": true,
             "network": "FC",
             "n_epochs": 100,
@@ -4425,6 +4426,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "norm_multiply": 5.0,
             "activation": "ReLU",
             "part": [0, 50000],
             "n_epochs": 500,
@@ -4442,6 +4444,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "norm_multiply": 5.0,
             "activation": "ReLU",
             "part": [0, 50000],
             "n_epochs": 500,
@@ -4459,6 +4462,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "norm_multiply": 10.0,
             "activation": "ReLU",
             "part": [0, 50000],
             "n_epochs": 500,
@@ -4476,6 +4480,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "norm_multiply": 10.0,
             "activation": "ReLU",
             "part": [0, 50000],
             "n_epochs": 500,
@@ -4498,6 +4503,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "norm_multiply": 5.0,
             "activation": "ReLU",
             "part": [0, 50000],
             "n_epochs": 500,
@@ -4519,6 +4525,194 @@
             "problems": ["QA"]
         },
         "model": {
+            "norm_multiply": 10.0,
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [16000]
+        }
+    },
+
+    "qa4_high20": {
+        "dataset_id": "qa4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "QA": {
+                "size": 8,
+                "high": 20
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "norm_multiply": 1.0,
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": []
+        }
+    },
+    "qa4_high500": {
+        "dataset_id": "qa4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "QA": {
+                "size": 8,
+                "high": 500
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "norm_multiply": 1.0,
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": []
+        }
+    },
+
+    "qa_256x256_5": {
+        "dataset_id": "qa_256x256_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "qubo_size": 256,
+            "QA": {
+                "size": 16
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "norm_multiply": 5.0,
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [65000]
+        }
+    },
+    "qa_256x256_5_diffnorm_v2": {
+        "dataset_id": "qa_256x256_4_diffnorm_v2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "qubo_size": 256,
+            "QA": {
+                "size": 16
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [65000]
+        }
+    },
+
+    "qa4_100x100_diffnorm_v2": {
+        "dataset_id": "qa4_100x100_diffnorm_v2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "qubo_size": 100,
+            "QA": {
+                "size": 10
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "norm_multiply": 10.0,
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [40000]
+        }
+    },
+
+    "qa4_diffnorm_v2_2_20norm": {
+        "dataset_id": "qa4_diffnorm_v2_2_20norm",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "norm_multiply": 20.0,
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [16000]
+        }
+    },
+    "qa4_diffnorm_v2_2_5norm": {
+        "dataset_id": "qa4_diffnorm_v2_2_5norm",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "norm_multiply": 5.0,
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [16000]
+        }
+    },
+    "qa4_diffnorm_v2_2_10norm": {
+        "desc": "SHOULD BE SAME AS qa4_diffnorm_v2! Which is the 99% one.",
+        "dataset_id": "qa4_diffnorm_v2_2_5norm",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "norm_multiply": 10.0,
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [16000]
+        }
+    },
+    "qa4_diffnorm_v2_2_1norm": {
+        "desc": "SHOULD BE SAME AS qa4_diffnorm_v2! Which is the 99% one.",
+        "dataset_id": "qa4_diffnorm_v2_2_5norm",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "problems": ["QA"]
+        },
+        "model": {
+            "norm_multiply": 1.0,
             "activation": "ReLU",
             "part": [0, 50000],
             "n_epochs": 500,
