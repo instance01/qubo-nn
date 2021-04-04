@@ -4720,5 +4720,52 @@
             "lr": 0.1,
             "fc_sizes": [16000]
         }
+    },
+
+    "qa4_16x16_diffnorm_v2": {
+        "dataset_id": "qa4_16x16_diffnorm_v2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "qubo_size": 16,
+            "QA": {
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "norm_multiply": 10.0,
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [64]
+        }
+    },
+
+    "qa4_100x100_diffnorm_v2_high500": {
+        "dataset_id": "qa4_100x100_diffnorm_v2_high500",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "qubo_size": 100,
+            "QA": {
+                "high": 500,
+                "size": 10
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "norm_multiply": 10.0,
+            "activation": "ReLU",
+            "part": [0, 50000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [40000]
+        }
     }
 }
