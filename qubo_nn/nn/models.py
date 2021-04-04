@@ -381,6 +381,13 @@ class ReverseOptimizer(Optimizer):
                     # # print(problem.float().tolist()[-1][:100])
                     # print('#')
 
+                    # for m in range(len(X)):
+                    #     if X[m] > 0 or X[m] < 0:
+                    #         print(X[m], round(Y[m], 3))
+                    print([round(x, 2) for x in outputs.detach().tolist()[-1][:256]])
+                    print([round(x, 2) for x in problem.float().tolist()[-1][:256]])
+                    print('#')
+
                     # Debug print weights and biases.
                     # for param in self.net.parameters():
                     #     print(param.data)

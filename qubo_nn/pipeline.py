@@ -312,6 +312,32 @@ class ReverseClassification(Classification):
             #             print(prob1, prob2)
             #             import pdb; pdb.set_trace()
 
+        if self.cfg['problems']['problems'] == ["QA"]:
+            print("Checking for duplicates.")
+            print(all_problems[0][0])
+            # import pdb; pdb.set_trace()
+
+            # # First, QUBO duplicate check
+            # for i, qubo1 in enumerate(data):
+            #     if i % 100 == 0: print(i)
+            #     for j, qubo2 in enumerate(data):
+            #         if i == j: continue
+            #         if np.allclose(qubo1, qubo2):
+            #             print(i, j)
+            #             import pdb; pdb.set_trace()
+
+            # # Then, problem duplicate check
+            # for i, prob1 in enumerate(all_problems[0]):
+            #     if i % 100 == 0: print(i)
+            #     for j, prob2 in enumerate(all_problems[0]):
+            #         if i == j:
+            #             continue
+
+            #         if (prob1["flow_matrix"] == prob2["flow_matrix"]).all() and (prob1["distance_matrix"] == prob2["distance_matrix"]).all():
+            #             print(i, j)
+            #             print(prob1, prob2)
+            #             import pdb; pdb.set_trace()
+
         all_problems_flat, output_size = self.flatten_problem_parameters(all_problems)
 
         for i, prob in enumerate(all_problems_flat):
@@ -326,13 +352,18 @@ class ReverseClassification(Classification):
 
         print(data.shape, labels.shape, all_problems_flat.shape)
 
-        print("NORM?", not self.cfg["model"]["no_norm"])
+        print("NORM?", not self.cfg["model"]["no_norm"], self.cfg["model"]["norm_multiply"])
 
         # NOTE: We are using min max normalization here.. Not standardization
         # like with classification.
         if not self.cfg["model"]["no_norm"]:
-            all_problems_flat /= np.max(np.abs(all_problems_flat))
-            all_problems_flat = (all_problems_flat + 1) / 2.
+            if self.cfg["model"]["use_norm_multiply"]:
+                all_problems_flat /= np.max(np.abs(all_problems_flat))
+                all_problems_flat *= self.cfg["model"]["norm_multiply"]
+                # qa4_diffnorm used 5., qa4_diffnorm_v2 used 10.
+            else:
+                all_problems_flat /= np.max(np.abs(all_problems_flat))
+                all_problems_flat = (all_problems_flat + 1) / 2.
 
         # all_problems_flat = (
         #     all_problems_flat - np.mean(all_problems_flat)
