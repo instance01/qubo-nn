@@ -30,8 +30,10 @@ def plot(id_):
         ax.plot(x, mean, color=col)
         ax.fill_between(x, ci[0], ci[1], color=col, alpha=.1)
 
+        print(mean[-1], "+-", mean[-1] - ci[0][-1])
+
     sub_plot(arr1, 'c')
-    plt.ylabel("Misclassification ratio")
+    plt.ylabel("Misclassification rate")
     plt.xlabel("Epoch")
     plt.tight_layout()
     plt.show()
