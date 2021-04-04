@@ -4,3 +4,4 @@ networkx
 torchvision
 torch
 dwave-qbsolv
+tensorboard
