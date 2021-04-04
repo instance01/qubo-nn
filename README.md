@@ -161,7 +161,7 @@ Reversing some problems like Quadratic Knapsack might be possible - an algorithm
 |Maximum Cut|**+**|Likely trivial.|
 |Minimum Vertex Cover|**+**|Likely trivial.|
 |Number Partitioning|**+**|Easy, create equation system from the upper triangular part of the matrix (triu).|
-|Quadratic Assignment|**-**|Needs factoring. Sometimes possible for integers, but in case of floats impossible.|
+|Quadratic Assignment|**+**|Over-determined linear system of equations -> solvable. P does not act as salt. A bit complex to learn.|
 |Quadratic Knapsack|**?**|Budgets can be deduced easily (Find argmin in first row. This column contains all the budgets.), rest possibly but not easily.|
 |Set Packing|**?**|No idea. TODO|
 |Set Partitioning|**-**|P and costs cannot be deduced from one number.|
