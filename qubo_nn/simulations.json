@@ -39,6 +39,8 @@
             "problems": ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK"]
         },
         "model": {
+            "use_norm_multiply": false,
+            "norm_multiply": 1.0,
             "activation": "ReLU",
             "class_weights": [],
             "no_norm": false,
@@ -652,6 +654,7 @@
             "activation": "LeakyReLU",
             "class_weights": [],
             "norm_data": false,
+            "use_norm_multiply": false,
             "norm_multiply": 1.0,
             "shuffle_data": true,
             "network": "FC",
@@ -4434,6 +4437,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 5.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4452,6 +4456,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 5.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4470,6 +4475,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 10.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4488,6 +4494,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 10.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4511,6 +4518,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 5.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4533,6 +4541,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 10.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4556,6 +4565,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 1.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4578,6 +4588,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 1.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4601,6 +4612,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 5.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4645,6 +4657,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 10.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4664,6 +4677,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 20.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4682,6 +4696,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 5.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4701,6 +4716,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 10.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4720,6 +4736,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 1.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4743,6 +4760,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 10.0,
             "activation": "ReLU",
             "part": [0, 50000],
@@ -4767,6 +4785,7 @@
             "problems": ["QA"]
         },
         "model": {
+            "use_norm_multiply": true,
             "norm_multiply": 10.0,
             "activation": "ReLU",
             "part": [0, 50000],
