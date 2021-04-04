@@ -55,6 +55,8 @@ class Classification:
         for i, (cls, args) in enumerate(self.problems):
             idx_start = i * n_problems
             idx_end = (i + 1) * n_problems
+            print(args)
+            print(self.problems)
             problems, qubo_matrices = self.gen_qubo_matrices(
                 cls, n_problems, **args
             )
@@ -95,8 +97,11 @@ class Classification:
 
     def gen_data_lmdb(self):
         data, labels, _ = self._gen_data(self.n_problems)
+        dirpath = 'datasets/%s/'
+        if self.cfg["use_big"]:
+            dirpath = '/big/r/ratke/qubo_datasets/%s/'
         db = px.Writer(
-            dirpath='datasets/%s/' % self.cfg['cfg_id'],
+            dirpath=dirpath % self.cfg['cfg_id'],
             map_size_limit=60000,
             ram_gb_limit=60
         )
@@ -154,9 +159,9 @@ class Classification:
         return model_fname
 
 
-class ReverseClassification(Classification):
+class ReverseRegression(Classification):
     def __init__(self, cfg):
-        super(ReverseClassification, self).__init__(cfg)
+        super(ReverseRegression, self).__init__(cfg)
 
     def flatten_problem_parameters(self, all_problems):
 

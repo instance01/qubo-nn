@@ -696,6 +696,14 @@
             "batch_size": 100
         }
     },
+    "XXX": {
+        "dataset_id": "XXX",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": true,
+            "n_problems": 1000
+        }
+    },
     "27_scramble_100k": {
         "dataset_id": "27_scramble_100k",
         "base_cfg": "23",

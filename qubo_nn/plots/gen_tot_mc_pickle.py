@@ -22,14 +22,15 @@ def aggregate(base_path, id_):
     paths = glob.glob('%s*-%s' % (base_path, id_))
 
     aggregated = []
+    aggregated_confusion_matrices = []
     for path in paths:
-        path = glob.glob(os.path.join(path, "events.out.tfevents.*"))
-        if not path:
+        tf_path = glob.glob(os.path.join(path, "events.out.tfevents.*"))
+        if not tf_path:
             continue
-        path = path[0]
+        tf_path = tf_path[0]
 
         data = []
-        for event in my_summary_iterator(path):
+        for event in my_summary_iterator(tf_path):
             if not event.summary.value:
                 continue
             tag = event.summary.value[0].tag
@@ -39,13 +40,23 @@ def aggregate(base_path, id_):
                 # print(val)
                 data.append(val)
 
+        # Also, let's get the confusion matrix:
+        path = glob.glob(os.path.join(path, "confusion_matrix_data.pickle"))
+        if not path:
+            continue  # We now require a confusion matrix.
+        path = path[0]
+        with open(path, "rb") as f:
+            matrix = pickle.load(f)
+        aggregated_confusion_matrices.append(matrix)
+
         if len(data) < 40:
             continue
         # data = smooth(data, 20)[10:-9]
         # data = smooth(data, 60)[30:-29]
-        data = data[:40]
+        data = data[:100]
         aggregated.append(data)
 
+    print(len(aggregated_confusion_matrices))
     if not aggregated:
         return []
     max_len = max(len(x) for x in aggregated)
@@ -62,13 +73,13 @@ def aggregate(base_path, id_):
     arr = np.array(aggregated_)
 
     with open('tot_misclassifications_%s.pickle' % id_, 'wb+') as f:
-        pickle.dump(arr, f)
+        pickle.dump((arr, aggregated_confusion_matrices), f)
 
     return arr
 
 
 def run():
-    aggregate('../runs/', '27_scramble_100k')
+    aggregate('../runs3/', '27_scramble_100k')
     aggregate('../runs2/', '18_lr2_leaky')
     aggregate('../runs2/', '23')
 

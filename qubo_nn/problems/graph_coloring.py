@@ -5,7 +5,7 @@ from qubo_nn.problems.util import gen_graph
 
 
 class GraphColoring(Problem):
-    def __init__(self, graph, n_colors, P=4):
+    def __init__(self, cfg, graph, n_colors, P=4):
         self.graph = graph
         self.n_colors = n_colors
         self.P = P
@@ -37,7 +37,7 @@ class GraphColoring(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, n_problems, size, n_colors, seed=None, **kwargs):
+    def gen_problems(self, cfg, n_problems, size, n_colors, seed=None, **kwargs):
         graphs = gen_graph(n_problems, size, seed)
         return [
             {"graph": graph, "n_colors": n_colors}

@@ -6,5 +6,5 @@ class Problem:
 
     # TODO Make sure overriding this works.
     @classmethod
-    def gen_problems(self, n_problems, size=20, **kwargs):
+    def gen_problems(self, cfg, n_problems, size=20, **kwargs):
         pass
