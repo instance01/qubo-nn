@@ -44,7 +44,7 @@ def plot(kv):
         'm2sat_16x16_30_F_v2': '30 clauses'
     }
 
-    fig, axs = plt.subplots(1, 1, figsize=(4, 3.0))
+    fig, axs = plt.subplots(1, 1, figsize=(5, 3.0))
 
     def calc_ci(ax, key, arr):
         # arr = arr[~np.isnan(arr)]
@@ -69,6 +69,13 @@ def plot(kv):
         axs.set_ylabel(r'$R^2$')
         axs.set_xlabel("Epoch")
 
+        # # Shrink current axis by 20%
+        # box = axs.get_position()
+        # axs.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+
+        # # Put a legend to the right of the current axis
+        # axs.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     plt.tight_layout()
     plt.show()
     fig.savefig('m2sat_comp.png')
