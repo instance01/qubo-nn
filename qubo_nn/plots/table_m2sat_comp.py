@@ -8,6 +8,9 @@ from matplotlib import pyplot as plt
 
 mpl.font_manager._rebuild()
 plt.rc('font', family='Raleway')
+n = 10
+color = plt.cm.Greens(np.linspace(.3, 1, n))[::-1]
+mpl.rcParams['axes.prop_cycle'] = plt.cycler('color', color)
 
 
 def gen_table(kv):
@@ -75,7 +78,7 @@ def plot(kv):
 
         # # Put a legend to the right of the current axis
         # axs.legend(loc='center left', bbox_to_anchor=(1, 0.5))
-    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     plt.tight_layout()
     plt.show()
     fig.savefig('m2sat_comp.png')
