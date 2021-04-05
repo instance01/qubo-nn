@@ -18,8 +18,10 @@ def smooth(y, box_pts):
     return y_smooth
 
 
-def aggregate(base_path, id_):
-    paths = glob.glob('%s*-%s' % (base_path, id_))
+def aggregate(base_paths, id_):
+    paths = []
+    for base_path in base_paths:
+        paths.extend(glob.glob('%s*-%s' % (base_path, id_)))
 
     aggregated = []
     aggregated_confusion_matrices = []
@@ -79,9 +81,10 @@ def aggregate(base_path, id_):
 
 
 def run():
-    aggregate('../runs3/', '27_scramble_100k')
-    aggregate('../runs2/', '18_lr2_leaky')
-    aggregate('../runs2/', '23')
+    aggregate(['../runs3/', '../runs/'], '27_scramble_100k')
+    aggregate(['../runs/'], '27_noscramble_100k')
+    aggregate(['../runs2/'], '18_lr2_leaky')
+    aggregate(['../runs2/'], '23')
 
 
 if __name__ == '__main__':
