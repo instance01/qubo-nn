@@ -1,23 +1,16 @@
-import os
-import sys
-import glob
 import pickle
-from collections import defaultdict
 
-import scipy.stats as st
 import numpy as np
+import scipy.stats as st
+import matplotlib as mpl
+from matplotlib import pyplot as plt
 
 
-def plot(kv):
-    tags = {
-        'm2sat_16x16_5_F_v2': 'Maximum Cut',
-        'm2sat_16x16_5_F_v2': 'Number Partitioning',
-        'm2sat_16x16_5_F_v2': 'Graph Coloring',
-        'm2sat_16x16_5_F_v2': 'Minimum Vertex Cover',
-        'm2sat_16x16_5_F_v2': 'Maximum Cut - edges',
-        'm2sat_16x16_5_F_v2': 'Maximum Cut - edges'
-    }
+mpl.font_manager._rebuild()
+plt.rc('font', family='Raleway')
 
+
+def gen_table(kv):
     def calc_ci(key, arr):
         arr = arr[~np.isnan(arr)]
         arr = arr[arr != 0.]
@@ -41,9 +34,51 @@ def plot(kv):
         print(k, "R2", "%.3f" % mean, "+-", "%.3f" % range_)
 
 
+def plot(kv):
+    tags = {
+        'm2sat_16x16_5_F_v2': '5 clauses',
+        'm2sat_16x16_10_F_v2': '10 clauses',
+        'm2sat_16x16_15_F_v2': '15 clauses',
+        'm2sat_16x16_20_F_v2': '20 clauses',
+        'm2sat_16x16_25_F_v2': '25 clauses',
+        'm2sat_16x16_30_F_v2': '30 clauses'
+    }
+
+    fig, axs = plt.subplots(1, 1, figsize=(4, 3.0))
+
+    def calc_ci(ax, key, arr):
+        # arr = arr[~np.isnan(arr)]
+        # arr = arr[arr != 0.]
+        mean = np.mean(arr, axis=0)
+        ci = st.t.interval(
+            0.95,
+            len(arr) - 1,
+            loc=np.mean(arr, axis=0),
+            scale=st.sem(arr, axis=0)
+        )
+
+        x = np.arange(len(mean))
+
+        ax.plot(x, mean, label=tags[key])
+        ax.fill_between(x, ci[0], ci[1], alpha=.2)
+
+    for k, v in kv.items():
+        calc_ci(axs, k, v[1][:, :20])  # r2
+
+        axs.legend()
+        axs.set_ylabel(r'$R^2$')
+        axs.set_xlabel("Epoch")
+
+    plt.tight_layout()
+    plt.show()
+    fig.savefig('m2sat_comp.png')
+    fig.savefig('m2sat_comp.pdf')
+
+
 def run():
     with open('m2sat_comp.pickle', 'rb') as f:
         kv = pickle.load(f)
+    gen_table(kv)
     plot(kv)
 
 
