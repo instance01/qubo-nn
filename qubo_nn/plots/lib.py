@@ -36,6 +36,8 @@ def aggregate_single(paths, desired_tag, min_len, cutoff=None):
 
         # data = smooth(data, 20)[10:-9]
         # data = smooth(data, 60)[30:-29]
+        if len(data) == 0:
+            continue
         print(len(data), data[-1])
         if cutoff is not None:
             data = data[:cutoff]
