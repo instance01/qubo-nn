@@ -5154,9 +5154,10 @@
             "activation": "LeakyReLU",
             "part": [0, 200000],
             "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [1024]
+            "fc_sizes": [1024],
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
     "qa_N_16_norm2": {
@@ -5177,9 +5178,11 @@
             "activation": "LeakyReLU",
             "part": [0, 200000],
             "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [1024]
+            "fc_sizes": [1024],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
     "qa_N_16_norm3": {
@@ -5200,9 +5203,11 @@
             "activation": "LeakyReLU",
             "part": [0, 200000],
             "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [1024]
+            "fc_sizes": [1024],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
 
@@ -5223,10 +5228,12 @@
             "norm_multiply": 1.0,
             "activation": "LeakyReLU",
             "part": [0, 200000],
-            "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [4096]
+            "n_epochs": 100,
+            "fc_sizes": [4096],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
     "qa_N_64_norm2": {
@@ -5246,10 +5253,12 @@
             "norm_multiply": 2.0,
             "activation": "LeakyReLU",
             "part": [0, 200000],
-            "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [4096]
+            "n_epochs": 100,
+            "fc_sizes": [4096],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
     "qa_N_64_norm3": {
@@ -5269,10 +5278,12 @@
             "norm_multiply": 3.0,
             "activation": "LeakyReLU",
             "part": [0, 200000],
-            "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [4096]
+            "n_epochs": 100,
+            "fc_sizes": [4096],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
 
@@ -5293,10 +5304,12 @@
             "norm_multiply": 1.0,
             "activation": "LeakyReLU",
             "part": [0, 200000],
-            "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [8192]
+            "n_epochs": 200,
+            "fc_sizes": [10000],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
     "qa_N_100_norm2": {
@@ -5316,10 +5329,12 @@
             "norm_multiply": 2.0,
             "activation": "LeakyReLU",
             "part": [0, 200000],
-            "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [8192]
+            "n_epochs": 200,
+            "fc_sizes": [10000],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
     "qa_N_100_norm3": {
@@ -5339,10 +5354,12 @@
             "norm_multiply": 3.0,
             "activation": "LeakyReLU",
             "part": [0, 200000],
-            "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [8192]
+            "n_epochs": 200,
+            "fc_sizes": [10000],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
 
@@ -5363,10 +5380,12 @@
             "norm_multiply": 1.0,
             "activation": "LeakyReLU",
             "part": [0, 200000],
-            "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [16396]
+            "n_epochs": 200,
+            "fc_sizes": [20000],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
     "qa_N_144_norm2": {
@@ -5386,10 +5405,12 @@
             "norm_multiply": 2.0,
             "activation": "LeakyReLU",
             "part": [0, 200000],
-            "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [16396]
+            "n_epochs": 200,
+            "fc_sizes": [20000],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
     "qa_N_144_norm3": {
@@ -5409,10 +5430,12 @@
             "norm_multiply": 3.0,
             "activation": "LeakyReLU",
             "part": [0, 200000],
-            "n_epochs": 500,
-            "batch_size": 500,
-            "lr": 0.1,
-            "fc_sizes": [16396]
+            "n_epochs": 200,
+            "fc_sizes": [20000],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
         }
     },
 
@@ -5482,7 +5505,55 @@
             "n_epochs": 500,
             "batch_size": 10,
             "lr": 0.1,
-            "fc_sizes": [100, 40, 40, 40, 40, 40, 40, 40, 40]
+            "fc_sizes": [1000, 200, 100]
+        }
+    },
+    "qa_N_16_norm3_5": {
+        "dataset_id": "qa_N_16_norm3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 16,
+            "QA": {
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 10,
+            "lr": 0.0001,
+            "fc_sizes": [2000, 2000, 2000, 2000],
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_16_norm3_6": {
+        "dataset_id": "qa_N_16_norm3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 16,
+            "QA": {
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 10,
+            "lr": 0.0001,
+            "fc_sizes": [20000, 20000, 20000],
+            "optimizer": "Adam"
         }
     },
     "qa_N_64_norm3_2": {
@@ -5506,6 +5577,272 @@
             "batch_size": 500,
             "lr": 0.1,
             "fc_sizes": [8192]
+        }
+    },
+
+    "qa_N_16_norm3_1M": {
+        "dataset_id": "qa_N_16_norm3_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
+            "qubo_size": 16,
+            "QA": {
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 500,
+            "batch_size": 10,
+            "lr": 0.1,
+            "fc_sizes": [1000, 200, 200]
+        }
+    },
+    "qa_N_16_norm3_1M_2": {
+        "dataset_id": "qa_N_16_norm3_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
+            "qubo_size": 16,
+            "QA": {
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 500,
+            "batch_size": 10,
+            "lr": 0.0001,
+            "fc_sizes": [5000, 500, 500],
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_16_norm3_1M_3": {
+        "dataset_id": "qa_N_16_norm3_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
+            "qubo_size": 16,
+            "QA": {
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 500,
+            "batch_size": 10,
+            "lr": 0.0001,
+            "fc_sizes": [10000, 1000, 1000],
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_16_norm3_1M_4": {
+        "dataset_id": "qa_N_16_norm3_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
+            "qubo_size": 16,
+            "QA": {
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 500,
+            "batch_size": 10,
+            "lr": 0.0001,
+            "fc_sizes": [10000, 500, 500, 50],
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_16_norm3_1M_5": {
+        "dataset_id": "qa_N_16_norm3_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
+            "qubo_size": 16,
+            "QA": {
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 500,
+            "batch_size": 10,
+            "lr": 0.0001,
+            "fc_sizes": [10000, 5000, 5000],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qa_N_100_norm1_2": {
+        "dataset_id": "qa_N_100_norm1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 100,
+            "QA": {
+                "size": 10
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 1.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [100000],
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_100_norm1_3": {
+        "dataset_id": "qa_N_100_norm1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 100,
+            "QA": {
+                "size": 10
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 1.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [200000],
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_100_norm3_2": {
+        "dataset_id": "qa_N_100_norm3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 100,
+            "QA": {
+                "size": 10
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 1.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [100000],
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_100_norm3_3": {
+        "dataset_id": "qa_N_100_norm3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 100,
+            "QA": {
+                "size": 10
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 1.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [200000],
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_100_norm3_4": {
+        "dataset_id": "qa_N_100_norm3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 100,
+            "QA": {
+                "size": 10
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [10000, 5000]
+        }
+    },
+
+    "qa_N_16_norm3_goddamn": {
+        "dataset_id": "qa_N_16_norm3_goddamn",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 16,
+            "QA": {
+                "debug": true,
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 20,
+            "batch_size": 10,
+            "lr": 0.0001,
+            "fc_sizes": [1000],
+            "optimizer": "Adam"
         }
     }
 }
