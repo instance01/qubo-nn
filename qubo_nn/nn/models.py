@@ -1,4 +1,5 @@
 import sys
+import pickle
 import collections
 
 import numpy as np
@@ -71,6 +72,13 @@ class ReverseFCNet(nn.Module):
         super(ReverseFCNet, self).__init__()
         input_size = cfg['problems']['qubo_size'] ** 2
 
+        self.is_qa = cfg['problems']['problems'] == ['QA']
+
+        # QA has a simplified input space.
+        if self.is_qa:
+            n = int((input_size ** .5) ** .5)
+            input_size = int((n * (n - 1) / 2) ** 2)
+
         activation_type = cfg['model']['activation']
         if activation_type == "ReLU":
             activation_cls = nn.ReLU
@@ -93,16 +101,9 @@ class ReverseFCNet(nn.Module):
         print(self.fc_net)
 
     def forward(self, x):
-        x = torch.flatten(x, 1)
+        if not self.is_qa:
+            x = torch.flatten(x, 1)
         return self.fc_net(x)
-
-
-class CNNNet(nn.Module):
-    pass  # TODO
-
-
-class RNNNet(nn.Module):
-    pass  # TODO
 
 
 class Optimizer:
@@ -370,7 +371,7 @@ class ReverseOptimizer(Optimizer):
                 # TODO!!! What if batch_size is not a factor of total size.
                 # Then the last term will be wrong.
                 batch_loss += loss.item() * self.batch_size
-                if i % 100 == 0:
+                if i % 1000 == 0:
                     X = problem.float().tolist()[-1]#[:200]
                     Y = outputs.detach().tolist()[-1]#[:200]
                     # print('')
@@ -407,13 +408,8 @@ class ReverseOptimizer(Optimizer):
 
             self.net.eval()
             data = {}
-            test_loss, problem_losses, _, _, _ = self.eval(epoch, do_print=False, debug=epoch % 10 == 0)
-            problem_losses = {
-                prob: problem_losses[i]
-                for i, prob in enumerate(self.cfg['problems']['problems'])
-            }
+            test_loss, _, _, _ = self.eval(epoch, do_print=False, debug=epoch % 10 == 0)
             data['loss_eval'] = test_loss
-            data['problem_losses'] = problem_losses
             self.logger.log_eval_reverse(data, epoch)
             self.net.train()
         print('')
@@ -423,8 +419,6 @@ class ReverseOptimizer(Optimizer):
             self.cfg['problems']['problems'] == ["M3SAT"]
 
         n_classes = len(self.cfg['problems']['problems'])
-        problem_losses = np.zeros(shape=(n_classes,), dtype=np.float32)
-        n_class_labels = np.zeros(shape=(n_classes,), dtype=np.float32)
 
         wrong_regressions3 = 0
         tot3_fp = 0
@@ -435,12 +429,23 @@ class ReverseOptimizer(Optimizer):
         ssm_mean = None
         n = 0
 
+        max_mistake_loss = 0.
+        max_mistake = None
+
+        debugdata = []
+
         self.net.eval()
         total_loss = 0.0
         for i, data in enumerate(self.lmdb_loader.test_data_loader):
             inputs, labels, prob = data
             outputs = self.net(inputs)
             loss = self.criterion(outputs, prob)
+
+            if loss > max_mistake_loss:
+                max_mistake = (inputs, labels, prob, outputs)
+                max_mistake_loss = loss
+            # if epoch >= 10:
+            #     debugdata.append((loss.detach().item(), inputs.detach().numpy(), outputs.detach().numpy(), prob.numpy()))
 
             sse += ((prob.numpy() - outputs[0].detach().numpy()) ** 2).sum()
             if ssm_mean is None:
@@ -506,9 +511,6 @@ class ReverseOptimizer(Optimizer):
                 tot3_fn += FN
                 tot3 += TOT
 
-            problem_losses[labels.item()] += loss
-            n_class_labels[labels.item()] += 1
-
             total_loss += loss.item()
             if do_print and i % 1000 == 0:
                 msg = '[%d] loss: %.3f' % (i, total_loss / (i + 1))
@@ -523,19 +525,21 @@ class ReverseOptimizer(Optimizer):
         R2 = 1 - (sse / ssm)
         print(" ", sse, ssm)
         print("R2", R2)
+        print(max_mistake_loss, "\n", max_mistake)
+        # if epoch >= 10:
+        #     with open("qa_debug.pickle", "wb+") as f:
+        #         pickle.dump(debugdata, f)
+        #     import pdb; pdb.set_trace()
         self.logger.log_custom_reverse_kpi("R2", R2, epoch)
 
         data_len = len(self.lmdb_loader.test_data_loader)
-
-        for c in range(n_classes):
-            problem_losses[c] /= n_class_labels[c]
 
         if debug:
             print('\n~~~~~ EVAL ~~~~~')
             print('.3', tot3_fp, tot3_fn, tot3, (tot3_fp + tot3_fn) / tot3, wrong_regressions3, data_len)
             self.logger.log_custom_reverse_kpi("FPFN_TOT_Ratio", (tot3_fp + tot3_fn) / tot3, epoch)
 
-        return total_loss / data_len, problem_losses, tot3_fp, tot3_fn, tot3
+        return total_loss / data_len, tot3_fp, tot3_fn, tot3
 
     def save(self, model_fname):
         torch.save(self.net.state_dict(), 'models/' + model_fname)

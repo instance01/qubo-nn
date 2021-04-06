@@ -316,30 +316,22 @@ class ReverseRegression(Classification):
             #             import pdb; pdb.set_trace()
 
         if self.cfg['problems']['problems'] == ["QA"]:
-            print("Checking for duplicates.")
+            print("Simplifying input space..")
             print(all_problems[0][0])
-            # import pdb; pdb.set_trace()
 
-            # # First, QUBO duplicate check
-            # for i, qubo1 in enumerate(data):
-            #     if i % 100 == 0: print(i)
-            #     for j, qubo2 in enumerate(data):
-            #         if i == j: continue
-            #         if np.allclose(qubo1, qubo2):
-            #             print(i, j)
-            #             import pdb; pdb.set_trace()
+            new_data = []
 
-            # # Then, problem duplicate check
-            # for i, prob1 in enumerate(all_problems[0]):
-            #     if i % 100 == 0: print(i)
-            #     for j, prob2 in enumerate(all_problems[0]):
-            #         if i == j:
-            #             continue
+            size = self.cfg["problems"]["QA"]["size"]
 
-            #         if (prob1["flow_matrix"] == prob2["flow_matrix"]).all() and (prob1["distance_matrix"] == prob2["distance_matrix"]).all():
-            #             print(i, j)
-            #             print(prob1, prob2)
-            #             import pdb; pdb.set_trace()
+            for k, d in enumerate(data):
+                tmp_data = []
+                triu_idx = np.triu_indices(size, 1)
+                for i, j in zip(*triu_idx):
+                    quadrant = d[i*size:(i+1)*size, j*size:(j+1)*size]
+                    x = quadrant[np.triu_indices(size, 1)]
+                    tmp_data.extend(x)
+                new_data.append(tmp_data)
+            data = np.array(new_data)
 
         all_problems_flat, output_size = self.flatten_problem_parameters(all_problems)
 
@@ -360,6 +352,7 @@ class ReverseRegression(Classification):
         # NOTE: We are using min max normalization here.. Not standardization
         # like with classification.
         if not self.cfg["model"]["no_norm"]:
+            print("use norm multiply?", self.cfg["model"]["use_norm_multiply"])
             if self.cfg["model"]["use_norm_multiply"]:
                 all_problems_flat /= np.max(np.abs(all_problems_flat))
                 all_problems_flat *= self.cfg["model"]["norm_multiply"]
