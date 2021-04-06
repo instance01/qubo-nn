@@ -55,12 +55,6 @@ class Logger:
 
     def log_eval_reverse(self, data, n_iter):
         self.writer.add_scalar('Loss/Eval', data['loss_eval'], n_iter)
-        for k, v in data['problem_losses'].items():
-            self.writer.add_scalar(
-                'Problem_Loss/' + k,
-                v,
-                n_iter
-            )
 
     def log_custom_reverse_kpi(self, kpi, data, n_iter):
         self.writer.add_scalar('Custom/' + kpi, data, n_iter)
