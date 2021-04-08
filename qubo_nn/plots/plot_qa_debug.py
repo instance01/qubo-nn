@@ -18,10 +18,10 @@ x = []  # good ones
 y = []  # bad ones
 for d in data:
     if d[0] > loss90:
-        y.append((d[3][0], d[2][0]))
+        y.append((d[3][0], d[2][0], d[1][0]))
         avg_diff_y += abs(np.average(d[3][0][:16]) - np.average(d[3][0][16:]))
     elif d[0] < loss10:
-        x.append((d[3][0], d[2][0]))
+        x.append((d[3][0], d[2][0], d[1][0]))
         avg_diff_x += abs(np.average(d[3][0][:16]) - np.average(d[3][0][16:]))
 
 print(avg_diff_x / 1000., avg_diff_y / 1000.)
@@ -32,6 +32,8 @@ width = np.min(np.diff(idx)) / 3
 print(len(x), len(y))
 
 for i in range(20):
+    print(y[i][2])
+
     fig, axs = plt.subplots(1, 2, figsize=(12, 4))
 
     ax = axs[0]

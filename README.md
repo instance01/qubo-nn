@@ -156,7 +156,7 @@ Reversing some problems like Quadratic Knapsack might be possible - an algorithm
 |Problem|Reversibility|Comment|
 |-------|-------------|-------|
 |Graph Coloring|**+**|Likely trivial.|
-|Maximum 2-SAT|**?**|Very complex to learn, but possible?|
+|Maximum 2-SAT|**?**|Very complex to learn, but possible? C.f. `m2sat_to_bip.py` in `contrib`.|
 |Maximum 3-SAT|**?**|Very complex to learn, but possible?|
 |Maximum Cut|**+**|Likely trivial.|
 |Minimum Vertex Cover|**+**|Likely trivial.|
