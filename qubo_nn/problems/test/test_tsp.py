@@ -10,6 +10,7 @@ class TestTSP(unittest.TestCase):
         Test case from: https://arxiv.org/pdf/1811.11538.pdf
         """
         problem = TSP(
+            {},
             [[0, 1/3., 2/3.], [1/3., 0, 1/3.], [1, 1/3., 0]],
             400
         )
@@ -30,6 +31,7 @@ class TestTSP(unittest.TestCase):
 
         m = [[0, 1, 1.41, 2.23, 1], [1, 0, 1, 1.41, 2], [1.41, 1, 0, 1, 2.23], [2.23, 1.41, 1, 0, 3.16], [1, 2, 2.23, 3.16, 0]]
         problem = TSP(
+            {},
             m / np.max(m),
             400
         )
@@ -67,7 +69,7 @@ class TestTSP(unittest.TestCase):
     def test_gen_problems(self):
         st0 = np.random.get_state()
         np.random.seed(1)
-        data = TSP.gen_problems(1, size=4)
+        data = TSP.gen_problems({}, 1, size=4)
         np.random.set_state(st0)
 
         self.assertCountEqual(

@@ -12,7 +12,7 @@ class TestGraphColoring(unittest.TestCase):
         graph = networkx.Graph(
             [(1, 2), (2, 3), (3, 4), (2, 5), (1, 5), (4, 5), (4, 2)]
         )
-        problem = GraphColoring(graph, 3)
+        problem = GraphColoring({}, graph, 3)
         matrix = problem.gen_qubo_matrix()
         want = [
             [-4., 4., 4., 2., 0., 0., 0., 0., 0., 0., 0., 0., 2., 0., 0.],

@@ -9,7 +9,7 @@ class TestNumberPartitioning(unittest.TestCase):
 
         Test case from: https://arxiv.org/pdf/1811.11538.pdf
         """
-        problem = NumberPartitioning([25, 7, 13, 31, 42, 17, 21, 10])
+        problem = NumberPartitioning({}, [25, 7, 13, 31, 42, 17, 21, 10])
         matrix = problem.gen_qubo_matrix()
         want = [
             [-3525, 175, 325, 775, 1050, 425, 525, 250],
@@ -26,7 +26,7 @@ class TestNumberPartitioning(unittest.TestCase):
     def test_gen_problems(self):
         st0 = np.random.get_state()
         np.random.seed(1)
-        data = NumberPartitioning.gen_problems(1, size=20)
+        data = NumberPartitioning.gen_problems({}, 1, size=20)
         np.random.set_state(st0)
         self.assertCountEqual(
             data[0]["numbers"].tolist(),

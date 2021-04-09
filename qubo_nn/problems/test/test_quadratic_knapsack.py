@@ -16,7 +16,7 @@ class TestQuadraticKnapsack(unittest.TestCase):
             [5, 3, 2, 4]
         ])
         budgets = np.array([8, 6, 5, 3])
-        problem = QuadraticKnapsack(projects, budgets, 16, 10)
+        problem = QuadraticKnapsack({}, projects, budgets, 16, 10)
         matrix = problem.gen_qubo_matrix()
         want = [
             [1922.,-476.,-397.,-235., -80.,-160.,-320.,-640.],
@@ -33,7 +33,7 @@ class TestQuadraticKnapsack(unittest.TestCase):
     def test_gen_problems(self):
         st0 = np.random.get_state()
         np.random.seed(1)
-        data = QuadraticKnapsack.gen_problems(1, size=4)
+        data = QuadraticKnapsack.gen_problems({}, 1, size=4)
         np.random.set_state(st0)
 
         self.assertCountEqual(

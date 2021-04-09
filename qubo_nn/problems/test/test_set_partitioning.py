@@ -10,6 +10,7 @@ class TestSetPartitioning(unittest.TestCase):
         Test case from: https://arxiv.org/pdf/1811.11538.pdf
         """
         problem = SetPartitioning(
+            {},
             [1, 2, 3, 4],
             [[1, 4], [2, 4], [1, 2, 3], [3, 4], [2, 3], [1, 2, 4]],
             [3, 2, 1, 1, 3, 2]
@@ -28,7 +29,7 @@ class TestSetPartitioning(unittest.TestCase):
     def test_gen_problems(self):
         st0 = random.getstate()
         random.seed(1)
-        data = SetPartitioning.gen_problems(1, size=(20, 25))
+        data = SetPartitioning.gen_problems({}, 1, size=(20, 25))
         random.setstate(st0)
         self.assertCountEqual(
             data[0]["set_"],

@@ -29,7 +29,18 @@ class SetPacking(Problem):
         return Q
 
     @classmethod
-    def gen_problems(self, cfg, n_problems, size=(20, 25), **kwargs):
+    def gen_matrix(cls, set_, subsets):
+        B = np.zeros((len(set_), len(subsets)))
+
+        for m, x in enumerate(set_):
+            for i, subset in enumerate(subsets):
+                if x in subset:
+                    B[m][i] = 1
+
+        return B
+
+    @classmethod
+    def gen_problems(cls, cfg, n_problems, size=(20, 25), **kwargs):
         sorting = cfg["problems"]["SP"].get("sorting", False)
 
         problems = []
@@ -51,12 +62,7 @@ class SetPacking(Problem):
                 continue
             uniques.add(tuple(subsets))
 
-            B = np.zeros((len(set_), len(subsets)))
-
-            for m, x in enumerate(set_):
-                for i, subset in enumerate(subsets):
-                    if x in subset:
-                        B[m][i] = 1
+            B = SetPacking.gen_matrix(set_, subsets)
 
             # Sort it.
             if sorting:

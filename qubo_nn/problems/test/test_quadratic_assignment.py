@@ -19,7 +19,7 @@ class TestQuadraticAssignment(unittest.TestCase):
             [8, 0, 13],
             [15, 13, 0]
         ])
-        problem = QuadraticAssignment(X, Y, 200)
+        problem = QuadraticAssignment({"problems": {"QA": {}}}, X, Y, 200)
         matrix = problem.gen_qubo_matrix()
         want = [
             [-400., 200., 200., 200.,  40.,  75., 200.,  16.,  30.],
@@ -37,23 +37,27 @@ class TestQuadraticAssignment(unittest.TestCase):
     def test_gen_problems(self):
         st0 = np.random.get_state()
         np.random.seed(1)
-        data = QuadraticAssignment.gen_problems(1, size=4)
+        data = QuadraticAssignment.gen_problems(
+            {"problems": {"QA": {"debug": True}}},
+            1,
+            size=4
+        )
         np.random.set_state(st0)
         self.assertCountEqual(
             data[0]["flow_matrix"].tolist(),
             [
-                [37, 43, 12,  8],
-                [ 9, 11,  5, 15],
-                [ 0, 16,  1, 12],
-                [ 7, 45,  6, 25]
+                [0, 1, 46, 22],
+                [1, 0, 31, 36],
+                [46, 31, 0, 20],
+                [22, 36, 20, 0]
             ]
         )
         self.assertCountEqual(
             data[0]["distance_matrix"].tolist(),
             [
-                [20, 37, 18, 20],
-                [11, 42, 28, 29],
-                [14,  4, 23, 23],
-                [41, 49, 30, 32]
+                [0, 1, 24, 11],
+                [1, 0, 5, 29],
+                [24, 5, 0, 48],
+                [11, 29, 48, 0]
             ]
         )

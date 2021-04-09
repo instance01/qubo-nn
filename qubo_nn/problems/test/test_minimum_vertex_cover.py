@@ -12,7 +12,7 @@ class TestMinimumVertexCover(unittest.TestCase):
         graph = networkx.Graph(
             [(1, 2), (1, 3), (2, 4), (3, 4), (4, 5), (3, 5)]
         )
-        problem = MinimumVertexCover(graph)
+        problem = MinimumVertexCover({}, graph)
         matrix = problem.gen_qubo_matrix()
         want = [
             [-15, 4, 4, 0, 0],
