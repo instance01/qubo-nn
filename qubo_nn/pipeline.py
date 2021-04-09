@@ -333,6 +333,14 @@ class ReverseRegression(Classification):
                 new_data.append(tmp_data)
             data = np.array(new_data)
 
+        if self.cfg['problems']['problems'] == ["SP"]:
+            len_ = len(all_problems[0])
+            data = data[:len_]
+            labels = labels[:len_]
+
+            print(data[0])
+            print(all_problems[0][0])
+
         all_problems_flat, output_size = self.flatten_problem_parameters(all_problems)
 
         for i, prob in enumerate(all_problems_flat):
