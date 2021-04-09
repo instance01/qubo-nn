@@ -4,7 +4,6 @@ import numpy as np
 import scipy.stats as st
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-import cycler
 
 
 np.seterr(divide='ignore', invalid='ignore')
