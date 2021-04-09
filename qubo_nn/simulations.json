@@ -5844,5 +5844,312 @@
             "fc_sizes": [1000],
             "optimizer": "Adam"
         }
+    },
+
+    "sp0": {
+        "dataset_id": "sp0",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 4,
+            "n_problems": 10000,
+            "SP": {
+                "size": [3, 4]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100],
+            "optimizer": "Adam"
+        }
+    },
+    "sp0_1": {
+        "dataset_id": "sp0",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 4,
+            "n_problems": 10000,
+            "SP": {
+                "size": [3, 4]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [1000],
+            "optimizer": "Adam"
+        }
+    },
+    "sp0_2": {
+        "dataset_id": "sp0",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 4,
+            "n_problems": 10000,
+            "SP": {
+                "size": [3, 4]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 1500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "sp0_3": {
+        "dataset_id": "sp0",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 4,
+            "n_problems": 10000,
+            "SP": {
+                "size": [3, 4]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100, 100],
+            "optimizer": "Adam"
+        }
+    },
+
+    "sp1": {
+        "dataset_id": "sp1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 8,
+            "n_problems": 10000,
+            "SP": {
+                "size": [6, 8]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100],
+            "optimizer": "Adam"
+        }
+    },
+
+    "sp2": {
+        "dataset_id": "sp1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 8,
+            "n_problems": 10000,
+            "SP": {
+                "size": [6, 8]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [2000, 1000, 100],
+            "optimizer": "Adam"
+        }
+    },
+
+    "sp3": {
+        "dataset_id": "sp1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 8,
+            "n_problems": 10000,
+            "SP": {
+                "size": [6, 8]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100],
+            "optimizer": "Adam"
+        }
+    },
+
+    "sp4": {
+        "dataset_id": "sp4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 10000,
+            "SP": {
+                "size": [6, 16]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100],
+            "optimizer": "Adam"
+        }
+    },
+    "sp5": {
+        "dataset_id": "sp5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 10000,
+            "SP": {
+                "size": [20, 16]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100],
+            "optimizer": "Adam"
+        }
+    },
+    "sp6": {
+        "dataset_id": "sp6",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 10000,
+            "SP": {
+                "size": [12, 16]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100],
+            "optimizer": "Adam"
+        }
+    },
+    "sp4_sort": {
+        "dataset_id": "sp4_sort",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 10000,
+            "SP": {
+                "sorting": true,
+                "size": [6, 16]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100],
+            "optimizer": "Adam"
+        }
+    },
+    "sp5_sort": {
+        "dataset_id": "sp5_sort",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 10000,
+            "SP": {
+                "sorting": true,
+                "size": [20, 16]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100],
+            "optimizer": "Adam"
+        }
+    },
+    "sp6_sort": {
+        "dataset_id": "sp6_sort",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 10000,
+            "SP": {
+                "sorting": true,
+                "size": [12, 16]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 10000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100],
+            "optimizer": "Adam"
+        }
     }
 }
