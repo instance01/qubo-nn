@@ -3,8 +3,8 @@ import json
 
 
 class Config:
-    def __init__(self):
-        with open('simulations.json', 'r') as f:
+    def __init__(self, base_path=''):
+        with open(base_path + 'simulations.json', 'r') as f:
             self.cfg = json.load(f)
 
     def _update_cfg(self, base_cfg, new_cfg):
