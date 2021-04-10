@@ -1,10 +1,16 @@
 import pickle
 
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 from qubo_nn.config import Config
 from qubo_nn.pipeline import ReverseOptimizer
+
+
+mpl.font_manager._rebuild()
+plt.rc('font', family='Raleway')
+plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.Set2.colors)
 
 
 kv = {
@@ -61,7 +67,7 @@ def plot_hist(cfg_id, labels=True):
     optimizer = ReverseOptimizer(cfg, None, None, output_size)
     optimizer.load(model_fname, output_size)
 
-    fig, ax = plt.subplots(figsize=(8, 8))
+    fig, ax = plt.subplots(figsize=(6, 6))
 
     # data = list(optimizer.net.named_parameters())[0][1].detach().numpy().flatten()
     # ax.hist(data, 30000)
@@ -97,11 +103,15 @@ def plot_hist(cfg_id, labels=True):
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
     plt.tight_layout()
-    plt.savefig('weights_hist_' + cfg_id + '2.png')
-    plt.savefig('weights_hist_' + cfg_id + '2.pdf')
+    if labels:
+        plt.savefig('weights_hist_' + cfg_id + '2.png')
+        plt.savefig('weights_hist_' + cfg_id + '2.pdf')
+    else:
+        plt.savefig('weights_hist_' + cfg_id + '.png')
+        plt.savefig('weights_hist_' + cfg_id + '.pdf')
     plt.show()
 
 
 for k in kv:
     # plot_matrix(k)
-    plot_hist(k, True)
+    plot_hist(k, False)
