@@ -6151,5 +6151,14 @@
             "fc_sizes": [100, 100, 100],
             "optimizer": "Adam"
         }
+    },
+
+    "27_scramble_10k_mini": {
+        "dataset_id": "27_scramble_10k_mini",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": true,
+            "n_problems": 10000
+        }
     }
 }
