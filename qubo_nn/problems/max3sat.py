@@ -127,9 +127,4 @@ class Max3SAT(Problem):
                 problems.append(sorted(problem))
         len_ = len(problems)
 
-        # # TODO Suboptimal solution tbh fam.
-        # if len_ < n_problems:
-        #     problems = np.array(problems)
-        #     problems = problems.repeat(n_problems // len_ + 1, axis=0)
-        #     problems = problems[:-(len_ - n_problems % len_)]
         return [{"clauses": problem, "n_vars": size[0]} for problem in problems]

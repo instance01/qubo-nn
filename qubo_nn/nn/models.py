@@ -362,7 +362,7 @@ class ReverseOptimizer(Optimizer):
 
                 self.optimizer.zero_grad()
 
-                outputs = self.net(inputs)
+                outputs = self.net(inputs.float())
 
                 loss = self.criterion(outputs, problem.float())
                 loss.backward()
@@ -438,7 +438,7 @@ class ReverseOptimizer(Optimizer):
         total_loss = 0.0
         for i, data in enumerate(self.lmdb_loader.test_data_loader):
             inputs, labels, prob = data
-            outputs = self.net(inputs)
+            outputs = self.net(inputs.float())
             loss = self.criterion(outputs, prob)
 
             if loss > max_mistake_loss:
@@ -525,7 +525,8 @@ class ReverseOptimizer(Optimizer):
         R2 = 1 - (sse / ssm)
         print(" ", sse, ssm)
         print("R2", R2)
-        print(max_mistake_loss, "\n", max_mistake)
+        # print("MAX MISTAKE", max_mistake_loss, "\n", max_mistake)
+
         # if epoch >= 10:
         #     with open("qa_debug.pickle", "wb+") as f:
         #         pickle.dump(debugdata, f)

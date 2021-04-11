@@ -32,8 +32,11 @@ class QuadraticKnapsack(Problem):
         # TODO: 30, 50 is hardcoded !!!
         problems = []
         for _ in range(n_problems):
+            projects = np.random.randint(low=0, high=30, size=(size, size))
+            projects = np.tril(projects) + np.tril(projects, -1).T
+
             problems.append((
-                np.random.randint(low=0, high=30, size=(size, size)),
+                projects,
                 np.random.randint(low=0, high=30, size=(size,)),
                 # np.random.randint(low=30, high=50)
                 constraint
