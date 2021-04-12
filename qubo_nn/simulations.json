@@ -6353,6 +6353,30 @@
         }
     },
 
+    "m3sat_20V_10_F": {
+        "dataset_id": "m3sat_20V_10_F",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 30,
+            "M3SAT": {
+                "check_duplicates": true,
+                "size": [20, 10]
+            },
+            "problems": ["M3SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 943],
+            "n_epochs": 200,
+            "batch_size": 100,
+            "lr": 0.0001,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
     "m3sat_5V_5_F": {
         "dataset_id": "m3sat_5V_5_F",
         "base_cfg": "1",
@@ -6578,7 +6602,7 @@
         "base_cfg": "1",
         "problems": {
             "scramble_qubos": false,
-            "n_problems": 1000000,
+            "n_problems": 500000,
             "qubo_size": 20,
             "M3SAT": {
                 "check_duplicates": true,
@@ -6589,7 +6613,7 @@
         "model": {
             "no_norm": true,
             "activation": "ReLU",
-            "part": [0, 1000000],
+            "part": [0, 500000],
             "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
@@ -6622,6 +6646,30 @@
         }
     },
 
+    "m3sat_5V_10_A": {
+        "dataset_id": "m3sat_5V_10_A",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
+            "qubo_size": 10,
+            "M3SAT": {
+                "check_duplicates": true,
+                "size": [5, 10]
+            },
+            "problems": ["M3SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "part": [0, 1000000],
+            "n_epochs": 200,
+            "batch_size": 100,
+            "lr": 0.0001,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
     "m3sat_5V_5_A": {
         "dataset_id": "m3sat_5V_5_A",
         "base_cfg": "1",
@@ -6737,7 +6785,7 @@
             "no_norm": true,
             "activation": "LeakyReLU",
             "part": [0, 1000000],
-            "n_epochs": 100,
+            "n_epochs": 25,
             "batch_size": 100,
             "lr": 0.002,
             "fc_sizes": [6168, 6168],
@@ -6785,7 +6833,7 @@
             "no_norm": true,
             "activation": "LeakyReLU",
             "part": [0, 1000000],
-            "n_epochs": 100,
+            "n_epochs": 25,
             "batch_size": 100,
             "lr": 0.002,
             "fc_sizes": [6168, 6168],
@@ -6809,7 +6857,7 @@
             "no_norm": true,
             "activation": "LeakyReLU",
             "part": [0, 1000000],
-            "n_epochs": 100,
+            "n_epochs": 25,
             "batch_size": 100,
             "lr": 0.002,
             "fc_sizes": [6168, 6168],
@@ -6833,7 +6881,7 @@
             "no_norm": true,
             "activation": "LeakyReLU",
             "part": [0, 1000000],
-            "n_epochs": 100,
+            "n_epochs": 25,
             "batch_size": 100,
             "lr": 0.002,
             "fc_sizes": [6168, 6168],
@@ -6857,7 +6905,7 @@
             "no_norm": true,
             "activation": "LeakyReLU",
             "part": [0, 1000000],
-            "n_epochs": 100,
+            "n_epochs": 25,
             "batch_size": 100,
             "lr": 0.002,
             "fc_sizes": [6168, 6168],
@@ -6881,7 +6929,7 @@
             "no_norm": true,
             "activation": "LeakyReLU",
             "part": [0, 1000000],
-            "n_epochs": 100,
+            "n_epochs": 25,
             "batch_size": 100,
             "lr": 0.002,
             "fc_sizes": [6168, 6168],

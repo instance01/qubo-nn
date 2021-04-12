@@ -19,6 +19,7 @@ def run():
         'm3sat_10_F',
         'm3sat_15V_5_F',
         'm3sat_15V_10_F',
+        'm3sat_20V_10_F',
         'm3sat_5V_5_F',
         'm3sat_5V_3_F',
         'm3sat_5V_2_F',
@@ -33,7 +34,6 @@ def run():
         'm3sat_5V_5_A_2',
 
         'm2sat_16x16_10_F_v2_1M',
-        'm2sat_16x16_10_F_v2_1M_2',
         'm2sat_16x16_5_F_v2_1M',
         'm2sat_16x16_15_F_v2_1M',
         'm2sat_16x16_20_F_v2_1M',
