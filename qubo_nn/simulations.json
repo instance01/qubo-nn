@@ -5134,7 +5134,7 @@
         }
     },
 
-    "QA AGAIN": {},
+    "-- QA AGAIN --": {},
 
     "qa_N_16_norm1": {
         "dataset_id": "qa_N_16_norm1",
@@ -7078,6 +7078,153 @@
             "batch_size": 100,
             "lr": 0.002,
             "fc_sizes": [688, 688],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qk3": {
+        "dataset_id": "qk3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 10,
+            "n_problems": 1000000,
+            "QK": {
+                "size": 7,
+                "constraint": 6
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [4096, 4096, 4096],
+            "optimizer": "Adam"
+        }
+    },
+    "qk4": {
+        "dataset_id": "qk4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 10,
+            "n_problems": 2000000,
+            "QK": {
+                "size": 7,
+                "constraint": 6
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 2000000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [4096, 4096],
+            "optimizer": "Adam"
+        }
+    },
+    "qk5": {
+        "dataset_id": "qk5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 7,
+            "n_problems": 2000000,
+            "QK": {
+                "size": 4,
+                "constraint": 6
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 2000000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [4096, 4096],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qa_N_16_norm2_1M": {
+        "dataset_id": "qa_N_16_norm2_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
+            "qubo_size": 16,
+            "QA": {
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 2.0,
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 50,
+            "fc_sizes": [1024],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_16_norm2_4M": {
+        "dataset_id": "qa_N_16_norm2_4M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 4000000,
+            "qubo_size": 16,
+            "QA": {
+                "size": 4
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 2.0,
+            "activation": "LeakyReLU",
+            "part": [0, 4000000],
+            "n_epochs": 50,
+            "fc_sizes": [3000],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
+        }
+    },
+
+    "qa_N_9_norm2_1M": {
+        "dataset_id": "qa_N_9_norm2_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
+            "qubo_size": 9,
+            "QA": {
+                "size": 3
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 2.0,
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 200,
+            "fc_sizes": [1024],
+
+            "batch_size": 50,
+            "lr": 0.0001,
             "optimizer": "Adam"
         }
     }
