@@ -15,6 +15,7 @@ def run():
     req_len = 20
     base_paths = ['../runs/']
     problems = [
+        ('qa_N_9_norm2_1M', 10),
         ('qa_N_16_norm1', 10),
         ('qa_N_16_norm2', 10),
         ('qa_N_16_norm3', 10),
@@ -24,7 +25,10 @@ def run():
         ('qa_N_100_norm1', 10),
         ('qa_N_100_norm2', 10),
         ('qa_N_100_norm3', 10),
-        ('qa_N_144_norm3', 10)
+        ('qa_N_144_norm3', 10),
+
+        ('qa_N_16_norm2_1M', 10),
+        ('qa_N_16_norm2_4M', 10)
     ]
     kv = {}
     for problem in problems:

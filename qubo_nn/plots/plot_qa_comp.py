@@ -45,6 +45,7 @@ def gen_table(kv):
 
 def plot(kv):
     tags = {
+        'qa_N_9_norm2_1': '9x9',
         'qa_N_16_norm': '16x16',
         'qa_N_64_norm': '64x64',
         'qa_N_100_norm': '100x100',
@@ -93,6 +94,49 @@ def plot(kv):
     plt.show()
     fig.savefig('qa_comp.png')
     fig.savefig('qa_comp.pdf')
+
+
+def plot(kv):
+    tags = {
+        'qa_N_16_norm': '16x16, 200k',
+        'qa_N_16_norm2_1': '16x16, 1M',
+        'qa_N_16_norm2_4': '16x16, 4M'
+    }
+
+    fig, axs = plt.subplots(1, 1, figsize=(5, 3.5))
+
+    def calc_ci(ax, key, arr):
+        mean = np.mean(arr, axis=0)
+        ci = st.t.interval(
+            0.95,
+            len(arr) - 1,
+            loc=np.mean(arr, axis=0),
+            scale=st.sem(arr, axis=0)
+        )
+
+        x = np.arange(len(mean))
+
+        ax.plot(x, mean, label=tags[key])
+        ax.fill_between(x, ci[0], ci[1], alpha=.2)
+
+    # First, aggregate.
+    kv_new = collections.defaultdict(list)
+    for k, v in kv.items():
+        kv_new[k[:-1]].extend(v)
+
+    for k, v in kv_new.items():
+        v = np.array(v)
+        calc_ci(axs, k, v[1][:, :100])  # r2
+
+        axs.legend()
+        axs.set_ylabel(r'$R^2$')
+        axs.set_xlabel("Epoch")
+
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
+    plt.tight_layout()
+    plt.show()
+    fig.savefig('qa_comp_datasize.png')
+    fig.savefig('qa_comp_datasize.pdf')
 
 
 def run():
