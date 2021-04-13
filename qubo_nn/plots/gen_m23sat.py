@@ -48,7 +48,7 @@ def run():
         'm2sat_8x8_30_F_v2_1M'
     ]
 
-    req_len = 0  # TODO !!!
+    req_len = 10
 
     kv = {}
     for problem in problems:
