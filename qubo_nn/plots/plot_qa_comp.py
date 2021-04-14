@@ -76,8 +76,10 @@ def plot(kv):
         kv_new[k[:-1]].extend(v)
 
     for k, v in kv_new.items():
+        if k not in tags:
+            continue
         v = np.array(v)
-        calc_ci(axs, k, v[1][:, :200])  # r2
+        calc_ci(axs, k, v[1][:, :100])  # r2
 
         axs.legend()
         axs.set_ylabel(r'$R^2$')
@@ -96,7 +98,7 @@ def plot(kv):
     fig.savefig('qa_comp.pdf')
 
 
-def plot(kv):
+def plot_datasize(kv):
     tags = {
         'qa_N_16_norm': '16x16, 200k',
         'qa_N_16_norm2_1': '16x16, 1M',
@@ -125,8 +127,10 @@ def plot(kv):
         kv_new[k[:-1]].extend(v)
 
     for k, v in kv_new.items():
+        if k not in tags:
+            continue
         v = np.array(v)
-        calc_ci(axs, k, v[1][:, :100])  # r2
+        calc_ci(axs, k, v[1][:, :50])  # r2
 
         axs.legend()
         axs.set_ylabel(r'$R^2$')
@@ -144,6 +148,7 @@ def run():
         kv = pickle.load(f)
     gen_table(kv)
     plot(kv)
+    plot_datasize(kv)
 
 
 if __name__ == '__main__':
