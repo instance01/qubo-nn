@@ -185,3 +185,5 @@ Michael J. Dinneen, "Maximum 3-SAT as QUBO" https://canvas.auckland.ac.nz/course
 [Hadamard Gate Transformation for 3 or more QuBits](https://blog.xa0.de/post/Hadamard-Gate-Transformation-for-3-or-more-QuBits/)
 
 [QUBOs for TSP and Maximum-3SAT](https://blog.xa0.de/post/QUBOs-for-TSP-and-Maximum---3SAT/)
+
+[QUBO-NN - Reverse-Engineering QUBO matrices](https://blog.xa0.de/post/QUBO-NN%20---%20Reverse-Engineering-QUBO-matrices/)
