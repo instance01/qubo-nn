@@ -7477,5 +7477,292 @@
             "fc_sizes": [100, 100, 100],
             "optimizer": "Adam"
         }
+    },
+    "sp4_5M": {
+        "dataset_id": "sp4_5M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 5000000,
+            "SP": {
+                "size": [6, 16]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "part": [0, 5000000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100],
+            "optimizer": "Adam"
+        }
+    },
+    "sp4_5M_2": {
+        "dataset_id": "sp4_5M_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 5000000,
+            "SP": {
+                "size": [6, 16]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "use_norm_multiply_input": true,
+            "use_norm_multiply": true,
+            "norm_multiply": 2.0,
+            "activation": "LeakyReLU",
+            "part": [0, 5000000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100, 100, 100],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qk5_1": {
+        "dataset_id": "qk5_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 6,
+            "n_problems": 4000000,
+            "QK": {
+                "size": 3,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 10
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 4000000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [1000, 1000],
+            "optimizer": "Adam"
+        }
+    },
+    "qk6": {
+        "dataset_id": "qk6",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 7,
+            "n_problems": 2000000,
+            "QK": {
+                "size": 4,
+                "constraint": 6
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "use_norm_multiply_input": true,
+            "use_norm_multiply": true,
+            "norm_multiply": 2.0,
+            "activation": "LeakyReLU",
+            "part": [0, 2000000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [4096, 4096],
+            "optimizer": "Adam"
+        }
+    },
+    "qk5_test": {
+        "dataset_id": "qk5_test",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 6,
+            "n_problems": 200000,
+            "QK": {
+                "size": 3,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "no_norm": true,
+            "use_norm_multiply_input": true,
+            "use_norm_multiply": true,
+            "norm_multiply": 2.0,
+            "activation": "ReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 10,
+            "lr": 0.0005,
+            "fc_sizes": [1000, 1000],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qk5_2": {
+        "dataset_id": "qk5_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 6,
+            "n_problems": 400000,
+            "QK": {
+                "size": 3,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "use_multiply_layer": true
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 400000],
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [1000, 1000],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qk7_6x6_high30_1M": {
+        "dataset_id": "qk7_6x6_high30_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 6,
+            "n_problems": 1000000,
+            "QK": {
+                "size": 3,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "use_multiply_layer": false
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 50,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [1000, 1000],
+            "optimizer": "Adam"
+        }
+    },
+    "qk7_6x6_high10_1M": {
+        "dataset_id": "qk7_6x6_high10_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 6,
+            "n_problems": 1000000,
+            "QK": {
+                "size": 3,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 10,
+                "use_multiply_layer": false
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 50,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [1000, 1000],
+            "optimizer": "Adam"
+        }
+    },
+    "qk7_6x6_high30_1M_multiply": {
+        "dataset_id": "qk7_6x6_high30_1M_multiply",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 6,
+            "n_problems": 1000000,
+            "QK": {
+                "size": 3,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "use_multiply_layer": true
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 50,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [1000, 1000],
+            "optimizer": "Adam"
+        }
+    },
+    "qk8_16x16_high30_1M": {
+        "dataset_id": "qk8_16x16_high30_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 1000000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "use_multiply_layer": false
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 50,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [1000, 1000],
+            "optimizer": "Adam"
+        }
+    },
+    "qk8_16x16_high30_1M_multiply": {
+        "dataset_id": "qk8_16x16_high30_1M_multiply",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 1000000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "use_multiply_layer": true
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 50,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [1000, 1000],
+            "optimizer": "Adam"
+        }
     }
 }
