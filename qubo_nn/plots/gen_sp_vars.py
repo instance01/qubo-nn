@@ -17,7 +17,11 @@ def aggregate(paths, min_len, cutoff=False):
 def run():
     min_len = 100
     base_path = '../runs/'
-    problems = ['sp4', 'sp5', 'sp6', 'sp4_sort', 'sp5_sort', 'sp6_sort']
+    problems = [
+        'sp4', 'sp5', 'sp6', 'sp4_sort', 'sp5_sort', 'sp6_sort',
+        'sp4_100k', 'sp5_100k', 'sp6_100k', 'sp4_sort_100k', 'sp5_sort_100k', 'sp6_sort_100k',
+        'sp4_1M'
+    ]
     kv = {}
     for problem in problems:
         print(problem)
