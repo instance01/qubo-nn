@@ -18,12 +18,14 @@ Let's find out.
 
 |File|Purpose|
 |----|-------|
-|nn/|Contains neural network models.|
-|problems/|Contains generators and evaluators for specific problems such as 3SAT or TSP.|
-|qubo/|Will contain the generic QUBO library.|
 |datasets/|Contains generated datasets.|
 |models/|Contains trained models.|
+|nn/|Contains neural network models.|
+|plots/|Contains plotting scripts and generated plots.|
+|problems/|Contains generators and evaluators for specific problems such as 3SAT or TSP.|
+|runs/|Contains tensorboard logging files.|
 |config.py|Configuration (json) handling.|
+|data.py|LMDB data handling.|
 |main.py|Main entry point.|
 |pipeline.py|End to end training and testing of NNs on QUBO matrices.|
 |simulations.json|All experiments and configurations.|
