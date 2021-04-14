@@ -143,12 +143,49 @@ def plot_datasize(kv):
     fig.savefig('qa_comp_datasize.pdf')
 
 
+def plot_special_loss(kv):
+    tags = {
+        'qa_special_loss1': 'QA 16x16'
+    }
+
+    fig, axs = plt.subplots(1, 1, figsize=(5, 3.5))
+
+    def calc_ci(ax, key, arr):
+        mean = np.mean(arr, axis=0)
+        ci = st.t.interval(
+            0.95,
+            len(arr) - 1,
+            loc=np.mean(arr, axis=0),
+            scale=st.sem(arr, axis=0)
+        )
+
+        x = np.arange(len(mean))
+
+        ax.plot(x, mean, label=tags[key])
+        ax.fill_between(x, ci[0], ci[1], alpha=.2)
+
+    for k in tags.keys():
+        v = np.array(kv[k])
+        calc_ci(axs, k, v[2][:, :50])  # eval loss
+
+        axs.legend()
+        axs.set_ylabel(r'$R^2$')
+        axs.set_xlabel("Epoch")
+
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
+    plt.tight_layout()
+    plt.show()
+    fig.savefig('qa_comp_special_loss.png')
+    fig.savefig('qa_comp_special_loss.pdf')
+
+
 def run():
     with open('qa_comp.pickle', 'rb') as f:
         kv = pickle.load(f)
     gen_table(kv)
     plot(kv)
     plot_datasize(kv)
+    plot_special_loss(kv)
 
 
 if __name__ == '__main__':
