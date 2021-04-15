@@ -24,9 +24,9 @@ def plot_loss(kv):
     fig, ax = plt.subplots(figsize=(4, 3))
 
     tags = {
-        'sp4': "6 Variables",
-        'sp6': "12 Variables",
-        'sp5': "20 Variables"
+        'sp4_100k': "6 Variables",
+        'sp6_100k': "12 Variables",
+        'sp5_100k': "20 Variables"
     }
 
     def sub_plot_r2(ax, key, arr):
@@ -43,9 +43,7 @@ def plot_loss(kv):
 
         ax.plot(x, mean, label=tags[key])
         ax.fill_between(x, ci[0], ci[1], alpha=.2)
-        idx = np.argmax(mean)
-        max_mean = mean[idx]
-        print("Max R2", key, max_mean, "+-", max_mean - ci[0][idx])
+        print("Last Loss", key, mean[-1], "+-", mean[-1] - ci[0][-1])
 
     for k in tags:
         v = kv[k]
@@ -66,9 +64,9 @@ def plot_vars(kv):
     fig, ax = plt.subplots(figsize=(4, 3))
 
     tags = {
-        'sp4': "6 Variables",
-        'sp6': "12 Variables",
-        'sp5': "20 Variables"
+        'sp4_100k': "6 Variables",
+        'sp6_100k': "12 Variables",
+        'sp5_100k': "20 Variables"
     }
 
     def sub_plot_r2(ax, key, arr):
@@ -85,9 +83,7 @@ def plot_vars(kv):
 
         ax.plot(x, mean, label=tags[key])
         ax.fill_between(x, ci[0], ci[1], alpha=.2)
-        idx = np.argmax(mean)
-        max_mean = mean[idx]
-        print("Max R2", key, max_mean, "+-", max_mean - ci[0][idx])
+        print("Last R2", key, mean[-1], "+-", mean[-1] - ci[0][-1])
 
     for k in tags:
         v = kv[k]
@@ -95,7 +91,7 @@ def plot_vars(kv):
         ax.legend()
         ax.set_ylabel(r'$R^2$')
         ax.set_xlabel("Epoch")
-        ax.set_ylim([0, .3])
+        ax.set_ylim([0, .5])
         # ax.set_title(tags[k])
 
     plt.tight_layout()
@@ -108,14 +104,14 @@ def plot_sort(kv):
     fig, axs = plt.subplots(1, 3, figsize=(8.5, 2.5))
 
     tags = {
-        'sp4': "6 Variables",
-        'sp6': "12 Variables",
-        'sp5': "20 Variables"
+        'sp4_100k': "6 Variables",
+        'sp6_100k': "12 Variables",
+        'sp5_100k': "20 Variables"
     }
     tags_sort = {
-        'sp4_sort': "6 Variables sorted",
-        'sp6_sort': "12 Variables sorted",
-        'sp5_sort': "20 Variables sorted"
+        'sp4_sort_100k': "6 Variables sorted",
+        'sp6_sort_100k': "12 Variables sorted",
+        'sp5_sort_100k': "20 Variables sorted"
     }
 
     def sub_plot_r2(ax, key, arr, tags):
@@ -132,9 +128,7 @@ def plot_sort(kv):
 
         ax.plot(x, mean, label=tags[key])
         ax.fill_between(x, ci[0], ci[1], alpha=.2)
-        idx = np.argmax(mean)
-        max_mean = mean[idx]
-        print("Max R2", key, max_mean, "+-", max_mean - ci[0][idx])
+        print("Last R2", key, mean[-1], "+-", mean[-1] - ci[0][-1])
 
     for i, (k1, k2) in enumerate(zip(tags.keys(), tags_sort.keys())):
         print(k1, k2)
@@ -144,7 +138,7 @@ def plot_sort(kv):
         ax.legend()
         ax.set_ylabel(r'$R^2$')
         ax.set_xlabel("Epoch")
-        ax.set_ylim([0, .3])
+        ax.set_ylim([0, .6])
         # ax.set_title(tags[k])
 
     plt.tight_layout()
