@@ -5,12 +5,12 @@ from lib import aggregate_single
 
 
 def aggregate(paths, min_len, cutoff=False):
-    arr_eval = aggregate_single(paths, 'Loss/Eval', min_len)
-    arr_train = aggregate_single(paths, 'Loss/Train', min_len)
+    arr_eval = aggregate_single(paths, 'Loss/Eval', min_len, req_len=10)
+    arr_train = aggregate_single(paths, 'Loss/Train', min_len, req_len=10)
     if cutoff:
-        arr_r2 = aggregate_single(paths, 'Custom/R2', min_len, cutoff=6)
+        arr_r2 = aggregate_single(paths, 'Custom/R2', min_len, cutoff=6, req_len=10)
     else:
-        arr_r2 = aggregate_single(paths, 'Custom/R2', min_len)
+        arr_r2 = aggregate_single(paths, 'Custom/R2', min_len, req_len=10)
     return arr_eval, arr_train, arr_r2
 
 
