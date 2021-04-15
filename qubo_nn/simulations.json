@@ -7713,6 +7713,32 @@
             "optimizer": "Adam"
         }
     },
+    "qk8_6x6_high10_1M": {
+        "dataset_id": "qk8_6x6_high10_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 1000000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 10,
+                "use_multiply_layer": false
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 50,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [1000, 1000],
+            "optimizer": "Adam"
+        }
+    },
     "qk8_16x16_high30_1M": {
         "dataset_id": "qk8_16x16_high30_1M",
         "base_cfg": "23",
