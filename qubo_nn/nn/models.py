@@ -73,6 +73,12 @@ class ReverseFCNet(nn.Module):
         input_size = cfg['problems']['qubo_size'] ** 2
 
         self.is_qa = cfg['problems']['problems'] == ['QA']
+        self.is_qk = cfg['problems']['problems'] == ['QK']
+        self.use_multiply_layer = False
+        if self.is_qk:
+            self.use_multiply_layer = cfg['problems']['QK'].get('use_multiply_layer', False)
+            if self.use_multiply_layer:
+                input_size = input_size ** 2 + input_size
 
         # QA has a simplified input space.
         if self.is_qa:
@@ -103,6 +109,10 @@ class ReverseFCNet(nn.Module):
     def forward(self, x):
         if not self.is_qa:
             x = torch.flatten(x, 1)
+        if self.is_qk and self.use_multiply_layer:
+            y = x.unsqueeze(2) * x.unsqueeze(1)
+            y = torch.flatten(y, 1)
+            x = torch.cat((x, y), 1)
         return self.fc_net(x)
 
 
@@ -353,6 +363,8 @@ class ReverseOptimizer(Optimizer):
         save_fpfn = self.cfg['problems']['problems'] == ["M2SAT"] or \
             self.cfg['problems']['problems'] == ["M3SAT"]
 
+        use_qa_loss = self.cfg['problems']['QA'].get('use_special_loss', False)
+
         self.net.train()
         data_len = len(self.lmdb_loader.train_data_loader)
         for epoch in range(self.n_epochs):
@@ -364,7 +376,18 @@ class ReverseOptimizer(Optimizer):
 
                 outputs = self.net(inputs.float())
 
-                loss = self.criterion(outputs, problem.float())
+                if use_qa_loss:
+                    loss = 0
+                    for input_, output, prob in zip(inputs, outputs, problem):
+                        len_ = int((len(output) / 2) ** .5)
+                        o_x = output.reshape((2, len_, len_))[0][np.triu_indices(len_, 1)]
+                        o_y = output.reshape((2, len_, len_))[1][np.triu_indices(len_, 1)]
+                        half = len(o_x)
+                        for k, x in enumerate(o_x):
+                            for m, y in enumerate(o_y):
+                                loss += (x * y - input_[k * half + m]) ** 2
+                else:
+                    loss = self.criterion(outputs, problem.float())
                 loss.backward()
                 self.optimizer.step()
 
@@ -372,8 +395,8 @@ class ReverseOptimizer(Optimizer):
                 # Then the last term will be wrong.
                 batch_loss += loss.item() * self.batch_size
                 if i % 1000 == 0:
-                    X = problem.float().tolist()[-1]#[:200]
-                    Y = outputs.detach().tolist()[-1]#[:200]
+                    X = problem.float().tolist()[-1]
+                    Y = outputs.detach().tolist()[-1]
                     # print('')
                     # for m in range(len(X)):
                     #     if X[m] > 0 or X[m] < 0:
@@ -385,6 +408,7 @@ class ReverseOptimizer(Optimizer):
                     # for m in range(len(X)):
                     #     if X[m] > 0 or X[m] < 0:
                     #         print(X[m], round(Y[m], 3))
+
                     print([round(x, 2) for x in outputs.detach().tolist()[-1][:256]])
                     print([round(x, 2) for x in problem.float().tolist()[-1][:256]])
                     print('#')
@@ -418,6 +442,9 @@ class ReverseOptimizer(Optimizer):
         save_fpfn = self.cfg['problems']['problems'] == ["M2SAT"] or \
             self.cfg['problems']['problems'] == ["M3SAT"]
 
+        use_qa_loss = self.cfg['problems']['QA'].get('use_special_loss', False)
+        is_qa = self.cfg['problems']['problems'] == ["QA"]
+
         n_classes = len(self.cfg['problems']['problems'])
 
         wrong_regressions3 = 0
@@ -434,12 +461,66 @@ class ReverseOptimizer(Optimizer):
 
         debugdata = []
 
+        res_n = 0
+        # residuals_neg = 0.
+        # residuals_pos = 0.
+        residuals_neg_arr1 = None
+        residuals_pos_arr1 = None
+        residuals_neg_arr2 = None
+        residuals_pos_arr2 = None
+
         self.net.eval()
         total_loss = 0.0
         for i, data in enumerate(self.lmdb_loader.test_data_loader):
             inputs, labels, prob = data
             outputs = self.net(inputs.float())
-            loss = self.criterion(outputs, prob)
+
+            if use_qa_loss:
+                loss = 0
+                for input_, output in zip(inputs, outputs):
+                    len_ = int((len(output) / 2) ** .5)
+                    o_x = output.reshape((2, len_, len_))[0][np.triu_indices(len_, 1)]
+                    o_y = output.reshape((2, len_, len_))[1][np.triu_indices(len_, 1)]
+                    half = len(o_x)
+                    for k, x in enumerate(o_x):
+                        for m, y in enumerate(o_y):
+                            loss += (x * y - input_[k * half + m]) ** 2
+                            if i == 100:  # 100th sample
+                                print(x, y, x * y, input_[k * half + m])
+                if i == 100:
+                    print(loss)
+            else:
+                loss = self.criterion(outputs, prob)
+
+                if is_qa:
+                    half = len(outputs[0]) // 2
+                    residuals = outputs[0].detach().numpy() - prob[0].detach().numpy()
+                    first_half = residuals[:half]
+                    sec_half = residuals[half:]
+                    if first_half.mean() < -.01 and sec_half.mean() > .01:
+                        # residuals_neg1 += first_half.mean()
+                        # residuals_pos1 += sec_half.mean()
+                        if residuals_neg_arr1 is None:
+                            residuals_neg_arr1 = first_half
+                        else:
+                            residuals_neg_arr1 += first_half
+                        if residuals_pos_arr1 is None:
+                            residuals_pos_arr1 = sec_half
+                        else:
+                            residuals_pos_arr1 += sec_half
+                        res_n += 1
+                    if first_half.mean() > .01 and sec_half.mean() < -.01:
+                        # residuals_pos += first_half.mean()
+                        # residuals_neg += sec_half.mean()
+                        if residuals_neg_arr2 is None:
+                            residuals_neg_arr2 = sec_half
+                        else:
+                            residuals_neg_arr2 += sec_half
+                        if residuals_pos_arr2 is None:
+                            residuals_pos_arr2 = first_half
+                        else:
+                            residuals_pos_arr2 += first_half
+                        res_n += 1
 
             if loss > max_mistake_loss:
                 max_mistake = (inputs, labels, prob, outputs)
@@ -534,6 +615,18 @@ class ReverseOptimizer(Optimizer):
         self.logger.log_custom_reverse_kpi("R2", R2, epoch)
 
         data_len = len(self.lmdb_loader.test_data_loader)
+
+        if is_qa:
+            self.logger.log_custom_reverse_kpi("Res_Tot", res_n / data_len, epoch)
+            if residuals_neg_arr1 is not None:
+                print("res_neg1", (residuals_neg_arr1 / res_n).tolist())
+            if residuals_pos_arr1 is not None:
+                print("res_pos1", (residuals_pos_arr1 / res_n).tolist())
+            if residuals_neg_arr2 is not None:
+                print("res_neg2", (residuals_neg_arr2 / res_n).tolist())
+            if residuals_pos_arr2 is not None:
+                print("res_pos2", (residuals_pos_arr2 / res_n).tolist())
+            print("res_tot", res_n / data_len)
 
         if debug:
             print('\n~~~~~ EVAL ~~~~~')
