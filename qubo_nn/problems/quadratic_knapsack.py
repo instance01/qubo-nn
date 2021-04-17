@@ -29,16 +29,21 @@ class QuadraticKnapsack(Problem):
 
     @classmethod
     def gen_problems(self, cfg, n_problems, size=4, constraint=30, **kwargs):
+        high1 = cfg["problems"]["QK"].get("high1", 30)
+        high2 = cfg["problems"]["QK"].get("high2", 30)
+
+        print(cfg["problems"]["QK"])
+        print("QK: Using following highs:", high1, high2)
+
         # TODO: 30, 50 is hardcoded !!!
         problems = []
         for _ in range(n_problems):
-            projects = np.random.randint(low=0, high=30, size=(size, size))
+            projects = np.random.randint(low=1, high=high1, size=(size, size))
             projects = np.tril(projects) + np.tril(projects, -1).T
 
             problems.append((
                 projects,
-                np.random.randint(low=0, high=30, size=(size,)),
-                # np.random.randint(low=30, high=50)
+                np.random.randint(low=1, high=high2, size=(size,)),
                 constraint
             ))
         return [
