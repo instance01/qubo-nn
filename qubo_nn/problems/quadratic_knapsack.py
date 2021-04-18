@@ -8,6 +8,7 @@ class QuadraticKnapsack(Problem):
         self.budgets = budgets.tolist()
         self.constraint = constraint
         self.P = P
+        self.random_P = cfg["problems"]["QK"].get("random_P", False)
 
     def gen_qubo_matrix(self):
         # n_slack_vars = np.ceil(np.log2(self.constraint - min(self.budgets)))
@@ -15,11 +16,16 @@ class QuadraticKnapsack(Problem):
         self.budgets += [2 ** x for x in range(int(n_slack_vars))]
         n = len(self.budgets)
 
+        if self.random_P:
+            P = np.random.randint(1, 10)
+        else:
+            P = self.P
+
         Q = np.zeros((n, n))
         for i in range(n):
             for j in range(n):
-                Q[i][j] -= self.P * self.budgets[i] * self.budgets[j]
-            Q[i][i] += self.P * 2 * self.constraint * self.budgets[i]
+                Q[i][j] -= P * self.budgets[i] * self.budgets[j]
+            Q[i][i] += P * 2 * self.constraint * self.budgets[i]
 
         for i in range(len(self.projects)):
             for j in range(len(self.projects)):
@@ -35,7 +41,6 @@ class QuadraticKnapsack(Problem):
         print(cfg["problems"]["QK"])
         print("QK: Using following highs:", high1, high2)
 
-        # TODO: 30, 50 is hardcoded !!!
         problems = []
         for _ in range(n_problems):
             projects = np.random.randint(low=1, high=high1, size=(size, size))
