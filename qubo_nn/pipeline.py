@@ -44,10 +44,11 @@ class Classification:
     def _gen_data(self, n_problems):
         qubo_size = self.qubo_size
         all_problems = []
-        data = np.zeros(
-            shape=(len(self.problems) * n_problems, qubo_size, qubo_size),
-            dtype=np.float32
-        )
+        data = []
+        # data = np.zeros(
+        #     shape=(len(self.problems) * n_problems, qubo_size, qubo_size),
+        #     dtype=np.float32
+        # )
         labels = np.zeros(
             shape=(len(self.problems) * n_problems,),
             dtype=np.long
@@ -71,7 +72,12 @@ class Classification:
 
             # Without normalization of some sort the NN won't learn.
             if not self.cfg["model"]["no_norm"]:
-                if self.cfg["model"]["norm_data"]:
+                if self.cfg["model"]["use_norm_divide"]:
+                    qubo_matrices /= self.cfg["model"]["norm_multiply"]
+                elif self.cfg["model"]["use_norm_multiply_input"]:
+                    qubo_matrices /= np.max(np.abs(qubo_matrices))
+                    qubo_matrices *= self.cfg["model"]["norm_multiply"]
+                elif self.cfg["model"]["norm_data"]:
                     qubo_matrices /= np.max(np.abs(qubo_matrices))
                     qubo_matrices = (qubo_matrices + 1) / 2.
                 else:
@@ -79,13 +85,15 @@ class Classification:
                         qubo_matrices - np.mean(qubo_matrices)
                     ) / np.std(qubo_matrices)
 
-            if qubo_matrices.shape[0] < n_problems:
-                data[idx_start:idx_start + qubo_matrices.shape[0], :, :] = qubo_matrices
-            else:
-                data[idx_start:idx_end, :, :] = qubo_matrices
+            # TODO !!
+            # if qubo_matrices.shape[0] < n_problems:
+            #     data[idx_start:idx_start + qubo_matrices.shape[0], :, :] = qubo_matrices
+            # else:
+            #     data[idx_start:idx_end, :, :] = qubo_matrices
+            data.append(qubo_matrices)
             labels[idx_start:idx_end] = i
 
-        return data, labels, all_problems
+        return data[0], labels, all_problems
 
     def gen_data_gzip_pickle(self):
         data, labels, _ = self._gen_data(self.n_problems)
@@ -341,6 +349,35 @@ class ReverseRegression(Classification):
             print(data[0])
             print(all_problems[0][0])
 
+        if self.cfg['problems']['problems'] == ["QK"]:
+            print(data[0])
+            print(all_problems[0][0])
+
+            np.set_printoptions(suppress=True)  # TODO REMOVE
+
+            special_norm = self.cfg['problems']['QK'].get('special_norm', False)
+            # Assumption: We know where the budgets lie.
+            budgets_idx = self.cfg['problems']['QK']['size']
+            multiplier = 2 ** (self.qubo_size - budgets_idx)
+
+            print("QK SPEC NORM?", special_norm, budgets_idx, multiplier)
+
+            if special_norm:
+                new_data = []
+                for k, d in enumerate(data):
+                    d_new = d[:budgets_idx, :budgets_idx]
+                    y = d[:budgets_idx, budgets_idx].reshape(1, -1)
+
+                    # np.fill_diagonal(d_new, np.diag(d_new) + y * 2 * 6)
+                    np.fill_diagonal(d_new, np.diag(d_new) + y * 2 * multiplier)
+
+                    d_new += np.amax([d_new, y.T @ y], axis=0)
+
+                    x = np.concatenate((d_new.flatten(), (-y * 2).flatten(), (y.T @ y).flatten() / 100.))
+                    new_data.append(x)
+                data = np.array(new_data)
+                print(data[0])
+
         all_problems_flat, output_size = self.flatten_problem_parameters(all_problems)
 
         for i, prob in enumerate(all_problems_flat):
@@ -361,7 +398,9 @@ class ReverseRegression(Classification):
         # like with classification.
         if not self.cfg["model"]["no_norm"]:
             print("use norm multiply?", self.cfg["model"]["use_norm_multiply"])
-            if self.cfg["model"]["use_norm_multiply"]:
+            if self.cfg["model"]["use_norm_divide"]:
+                all_problems_flat /= self.cfg["model"]["norm_multiply"]
+            elif self.cfg["model"]["use_norm_multiply"]:
                 all_problems_flat /= np.max(np.abs(all_problems_flat))
                 all_problems_flat *= self.cfg["model"]["norm_multiply"]
                 # qa4_diffnorm used 5., qa4_diffnorm_v2 used 10.
@@ -391,7 +430,10 @@ class ReverseRegression(Classification):
         else:
             lmdb_loader = LMDBDataLoader(self.cfg, reverse=True)
 
-        with open('datasets/%s/cfg.pickle' % self.cfg['dataset_id'], 'rb') as f:
+        dirpath = 'datasets/'
+        if self.cfg["use_big"]:
+            dirpath = '/big/r/ratke/qubo_datasets/'
+        with open(dirpath + '%s/cfg.pickle' % self.cfg['dataset_id'], 'rb') as f:
             output_size = pickle.load(f)
 
         for _ in range(n_runs):
