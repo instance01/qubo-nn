@@ -14,7 +14,7 @@ def aggregate(paths, min_len, len_, req_len=None):
 def run():
     min_len = 200
     req_len = 22
-    base_paths = ['../runs/']
+    base_paths = ['../runs/', '../runs5/']
     problems = [
         ('qa_N_9_norm2_1M', 10),
         ('qa_N_16_norm1', 10),
@@ -31,7 +31,9 @@ def run():
         ('qa_N_16_norm2_1M', 10),
         ('qa_N_16_norm2_4M', 10),
 
-        ('qa_special_loss1', 10)
+        ('qa_special_loss1', 10),
+
+        ('qa_N_9_norm2_1M_2', 10)
     ]
     kv = {}
     for problem in problems:

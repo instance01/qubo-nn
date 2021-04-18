@@ -40,6 +40,7 @@
         },
         "model": {
             "use_norm_multiply": false,
+            "use_norm_divide": false,
             "norm_multiply": 1.0,
             "activation": "ReLU",
             "class_weights": [],
@@ -656,6 +657,7 @@
             "norm_data": false,
             "use_norm_multiply_input": false,
             "use_norm_multiply": false,
+            "use_norm_divide": false,
             "norm_multiply": 1.0,
             "shuffle_data": true,
             "network": "FC",
@@ -7788,6 +7790,497 @@
             "batch_size": 50,
             "lr": 0.0001,
             "fc_sizes": [1000, 1000],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qk8_16x16_high30_1M_multiply_1": {
+        "dataset_id": "qk8_16x16_high30_1M_multiply",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 1000000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "use_multiply_layer": true
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 50,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [10000, 1000],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qk_TTY": {
+        "dataset_id": "qk_TTY",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 100000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "use_multiply_layer": true
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "use_norm_divide": true,
+            "norm_multiply": 10.0,
+            "activation": "LeakyReLU",
+            "part": [0, 100000],
+            "n_epochs": 50,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qk_TTY2": {
+        "dataset_id": "qk_TTY2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 100000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "use_multiply_layer": true
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "use_norm_divide": true,
+            "norm_multiply": 10.0,
+            "activation": "LeakyReLU",
+            "part": [0, 100000],
+            "n_epochs": 300,
+            "batch_size": 50,
+            "lr": 0.0002,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+    "qk_TTY2_1": {
+        "dataset_id": "qk_TTY2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 100000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "special_norm": true
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "use_norm_divide": true,
+            "norm_multiply": 10.0,
+            "activation": "LeakyReLU",
+            "part": [0, 100000],
+            "n_epochs": 300,
+            "batch_size": 50,
+            "lr": 0.0002,
+            "fc_sizes": [4000],
+            "optimizer": "Adam"
+        }
+    },
+    "qk_TTY2_2": {
+        "dataset_id": "qk_TTY2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 100000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "special_norm": true
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "use_norm_divide": true,
+            "norm_multiply": 10.0,
+            "activation": "LeakyReLU",
+            "part": [0, 100000],
+            "n_epochs": 300,
+            "batch_size": 50,
+            "lr": 0.0002,
+            "fc_sizes": [2000],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qk_TTY3_6x6": {
+        "dataset_id": "qk_TTY3_6x6",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 6,
+            "n_problems": 100000,
+            "QK": {
+                "size": 3,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "use_multiply_layer": false
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "part": [0, 100000],
+            "n_epochs": 50,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [50000],
+            "optimizer": "Adam"
+        }
+    },
+
+    "qk10": {
+        "dataset_id": "qk10",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 200000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "special_norm": false
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "use_norm_divide": true,
+            "norm_multiply": 10.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 300,
+            "batch_size": 50,
+            "lr": 0.0002,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+    "qk10_norm": {
+        "dataset_id": "qk10_norm",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 200000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 30,
+                "special_norm": true
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "use_norm_divide": true,
+            "norm_multiply": 10.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 300,
+            "batch_size": 50,
+            "lr": 0.0002,
+            "fc_sizes": [2000],
+            "optimizer": "Adam"
+        }
+    },
+    "qk10_high10": {
+        "dataset_id": "qk10_high10",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 200000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 10,
+                "special_norm": false
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "use_norm_divide": true,
+            "norm_multiply": 10.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 300,
+            "batch_size": 50,
+            "lr": 0.0002,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+    "qk10_high10_1": {
+        "dataset_id": "qk10_high10_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 16,
+            "n_problems": 200000,
+            "QK": {
+                "size": 13,
+                "constraint": 6,
+                "high1": 30,
+                "high2": 10,
+                "special_norm": false
+            },
+            "problems": ["QK"]
+        },
+        "model": {
+            "use_norm_divide": true,
+            "norm_multiply": 10.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 300,
+            "batch_size": 50,
+            "lr": 0.0002,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+
+    "np19_LONG_r2_64x64_2k": {
+        "dataset_id": "np19_LONG_r2_64x64",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 64,
+            "problems": ["NP"],
+            "NP": {
+                "size": 64
+            }
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 0.03,
+            "fc_sizes": [2000]
+        }
+    },
+    "np19_LONG_r2_64x64_5k": {
+        "dataset_id": "np19_LONG_r2_64x64",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 64,
+            "problems": ["NP"],
+            "NP": {
+                "size": 64
+            }
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 0.03,
+            "fc_sizes": [5000]
+        }
+    },
+    "np19_LONG_r2_5x5": {
+        "dataset_id": "np19_LONG_r2_5x5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 5,
+            "problems": ["NP"],
+            "NP": {
+                "size": 5
+            }
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 0.03,
+            "fc_sizes": [5000]
+        }
+    },
+    "np19_LONG_r2_5x5_empty": {
+        "dataset_id": "np19_LONG_r2_5x5",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 5,
+            "problems": ["NP"],
+            "NP": {
+                "size": 5
+            }
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 10000],
+            "n_epochs": 10000,
+            "batch_size": 500,
+            "lr": 0.03,
+            "fc_sizes": []
+        }
+    },
+
+    "qa_N_9_norm2_1M_1": {
+        "dataset_id": "qa_N_9_norm2_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
+            "qubo_size": 9,
+            "QA": {
+                "size": 3
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 2.0,
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 200,
+            "fc_sizes": [20000],
+
+            "batch_size": 50,
+            "lr": 0.0001,
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_9_norm2_100k": {
+        "dataset_id": "qa_N_9_norm2_100k",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 9,
+            "QA": {
+                "size": 3
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "use_norm_multiply_input": true,
+            "norm_multiply": 5.0,
+            "activation": "LeakyReLU",
+            "part": [0, 100000],
+            "n_epochs": 200,
+            "fc_sizes": [50000],
+
+            "batch_size": 50,
+            "lr": 0.0002,
+            "optimizer": "Adam"
+        }
+    },
+    "qa_N_9_norm2_100k_1": {
+        "dataset_id": "qa_N_9_norm2_100k",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 9,
+            "QA": {
+                "size": 3
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "part": [0, 100000],
+            "n_epochs": 100000,
+            "batch_size": 500,
+            "lr": 0.03,
+            "fc_sizes": [5000]
+        }
+    },
+    "qa_N_9_norm2_100k_2": {
+        "dataset_id": "qa_N_9_norm2_100k",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 9,
+            "QA": {
+                "size": 3
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "use_norm_multiply_input": true,
+            "norm_multiply": 5.0,
+            "activation": "LeakyReLU",
+            "part": [0, 100000],
+            "n_epochs": 200,
+            "fc_sizes": [50],
+
+            "batch_size": 50,
+            "lr": 0.0003,
+            "optimizer": "Adam"
+        }
+    },
+
+    "qa_N_9_norm2_1M_2": {
+        "dataset_id": "qa_N_9_norm2_1M",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
+            "qubo_size": 9,
+            "QA": {
+                "size": 3
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply": true,
+            "norm_multiply": 2.0,
+            "activation": "LeakyReLU",
+            "part": [0, 1000000],
+            "n_epochs": 200,
+            "fc_sizes": [10000],
+
+            "batch_size": 50,
+            "lr": 0.0001,
             "optimizer": "Adam"
         }
     }
