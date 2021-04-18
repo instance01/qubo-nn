@@ -74,11 +74,12 @@ class ReverseFCNet(nn.Module):
 
         self.is_qa = cfg['problems']['problems'] == ['QA']
         self.is_qk = cfg['problems']['problems'] == ['QK']
-        self.use_multiply_layer = False
+        self.use_special_norm = False
         if self.is_qk:
-            self.use_multiply_layer = cfg['problems']['QK'].get('use_multiply_layer', False)
-            if self.use_multiply_layer:
-                input_size = input_size ** 2 + input_size
+            self.use_special_norm = cfg['problems']['QK'].get('special_norm', False)
+            if self.use_special_norm:
+                size = cfg['problems']['QK']['size']
+                input_size = 2 * size ** 2 + size
 
         # QA has a simplified input space.
         if self.is_qa:
@@ -107,12 +108,8 @@ class ReverseFCNet(nn.Module):
         print(self.fc_net)
 
     def forward(self, x):
-        if not self.is_qa:
+        if not self.is_qa and not self.use_special_norm:
             x = torch.flatten(x, 1)
-        if self.is_qk and self.use_multiply_layer:
-            y = x.unsqueeze(2) * x.unsqueeze(1)
-            y = torch.flatten(y, 1)
-            x = torch.cat((x, y), 1)
         return self.fc_net(x)
 
 
