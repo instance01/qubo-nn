@@ -70,21 +70,21 @@ def plot(kv, kv2):
             ax.plot(x, mean, label=tags[key])
             ax.fill_between(x, ci[0], ci[1], alpha=.2)
 
-    color = plt.cm.Greens(np.linspace(.3, 1, n))[::-1]
+    color = plt.cm.Blues(np.linspace(.3, 1, n))[::-1]
 
-    for i, k in enumerate(TAGS.keys()):
-        v = kv[k]
-        calc_ci(axs[0], k, v[2][:, :200], TAGS, color[i+1])  # R2
+    for i, k in enumerate(TAGS2.keys()):
+        v = kv2[k]
+        calc_ci(axs[0], k, v[2][:, :200], TAGS2, color[i+1])  # R2
 
         axs[0].legend()
         axs[0].set_ylabel(r'$R^2$')
         axs[0].set_xlabel("Epoch")
 
-    color = plt.cm.Blues(np.linspace(.3, 1, n))[::-1]
+    color = plt.cm.Greens(np.linspace(.3, 1, n))[::-1]
 
-    for i, k in enumerate(TAGS2.keys()):
-        v = kv2[k]
-        calc_ci(axs[1], k, v[2][:, :200], TAGS2, color[i+1])  # R2
+    for i, k in enumerate(TAGS.keys()):
+        v = kv[k]
+        calc_ci(axs[1], k, v[2][:, :200], TAGS, color[i+1])  # R2
 
         axs[1].legend()
         axs[1].set_ylabel(r'$R^2$')
@@ -93,6 +93,8 @@ def plot(kv, kv2):
     # plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     axs[0].legend(frameon=False)
     axs[1].legend(frameon=False)
+    axs[0].set_ylim((0., 1.05))
+    axs[1].set_ylim((0., 1.05))
     plt.tight_layout()
     plt.show()
     fig.savefig('m3sat_comp_A_F.png')

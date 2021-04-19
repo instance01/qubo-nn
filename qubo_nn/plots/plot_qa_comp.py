@@ -169,7 +169,7 @@ def plot_special_loss(kv):
         calc_ci(axs, k, v[2][:, :50])  # eval loss
 
         axs.legend()
-        axs.set_ylabel(r'$R^2$')
+        axs.set_ylabel('Loss')
         axs.set_xlabel("Epoch")
 
     plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)

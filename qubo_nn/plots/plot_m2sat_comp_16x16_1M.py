@@ -54,8 +54,6 @@ def gen_table(kv):
 
 
 def plot(kv, kv2):
-    fig, axs = plt.subplots(1, 2, figsize=(10, 3.0))
-
     def calc_ci(ax, key, arr, tags, col=None):
         # arr = arr[~np.isnan(arr)]
         # arr = arr[arr != 0.]
@@ -76,31 +74,41 @@ def plot(kv, kv2):
             ax.plot(x, mean, label=tags[key])
             ax.fill_between(x, ci[0], ci[1], alpha=.2)
 
+    fig, axs = plt.subplots(1, 1, figsize=(5, 3.0))
     color = plt.cm.Greens(np.linspace(.3, 1, n))[::-1]
 
     for i, k in enumerate(TAGS.keys()):
         v = kv[k]
-        calc_ci(axs[0], k, v[2][:, :25], TAGS, color[i+1])  # R2
+        calc_ci(axs, k, v[2][:, :10], TAGS, color[i+1])  # R2
 
-        axs[0].legend()
-        axs[0].set_ylabel(r'$R^2$')
-        axs[0].set_xlabel("Epoch")
-
-    color = plt.cm.Blues(np.linspace(.3, 1, n))[::-1]
-
-    for i, k in enumerate(TAGS2.keys()):
-        v = kv2[k]
-        calc_ci(axs[1], k, v[1][:, :25], TAGS2, color[i+1])  # R2
-
-        axs[1].legend()
-        axs[1].set_ylabel(r'$R^2$')
-        axs[1].set_xlabel("Epoch")
+        axs.legend()
+        axs.set_ylabel(r'$R^2$')
+        axs.set_xlabel("Epoch")
 
     plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
+    plt.ylim((.3, 1.))
     plt.tight_layout()
     plt.show()
     fig.savefig('m2sat_comp_16x16_1M.png')
     fig.savefig('m2sat_comp_16x16_1M.pdf')
+
+    fig, axs = plt.subplots(1, 1, figsize=(5, 3.0))
+    color = plt.cm.Blues(np.linspace(.3, 1, n))[::-1]
+
+    for i, k in enumerate(TAGS2.keys()):
+        v = kv2[k]
+        calc_ci(axs, k, v[1][:, :10], TAGS2, color[i+1])  # R2
+
+        axs.legend()
+        axs.set_ylabel(r'$R^2$')
+        axs.set_xlabel("Epoch")
+
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
+    plt.ylim((.3, 1.))
+    plt.tight_layout()
+    plt.show()
+    fig.savefig('m2sat_comp_16x16_300k.png')
+    fig.savefig('m2sat_comp_16x16_300k.pdf')
 
 
 def run():

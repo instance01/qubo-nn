@@ -81,8 +81,8 @@ def plot(kv):
     plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     plt.tight_layout()
     plt.show()
-    fig.savefig('m2sat_comp_16x16_1M.png')
-    fig.savefig('m2sat_comp_16x16_1M.pdf')
+    fig.savefig('m2sat_comp_8x8_1M.png')
+    fig.savefig('m2sat_comp_8x8_1M.pdf')
 
 
 def run():
