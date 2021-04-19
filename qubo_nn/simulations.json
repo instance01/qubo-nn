@@ -8283,5 +8283,104 @@
             "lr": 0.0001,
             "optimizer": "Adam"
         }
+    },
+    "BBB": {
+        "dataset_id": "BBB",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 2000,
+            "qubo_size": 64,
+            "QA": {
+                "size": 8,
+                "remove_percentile_smallest": 1
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply_input": true,
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 2000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [8192]
+        }
+    },
+    "qa_N_64_norm3_again": {
+        "dataset_id": "qa_N_64_norm3_again",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 64,
+            "QA": {
+                "size": 8
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply_input": true,
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [8192]
+        }
+    },
+    "qa_N_64_norm3_5p": {
+        "dataset_id": "qa_N_64_norm3_5p",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 64,
+            "QA": {
+                "size": 8,
+                "remove_percentile_smallest": 5
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply_input": true,
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [8192]
+        }
+    },
+    "qa_N_64_norm3_10p": {
+        "dataset_id": "qa_N_64_norm3_10p",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 64,
+            "QA": {
+                "size": 8,
+                "remove_percentile_smallest": 5
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply_input": true,
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [8192]
+        }
     }
 }
