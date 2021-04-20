@@ -37,7 +37,8 @@ def run():
         ('qk10', 10),
         ('qk10_norm', 10),
         ('qk10_high10', 10),
-        ('qk10_high10_1', 10)
+        ('qk10_high10_1', 10),
+        ('qk10_norm_random_P', 10)
     ]
     req_len = 200
     for problem in problems:
