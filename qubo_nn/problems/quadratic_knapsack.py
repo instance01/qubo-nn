@@ -17,7 +17,7 @@ class QuadraticKnapsack(Problem):
         n = len(self.budgets)
 
         if self.random_P:
-            P = np.random.randint(1, 10)
+            P = np.random.randint(5, 15)
         else:
             P = self.P
 
