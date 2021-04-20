@@ -18,6 +18,9 @@ from qubo_nn.problems import PROBLEM_REGISTRY
 from qubo_nn.data import LMDBDataLoader
 
 
+np.set_printoptions(suppress=True)
+
+
 class Classification:
     def __init__(self, cfg):
         self.cfg = cfg
@@ -325,7 +328,6 @@ class ReverseRegression(Classification):
 
         if self.cfg['problems']['problems'] == ["QA"]:
             print("Simplifying input space..")
-            print(all_problems[0][0])
 
             new_data = []
 
@@ -341,6 +343,15 @@ class ReverseRegression(Classification):
                 new_data.append(tmp_data)
             data = np.array(new_data)
 
+            rm_perc = self.cfg["problems"]["QA"].get("remove_percentile_smallest", None)
+            if rm_perc is not None:
+                for d in data:
+                    perc = np.percentile(d, rm_perc)
+                    d[np.where(d < perc)] = 0.
+
+            print(data[0])
+            print(all_problems[0][0])
+
         if self.cfg['problems']['problems'] == ["SP"]:
             len_ = len(all_problems[0])
             data = data[:len_]
@@ -352,8 +363,6 @@ class ReverseRegression(Classification):
         if self.cfg['problems']['problems'] == ["QK"]:
             print(data[0])
             print(all_problems[0][0])
-
-            np.set_printoptions(suppress=True)  # TODO REMOVE
 
             special_norm = self.cfg['problems']['QK'].get('special_norm', False)
             # Assumption: We know where the budgets lie.
