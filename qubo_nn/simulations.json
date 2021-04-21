@@ -8733,6 +8733,56 @@
             "fc_sizes": [8192]
         }
     },
+    "qa_N_64_norm3_85p": {
+        "dataset_id": "qa_N_64_norm3_85p",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 64,
+            "QA": {
+                "size": 8,
+                "remove_percentile_smallest": 85
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply_input": true,
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [8192]
+        }
+    },
+    "qa_N_64_norm3_90p": {
+        "dataset_id": "qa_N_64_norm3_90p",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 200000,
+            "qubo_size": 64,
+            "QA": {
+                "size": 8,
+                "remove_percentile_smallest": 90
+            },
+            "problems": ["QA"]
+        },
+        "model": {
+            "use_norm_multiply_input": true,
+            "use_norm_multiply": true,
+            "norm_multiply": 3.0,
+            "activation": "LeakyReLU",
+            "part": [0, 200000],
+            "n_epochs": 500,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [8192]
+        }
+    },
 
     "qk7_6x6_high10_1M_random_P": {
         "dataset_id": "qk7_6x6_high10_1M_random_P",
