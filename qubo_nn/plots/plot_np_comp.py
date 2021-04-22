@@ -74,7 +74,7 @@ def plot_5x5(kv):
 
     # plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     plt.legend()
-    plt.ylim((0.5, 1.1))
+    plt.ylim((0.5, 1.05))
     plt.tight_layout()
     plt.show()
     fig.savefig('np_comp_nodes5x5.png')
