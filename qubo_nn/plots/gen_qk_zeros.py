@@ -30,7 +30,9 @@ def run():
         ('qa_N_64_norm3_65p', 10),
         ('qa_N_64_norm3_70p', 10),
         ('qa_N_64_norm3_75p', 10),
-        ('qa_N_64_norm3_80p', 10)
+        ('qa_N_64_norm3_80p', 10),
+        ('qa_N_64_norm3_85p', 10),
+        ('qa_N_64_norm3_90p', 10)
     ]
     kv = {}
     for problem in problems:
