@@ -94,12 +94,12 @@ def plot(kv):
     plt.legend(frameon=False)
     plt.tight_layout()
     plt.show()
-    fig.savefig('qk_zeros.png')
-    fig.savefig('qk_zeros.pdf')
+    fig.savefig('qa_zeros.png')
+    fig.savefig('qa_zeros.pdf')
 
 
 def run():
-    with open('qk_zeros.pickle', 'rb') as f:
+    with open('qa_zeros.pickle', 'rb') as f:
         kv = pickle.load(f)
     gen_table(kv)
     plot(kv)
