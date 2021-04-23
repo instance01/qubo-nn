@@ -45,7 +45,7 @@ def run():
         data = aggregate(paths, min_len, problem[1], req_len=req_len)
         kv[problem[0]] = data
 
-    with open('qk_zeros.pickle', 'wb+') as f:
+    with open('qa_zeros.pickle', 'wb+') as f:
         pickle.dump(kv, f)
 
 
