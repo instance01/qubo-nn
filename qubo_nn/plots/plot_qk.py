@@ -86,7 +86,7 @@ def plot(kv):
 
 def plot2(kv):
     tags = {
-        'qk10_norm': '16x16, high30, normed, 1M',
+        'qk10_norm': '16x16, high30, normed, 200k',
         'qk8_6x6_high10_1M': '16x16, high10, 1M',
         'qk8_16x16_high30_1M': '16x16, high30, 1M'
     }
