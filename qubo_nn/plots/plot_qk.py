@@ -117,6 +117,7 @@ def plot2(kv):
 
     # plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     plt.legend(frameon=False)
+    plt.ylim((0, 1.05))
     plt.tight_layout()
     plt.show()
     fig.savefig('qk_norm.png')

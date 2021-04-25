@@ -41,6 +41,8 @@ def gen_table(kv):
         v = np.array(v)
         mean, range_ = calc_ci(k, v[1].max(axis=1))  # r2
         print(k, "R2", "%.3f" % mean, "+-", "%.3f" % range_)
+        mean, range_ = calc_ci(k, v[2].min(axis=1))  # eval loss
+        print(k, "Eval Loss", "%.5f" % mean, "+-", "%.5f" % range_)
 
 
 def plot(kv):
