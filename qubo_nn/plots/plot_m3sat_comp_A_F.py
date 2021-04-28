@@ -48,7 +48,7 @@ def gen_table(kv):
 
 
 def plot(kv, kv2):
-    fig, axs = plt.subplots(1, 2, figsize=(10, 3.0))
+    fig, axs = plt.subplots(1, 2, figsize=(9, 3.0))
 
     def calc_ci(ax, key, arr, tags, col=None):
         # arr = arr[~np.isnan(arr)]

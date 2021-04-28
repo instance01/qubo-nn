@@ -48,7 +48,7 @@ def plot_loss(kv):
     for i, (k, v) in enumerate(kv.items()):
         # sub_plot(k, v[0])  # This is eval
         sub_plot(ax, k, v[1])  # This is train
-        ax.legend()
+        ax.legend(frameon=False)
         if i == 0:
             ax.set_ylabel("Train Loss")
         ax.set_xlabel("Epoch")
@@ -87,7 +87,7 @@ def plot_r2(kv):
     for i, (k, v) in enumerate(kv.items()):
         # sub_plot(k, v[0])  # This is eval
         sub_plot_r2(ax, k, v[2])  # This is R**2
-        ax.legend()
+        ax.legend(frameon=False)
         if i == 0:
             ax.set_ylabel(r'$R^2$')
         ax.set_xlabel("Epoch")

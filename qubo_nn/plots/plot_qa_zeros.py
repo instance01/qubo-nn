@@ -34,7 +34,7 @@ def gen_table(kv):
         # arr = arr[:, 1:201]
         v = np.array(v)
         mean, range_ = calc_ci(k, v[0].max(axis=1))  # r2
-        print(k, "R2", "%.3f" % mean, "+-", "%.3f" % range_)
+        print(k, "R2", "%.3f" % mean, "+-", "%.4f" % range_)
 
 
 def plot(kv):

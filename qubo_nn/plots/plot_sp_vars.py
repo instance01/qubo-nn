@@ -24,9 +24,9 @@ def plot_loss(kv):
     fig, ax = plt.subplots(figsize=(4, 3))
 
     tags = {
-        'sp4_100k': "6 Variables",
-        'sp6_100k': "12 Variables",
-        'sp5_100k': "20 Variables"
+        'sp4_100k': "6 set size",
+        'sp6_100k': "12 set size",
+        'sp5_100k': "20 set size"
     }
 
     def sub_plot_r2(ax, key, arr):
@@ -48,7 +48,7 @@ def plot_loss(kv):
     for k in tags:
         v = kv[k]
         sub_plot_r2(ax, k, v[1])  # This is train loss.
-        ax.legend()
+        ax.legend(frameon=False)
         ax.set_ylabel(r'Train Loss')
         ax.set_xlabel("Epoch")
         ax.set_ylim([0, 30])
@@ -64,9 +64,9 @@ def plot_vars(kv):
     fig, ax = plt.subplots(figsize=(4, 3))
 
     tags = {
-        'sp4_100k': "6 Variables",
-        'sp6_100k': "12 Variables",
-        'sp5_100k': "20 Variables"
+        'sp4_100k': "6 set size",
+        'sp6_100k': "12 set size",
+        'sp5_100k': "20 set size"
     }
 
     def sub_plot_r2(ax, key, arr):
@@ -88,7 +88,7 @@ def plot_vars(kv):
     for k in tags:
         v = kv[k]
         sub_plot_r2(ax, k, v[2])  # This is R**2
-        ax.legend()
+        ax.legend(frameon=False)
         ax.set_ylabel(r'$R^2$')
         ax.set_xlabel("Epoch")
         ax.set_ylim([0, .5])
@@ -104,14 +104,14 @@ def plot_sort(kv):
     fig, axs = plt.subplots(1, 3, figsize=(8.5, 2.5))
 
     tags = {
-        'sp4_100k': "6 Variables",
-        'sp6_100k': "12 Variables",
-        'sp5_100k': "20 Variables"
+        'sp4_100k': "6 set size",
+        'sp6_100k': "12 set size",
+        'sp5_100k': "20 set size"
     }
     tags_sort = {
-        'sp4_sort_100k': "6 Variables sorted",
-        'sp6_sort_100k': "12 Variables sorted",
-        'sp5_sort_100k': "20 Variables sorted"
+        'sp4_sort_100k': "6 set size, sorted",
+        'sp6_sort_100k': "12 set size, sorted",
+        'sp5_sort_100k': "20 set size, sorted"
     }
 
     def sub_plot_r2(ax, key, arr, tags):
@@ -135,7 +135,7 @@ def plot_sort(kv):
         ax = axs[i]
         sub_plot_r2(ax, k1, kv[k1][2], tags)
         sub_plot_r2(ax, k2, kv[k2][2], tags_sort)
-        ax.legend()
+        ax.legend(frameon=False)
         ax.set_ylabel(r'$R^2$')
         ax.set_xlabel("Epoch")
         ax.set_ylim([0, .6])
