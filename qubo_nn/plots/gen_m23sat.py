@@ -13,7 +13,7 @@ def aggregate(paths, min_len, req_len):
 
 def run():
     min_len = 100
-    base_path = '../runs/'
+    base_paths = ['../runs/', '../runs5/']
     problems = [
         'm3sat_5_F',
         'm3sat_10_F',
@@ -52,8 +52,10 @@ def run():
 
     kv = {}
     for problem in problems:
-        print(problem)
-        paths = glob.glob(base_path + '*-' + problem)
+        paths = []
+        for base_path in base_paths:
+            print(problem)
+            paths.extend(glob.glob(base_path + '*-' + problem))
 
         print(paths)
         data = aggregate(paths, min_len, req_len)
