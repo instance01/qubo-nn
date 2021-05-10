@@ -52,16 +52,36 @@ class Classification:
         #     shape=(len(self.problems) * n_problems, qubo_size, qubo_size),
         #     dtype=np.float32
         # )
+
+        # Only works for single-reversal models.
+        generalized_params = self.cfg['problems'].get('generalization', [])
+
         labels = np.zeros(
-            shape=(len(self.problems) * n_problems,),
+            shape=(len(self.problems) * n_problems * (len(generalized_params) + 1),),
             dtype=np.long
         )
-        for i, (cls, args) in enumerate(self.problems):
+        for i, (cls, kwargs) in enumerate(self.problems):
             idx_start = i * n_problems
             idx_end = (i + 1) * n_problems
             problems, qubo_matrices = self.gen_qubo_matrices(
-                cls, n_problems, **args
+                cls, n_problems, **kwargs
             )
+
+            for params in generalized_params:
+                args = kwargs.copy()
+                args.update(params)
+                problems_, qubo_matrices_ = self.gen_qubo_matrices(
+                    cls, n_problems, **args
+                )
+
+                # Padding
+                for k, matrix in enumerate(qubo_matrices_):
+                    pad_width = qubo_size - matrix.shape[0]
+                    matrix = np.pad(matrix, ((0, pad_width), (0, pad_width)))
+                    qubo_matrices_[k] = matrix
+                problems.extend(problems_)
+                qubo_matrices.extend(qubo_matrices_)
+
             all_problems.append(problems)
             if self.scramble_qubos:
                 for j in range(n_problems):
@@ -300,15 +320,30 @@ class ReverseRegression(Classification):
             new_data = []
 
             size = self.cfg["problems"]["QA"]["size"]
+            max_full_size = None
 
-            for k, d in enumerate(data):
-                tmp_data = []
-                triu_idx = np.triu_indices(size, 1)
-                for i, j in zip(*triu_idx):
-                    quadrant = d[i*size:(i+1)*size, j*size:(j+1)*size]
-                    x = quadrant[np.triu_indices(size, 1)]
-                    tmp_data.extend(x)
-                new_data.append(tmp_data)
+            generalized_params = self.cfg['problems'].get('generalization', [])
+            for m in range(len(generalized_params) + 1):
+                if m > 0:
+                    size = self.cfg["problems"]["generalization"][m - 1]["size"]
+                qubo_size = int(size ** 2)
+                for n in range(self.n_problems):
+                    d = data[self.n_problems * m + n]
+                    d = d[:qubo_size, :qubo_size]
+                    tmp_data = []
+                    triu_idx = np.triu_indices(size, 1)
+                    for i, j in zip(*triu_idx):
+                        quadrant = d[i*size:(i+1)*size, j*size:(j+1)*size]
+                        x = quadrant[np.triu_indices(size, 1)]
+                        tmp_data.extend(x)
+
+                    if m > 0:
+                        pad_width = max_full_size - len(tmp_data)
+                        tmp_data = np.pad(tmp_data, (0, pad_width))
+
+                    new_data.append(tmp_data)
+                if m == 0:
+                    max_full_size = len(new_data[0])
             data = np.array(new_data)
 
             rm_perc = self.cfg["problems"]["QA"].get("remove_percentile_smallest", None)
