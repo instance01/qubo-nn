@@ -228,27 +228,6 @@ class ReverseRegression(Classification):
                 dtype=np.float32
             )
 
-            # TODO REMOVE !
-            # for clause in clauses:
-            #     if clause[0][1] and clause[1][1]:
-            #         new_p[0][clause[0][0]][clause[1][0]] -= 2
-            #         new_p[0][clause[1][0]][clause[0][0]] -= 2
-            #     if not clause[0][1] and not clause[1][1]:
-            #         # new_p[1][clause[0][0]][clause[1][0]] = 1
-            #         # new_p[1][clause[1][0]][clause[0][0]] = 1
-            #         new_p[0][clause[0][0]][clause[1][0]] -= 1
-            #         new_p[0][clause[1][0]][clause[0][0]] -= 1
-            #     if clause[0][1] and not clause[1][1]:
-            #         # new_p[2][clause[0][0]][clause[1][0]] = 1
-            #         # new_p[2][clause[1][0]][clause[0][0]] = 1
-            #         new_p[0][clause[0][0]][clause[1][0]] += 1
-            #         new_p[0][clause[1][0]][clause[0][0]] += 1
-            #     if not clause[0][1] and clause[1][1]:
-            #         # new_p[3][clause[0][0]][clause[1][0]] = 1
-            #         # new_p[3][clause[1][0]][clause[0][0]] = 1
-            #         new_p[0][clause[0][0]][clause[1][0]] += 2
-            #         new_p[0][clause[1][0]][clause[0][0]] += 2
-
             for clause in clauses:
                 if clause[0][1] and clause[1][1]:
                     new_p[0][clause[0][0]][clause[1][0]] -= 2
@@ -314,17 +293,6 @@ class ReverseRegression(Classification):
             self.gen_apply_m3sat_customization(all_problems)
             print(data[0])
             print(all_problems[0][0]["clauses"])
-
-            # TODO: REMOVE (checking for duplicates)
-            # for i, prob1 in enumerate(all_problems[0]):
-            #     for j, prob2 in enumerate(all_problems[0]):
-            #         if i == j:
-            #             continue
-
-            #         if prob1["clauses"] == prob2["clauses"]:
-            #             print(i, j)
-            #             print(prob1, prob2)
-            #             import pdb; pdb.set_trace()
 
         if self.cfg['problems']['problems'] == ["QA"]:
             print("Simplifying input space..")
