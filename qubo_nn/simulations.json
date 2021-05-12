@@ -8887,11 +8887,10 @@
         },
         "model": {
             "activation": "ReLU",
-            "part": [0, 10000],
-            "n_epochs": 100,
+            "n_epochs": 300,
             "batch_size": 500,
-            "lr": 0.01,
-            "fc_sizes": []
+            "lr": 0.15,
+            "fc_sizes": [1000]
         }
     },
     "a19_2_generalized": {
@@ -8909,7 +8908,6 @@
         "model": {
             "no_norm": true,
             "activation": "ReLU",
-            "part": [0, 10000],
             "n_epochs": 1000,
             "batch_size": 500,
             "lr": 3.0,
@@ -8930,7 +8928,6 @@
         },
         "model": {
             "activation": "ReLU",
-            "part": [0, 10000],
             "n_epochs": 2000,
             "batch_size": 500,
             "lr": 1.0,
@@ -8951,7 +8948,6 @@
         },
         "model": {
             "activation": "ReLU",
-            "part": [0, 10000],
             "n_epochs": 15000,
             "batch_size": 500,
             "lr": 0.03,
@@ -8972,7 +8968,6 @@
         },
         "model": {
             "activation": "ReLU",
-            "part": [0, 10000],
             "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.011,
@@ -8997,7 +8992,6 @@
             "use_norm_multiply": true,
             "norm_multiply": 3.0,
             "activation": "LeakyReLU",
-            "part": [0, 300000],
             "n_epochs": 300,
             "fc_sizes": [20000],
 

@@ -436,7 +436,7 @@ class ReverseRegression(Classification):
             pickle.dump(output_size, f)
 
     def run_experiment(self, n_runs=1):
-        part = self.cfg["model"]["part"]
+        part = self.cfg["model"].get("part", None)
         if part:
             lmdb_loader = LMDBDataLoader(self.cfg, reverse=True, part=part)
         else:
@@ -459,7 +459,7 @@ class ReverseRegression(Classification):
             self.logger.close()
 
     def eval(self, model_fname):
-        part = self.cfg["model"]["part"]
+        part = self.cfg["model"].get("part", None)
         if part:
             lmdb_loader = LMDBDataLoader(self.cfg, reverse=True, part=part)
         else:
