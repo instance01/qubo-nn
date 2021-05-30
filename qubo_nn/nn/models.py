@@ -72,6 +72,10 @@ class ReverseFCNet(nn.Module):
         super(ReverseFCNet, self).__init__()
         input_size = cfg['problems']['qubo_size'] ** 2
 
+        self.use_cnn = cfg['model'].get('use_cnn', False)
+        self.cnn_cfg = cfg['model'].get('cnn_cfg', [])
+        print(cfg['model'])
+
         self.is_qa = cfg['problems']['problems'] == ['QA']
         self.is_qk = cfg['problems']['problems'] == ['QK']
         self.use_special_norm = False
@@ -96,19 +100,43 @@ class ReverseFCNet(nn.Module):
 
         fc_sizes = cfg['model']['fc_sizes'] + [output_size]
 
-        net = []
-        last_fc_size = input_size
-        for size in fc_sizes:
-            net.append(nn.Linear(last_fc_size, size))
-            net.append(activation_cls())
-            last_fc_size = size
+        if self.use_cnn:
+            net = []
+            # E.g.: [["cnn", 1, 20, 8], ["max_pool"] ["flatten"], ["fc", 64]]
+            for item in self.cnn_cfg:
+                if item[0] == "cnn":
+                    net.append(nn.Conv2d(*item[1:]))
+                    net.append(activation_cls())
+                elif item[0] == "max_pool":
+                    net.append(nn.MaxPool2d(*item[1:]))
+                elif item[0] == "flatten":
+                    net.append(nn.Flatten(1))
+                elif item[0] == "fc":
+                    net.append(nn.Linear(*item[1:]))
+                    net.append(activation_cls())
+            # TODO: Currently we assume we end with ReLU (or so).
+            net.pop(-1)
+            self.fc_net = nn.Sequential(*net)
+        else:
+            net = []
+            last_fc_size = input_size
+            for size in fc_sizes:
+                net.append(nn.Linear(last_fc_size, size))
+                net.append(activation_cls())
+                last_fc_size = size
 
-        net.pop(-1)
-        self.fc_net = nn.Sequential(*net)
+            net.pop(-1)
+            self.fc_net = nn.Sequential(*net)
         print(self.fc_net)
+        n_params = sum(
+            p.numel() for p in self.fc_net.parameters() if p.requires_grad
+        )
+        print("Number of trainable params:", n_params)
 
     def forward(self, x):
-        if not self.is_qa and not self.use_special_norm:
+        if self.use_cnn:
+            x = torch.unsqueeze(x, 1)  # We have just one channel.
+        if not self.is_qa and not self.use_special_norm and not self.use_cnn:
             x = torch.flatten(x, 1)
         return self.fc_net(x)
 
