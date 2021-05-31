@@ -9391,7 +9391,7 @@
             "activation": "ReLU",
             "n_epochs": 4000,
             "batch_size": 500,
-            "lr": 0.5,
+            "lr": 0.1,
             "fc_sizes": []
         }
     },
@@ -9539,7 +9539,7 @@
             "activation": "ReLU",
             "n_epochs": 4000,
             "batch_size": 500,
-            "lr": 0.5,
+            "lr": 0.1,
             "fc_sizes": []
         }
     },
@@ -9687,7 +9687,7 @@
             "activation": "ReLU",
             "n_epochs": 4000,
             "batch_size": 500,
-            "lr": 0.5,
+            "lr": 0.1,
             "fc_sizes": []
         }
     },
