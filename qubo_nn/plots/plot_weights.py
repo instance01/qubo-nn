@@ -41,9 +41,13 @@ def plot_matrix(cfg_id):
     fig, ax = plt.subplots(figsize=(8, 8))
     mat = list(optimizer.net.named_parameters())[0][1].detach().numpy()
     size = min(mat.shape[0], 192)
-    ax.matshow(mat[:size, :size])
+    im = ax.matshow(mat[:size, :size])
     ax.get_xaxis().set_visible(False)
     ax.get_yaxis().set_visible(False)
+
+    cbar = ax.figure.colorbar(im, ax=[ax], aspect=40)
+    cbar.ax.set_ylabel('Avg Number of Stuns', rotation=-90, va="bottom")
+
     plt.tight_layout()
     plt.savefig('weights_' + cfg_id + '.png')
     plt.savefig('weights_' + cfg_id + '.pdf')
@@ -113,5 +117,5 @@ def plot_hist(cfg_id, labels=True):
 
 
 for k in kv:
-    # plot_matrix(k)
-    plot_hist(k, False)
+    plot_matrix(k)
+    # plot_hist(k, False)
