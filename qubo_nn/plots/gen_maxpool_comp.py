@@ -13,7 +13,7 @@ def aggregate(paths, min_len, len_, req_len=None):
 
 def run():
     min_len = 200
-    req_len = 1000
+    req_len = 200
     base_paths = ['../runs/', '../runs7/']
     problems = [
         ('gc1_cnn_test1', 10),
