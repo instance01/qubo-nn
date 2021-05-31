@@ -1,6 +1,5 @@
 import os
 import pickle
-import collections
 
 import numpy as np
 import scipy.stats as st
@@ -8,7 +7,7 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 
 
-NAME = os.path.splitext(__file__)[0][5:]
+NAME = os.path.splitext(os.path.basename(__file__))[0][5:]
 
 mpl.font_manager._rebuild()
 plt.rc('font', family='Raleway')
@@ -36,12 +35,16 @@ def gen_table(kv):
 
     for k, v in kv.items():
         # arr = arr[:, 1:201]
+        if not v:
+            continue
+        if len(v[0]) == 0:
+            continue
         v = np.array(v)
         mean, range_ = calc_ci(k, v[0].max(axis=1))  # r2
         print(k, "R2", "%.3f" % mean, "+-", "%.3f" % range_)
 
 
-def plot_5x5(kv):
+def plot(kv):
     tags = {
         'gc1_generalized_6': 'FC',
         'gc1_cnn_test1': 'CNN+maxpool',
@@ -89,8 +92,7 @@ def run():
     with open(NAME + '.pickle', 'rb') as f:
         kv = pickle.load(f)
     gen_table(kv)
-    plot_5x5(kv)
-    plot_64x64(kv)
+    plot(kv)
 
 
 if __name__ == '__main__':
