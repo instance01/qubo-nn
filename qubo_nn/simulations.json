@@ -8882,7 +8882,9 @@
                 "size": [16, 20],
                 "n_colors": 5
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -8902,7 +8904,9 @@
             "MC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MC"]
         },
         "model": {
@@ -8923,7 +8927,9 @@
             "MVC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MVC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MVC"]
         },
         "model": {
@@ -8943,7 +8949,9 @@
             "NP": {
                 "size": 64
             },
-            "generalization": [{"size": 32}, {"size": 48}],
+            "generalization": {
+                "NP": [{"size": 32}, {"size": 48}]
+            },
             "problems": ["NP"]
         },
         "model": {
@@ -8963,7 +8971,9 @@
             "TSP": {
                 "size": 8
             },
-            "generalization": [{"size": 7}, {"size": 6}],
+            "generalization": {
+                "TSP": [{"size": 7}, {"size": 6}]
+            },
             "problems": ["TSP"]
         },
         "model": {
@@ -8985,7 +8995,9 @@
             "QA": {
                 "size": 12
             },
-            "generalization": [{"size": 10}, {"size": 8}],
+            "generalization": {
+                "QA": [{"size": 10}, {"size": 8}]
+            },
             "problems": ["QA"]
         },
         "model": {
@@ -9012,7 +9024,9 @@
                 "size": [16, 20],
                 "n_colors": 5
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9034,7 +9048,9 @@
                 "size": [16, 20],
                 "n_colors": 5
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9056,7 +9072,9 @@
                 "size": [16, 20],
                 "n_colors": 5
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9078,7 +9096,9 @@
                 "size": [16, 20],
                 "n_colors": 5
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9100,7 +9120,9 @@
                 "size": [16, 20],
                 "n_colors": 5
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9122,7 +9144,9 @@
                 "size": [16, 20],
                 "n_colors": 5
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9143,7 +9167,9 @@
             "MC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MC"]
         },
         "model": {
@@ -9164,7 +9190,9 @@
             "MVC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MVC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MVC"]
         },
         "model": {
@@ -9184,7 +9212,9 @@
             "MVC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MVC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MVC"]
         },
         "model": {
@@ -9204,7 +9234,9 @@
             "MVC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MVC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MVC"]
         },
         "model": {
@@ -9227,7 +9259,9 @@
             "NP": {
                 "size": 64
             },
-            "generalization": [{"size": 48}],
+            "generalization":{
+                "NP": [{"size": 48}]
+            },
             "problems": ["NP"]
         },
         "model": {
@@ -9248,7 +9282,9 @@
             "TSP": {
                 "size": 8
             },
-            "generalization": [{"size": 7}],
+            "generalization": {
+                "TSP": [{"size": 7}]
+            },
             "problems": ["TSP"]
         },
         "model": {
@@ -9270,7 +9306,9 @@
             "QA": {
                 "size": 12
             },
-            "generalization": [{"size": 10}],
+            "generalization": {
+                "QA": [{"size": 10}]
+            },
             "problems": ["QA"]
         },
         "model": {
@@ -9295,7 +9333,9 @@
             "MC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [48, 60]}],
+            "generalization": {
+                "MC": [{"size": [48, 60]}]
+            },
             "problems": ["MC"]
         },
         "model": {
@@ -9317,7 +9357,9 @@
             "MVC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [48, 60]}],
+            "generalization": {
+                "MVC": [{"size": [48, 60]}]
+            },
             "problems": ["MVC"]
         },
         "model": {
@@ -9340,14 +9382,16 @@
                 "size": [16, 20],
                 "n_colors": 5
             },
-            "generalization": [{"size": [16, 20], "n_colors": 4}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 4}]
+            },
             "problems": ["GC"]
         },
         "model": {
             "activation": "ReLU",
             "n_epochs": 4000,
             "batch_size": 500,
-            "lr": 0.1,
+            "lr": 0.5,
             "fc_sizes": []
         }
     },
@@ -9363,7 +9407,9 @@
             "NP": {
                 "size": 64
             },
-            "generalization": [{"size": 48}, {"size": 32}],
+            "generalization": {
+                "NP": [{"size": 48}, {"size": 32}]
+            },
             "problems": ["NP"]
         },
         "model": {
@@ -9384,7 +9430,9 @@
             "TSP": {
                 "size": 8
             },
-            "generalization": [{"size": 7}, {"size": 6}],
+            "generalization": {
+                "TSP": [{"size": 7}, {"size": 6}]
+            },
             "problems": ["TSP"]
         },
         "model": {
@@ -9406,7 +9454,9 @@
             "QA": {
                 "size": 12
             },
-            "generalization": [{"size": 10}, {"size": 8}],
+            "generalization": {
+                "QA": [{"size": 10}, {"size": 8}]
+            },
             "problems": ["QA"]
         },
         "model": {
@@ -9431,7 +9481,9 @@
             "MC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MC"]
         },
         "model": {
@@ -9453,7 +9505,9 @@
             "MVC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MVC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MVC"]
         },
         "model": {
@@ -9476,14 +9530,16 @@
                 "size": [16, 20],
                 "n_colors": 5
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}]
+            },
             "problems": ["GC"]
         },
         "model": {
             "activation": "ReLU",
             "n_epochs": 4000,
             "batch_size": 500,
-            "lr": 0.1,
+            "lr": 0.5,
             "fc_sizes": []
         }
     },
@@ -9499,7 +9555,9 @@
             "NP": {
                 "size": 64
             },
-            "generalization": [{"size": 48}, {"size": 32}, {"size": 24}],
+            "generalization": {
+                "NP": [{"size": 48}, {"size": 32}, {"size": 24}]
+            },
             "problems": ["NP"]
         },
         "model": {
@@ -9520,7 +9578,9 @@
             "TSP": {
                 "size": 8
             },
-            "generalization": [{"size": 7}, {"size": 6}, {"size": 5}],
+            "generalization": {
+                "TSP": [{"size": 7}, {"size": 6}, {"size": 5}]
+            },
             "problems": ["TSP"]
         },
         "model": {
@@ -9542,7 +9602,9 @@
             "QA": {
                 "size": 12
             },
-            "generalization": [{"size": 10}, {"size": 8}, {"size": 6}],
+            "generalization": {
+                "QA": [{"size": 10}, {"size": 8}, {"size": 6}]
+            },
             "problems": ["QA"]
         },
         "model": {
@@ -9567,7 +9629,9 @@
             "MC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MC"]
         },
         "model": {
@@ -9589,7 +9653,9 @@
             "MVC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MVC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MVC"]
         },
         "model": {
@@ -9612,14 +9678,16 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
             "activation": "ReLU",
             "n_epochs": 4000,
             "batch_size": 500,
-            "lr": 0.1,
+            "lr": 0.5,
             "fc_sizes": []
         }
     },
@@ -9635,7 +9703,9 @@
             "MC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MC"]
         },
         "model": {
@@ -9657,7 +9727,9 @@
             "MVC": {
                 "size": [64, 90]
             },
-            "generalization": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}],
+            "generalization": {
+                "MVC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
             "problems": ["MVC"]
         },
         "model": {
@@ -9680,7 +9752,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9701,7 +9775,9 @@
             "TSP": {
                 "size": 8
             },
-            "generalization": [{"size": 7}],
+            "generalization": {
+                "TSP": [{"size": 7}]
+            },
             "problems": ["TSP"]
         },
         "model": {
@@ -9725,7 +9801,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9749,7 +9827,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9773,7 +9853,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9797,7 +9879,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9821,7 +9905,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9845,7 +9931,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9869,7 +9957,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9893,7 +9983,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9917,7 +10009,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9941,7 +10035,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9965,7 +10061,9 @@
                 "size": [16, 20],
                 "n_colors": 6
             },
-            "generalization": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}],
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
             "problems": ["GC"]
         },
         "model": {
@@ -9976,6 +10074,53 @@
             "batch_size": 500,
             "lr": 0.05,
             "fc_sizes": [40000]
+        }
+    },
+
+    "test1": {
+        "dataset_id": "test1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.5,
+            "fc_sizes": [40000]
+        }
+    },
+
+    "27_gen4": {
+        "dataset_id": "27_gen4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": true,
+            "n_problems": 10000,
+            "generalization": {
+                "NP":   [{"size": 48},{"size": 32},{"size": 24}],
+                "MC":   [{"size": [48, 60]},{"size": [32, 40]},{"size": [24, 30]}],
+                "MVC":  [{"size": [48, 60]},{"size": [32, 40]},{"size": [24, 30]}],
+                "SP":   [{"size": [30, 48]},{"size": [20, 32]},{"size": [10, 24]}],
+                "M2SAT":[{"size": [48, 60]},{"size": [32, 40]},{"size": [24, 30]}],
+                "SPP":  [{"size": [30, 48]},{"size": [20, 32]},{"size": [10, 24]}],
+                "GC":   [{"size": [8, 10], "n_colors": 7},{"size": [8, 10], "n_colors": 6},{"size": [8, 10], "n_colors": 5}],
+                "QA":   [{"size": 7},{"size": 6},{"size": 5}],
+                "QK":   [{"size": 42, "constraint": 40},{"size": 27, "constraint": 30},{"size": 20, "constraint": 10}],
+                "M3SAT":[{"size": [20, 24]},{"size": [10, 22]},{"size": [10, 12]}],
+                "TSP":  [{"size": 7},{"size": 6},{"size": 5}]
+            }
         }
     }
 }

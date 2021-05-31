@@ -29,11 +29,12 @@ class Classification:
         self.qubo_size = cfg['problems']['qubo_size']
         self.scramble_qubos = cfg['problems']['scramble_qubos']
         self.problems = self._prep_problems()
+        self.generalization_cfgs = self.cfg['problems'].get('generalization', {})
 
     def _prep_problems(self):
         ret = []
         for name in self.cfg['problems']['problems']:
-            ret.append((PROBLEM_REGISTRY[name], self.cfg['problems'][name]))
+            ret.append((PROBLEM_REGISTRY[name], self.cfg['problems'][name], name))
         return ret
 
     def gen_qubo_matrices(self, cls, n_problems, **kwargs):
@@ -53,19 +54,24 @@ class Classification:
         #     dtype=np.float32
         # )
 
-        # Only works for single-reversal models.
-        generalized_params = self.cfg['problems'].get('generalization', [])
+        generalized_params = self.cfg['problems'].get('generalization', {})
+        generalized_order = 0
+        if generalized_params:
+            k = list(generalized_params.keys())[0]
+            generalized_order = len(generalized_params[k])
 
-        labels = np.zeros(
-            shape=(len(self.problems) * n_problems * (len(generalized_params) + 1),),
-            dtype=np.long
-        )
-        for i, (cls, kwargs) in enumerate(self.problems):
+        labels = []
+        # labels = np.zeros(
+        #     shape=(len(self.problems) * n_problems * (generalized_order + 1),),
+        #     dtype=np.long
+        # )
+        for i, (cls, kwargs, name) in enumerate(self.problems):
             idx_start = i * n_problems
             idx_end = (i + 1) * n_problems
             problems, qubo_matrices = self.gen_qubo_matrices(
                 cls, n_problems, **kwargs
             )
+            generalized_params = self.generalization_cfgs[name]
 
             for params in generalized_params:
                 args = kwargs.copy()
@@ -113,10 +119,14 @@ class Classification:
             #     data[idx_start:idx_start + qubo_matrices.shape[0], :, :] = qubo_matrices
             # else:
             #     data[idx_start:idx_end, :, :] = qubo_matrices
-            data.append(qubo_matrices)
-            labels[idx_start:idx_end] = i
+            data.extend(qubo_matrices)
+            # labels[idx_start:idx_end] = i
+            labels.extend([i for _ in range(len(qubo_matrices))])
 
-        return data[0], labels, all_problems
+        print("TOTAL DATA LEN", len(data))
+        data = np.array(data, dtype=np.float32)
+        labels = np.array(labels, dtype=np.long)
+        return data, labels, all_problems
 
     def gen_data_gzip_pickle(self):
         data, labels, _ = self._gen_data(self.n_problems)
@@ -322,7 +332,7 @@ class ReverseRegression(Classification):
             size = self.cfg["problems"]["QA"]["size"]
             max_full_size = None
 
-            generalized_params = self.cfg['problems'].get('generalization', [])
+            generalized_params = self.cfg['problems'].get('generalization', {}).get('QA', [])
             for m in range(len(generalized_params) + 1):
                 if m > 0:
                     size = self.cfg["problems"]["generalization"][m - 1]["size"]
