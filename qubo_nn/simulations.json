@@ -10077,6 +10077,317 @@
         }
     },
 
+    "tsp_cnn_test1": {
+        "dataset_id": "tsp2_generalized_gen2_small_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": [{"size": 7}]
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 6, 8], ["max_pool", 2, 2], ["flatten"], ["fc", 4704, 65]],
+            "activation": "ReLU",
+            "n_epochs": 200,
+            "batch_size": 100,
+            "lr": 0.011,
+            "fc_sizes": []
+        }
+    },
+    "gc1_cnn_test1": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 6, 8], ["max_pool", 2, 2], ["flatten"], ["fc", 11616, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test2": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 12, 8], ["max_pool", 2, 2], ["flatten"], ["fc", 23232, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test3": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 20, 8, 8], ["max_pool", 2, 2], ["flatten"], ["fc", 720, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test4": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 100, 8, 8], ["max_pool", 2, 2], ["flatten"], ["fc", 3600, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test5": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 200, 8, 8], ["max_pool", 2, 2], ["flatten"], ["fc", 7200, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test6": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 300, 8, 8], ["max_pool", 2, 2], ["flatten"], ["fc", 10800, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test7": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 400, 8, 8], ["max_pool", 2, 2], ["flatten"], ["fc", 14400, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.1,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test8": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 5, 8], ["max_pool", 2, 2], ["flatten"], ["fc", 9680, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test9": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 6, 8], ["flatten"], ["fc", 47526, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test10": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 8, 8], ["flatten"], ["fc", 63368, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test11": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 12, 8], ["flatten"], ["fc", 95052, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": [40000]
+        }
+    },
+
     "test1": {
         "dataset_id": "test1",
         "base_cfg": "23",
