@@ -7,3 +7,4 @@ qubo_nn/models/*-*
 qubo_nn/datasets/*.gz
 qubo_nn/datasets/*
 *.bak
+runs*/
