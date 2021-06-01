@@ -106,6 +106,8 @@ class Classification:
                 elif self.cfg["model"]["use_norm_multiply_input"]:
                     qubo_matrices /= np.max(np.abs(qubo_matrices))
                     qubo_matrices *= self.cfg["model"]["norm_multiply"]
+                elif self.cfg["model"].get("norm_data_abs", False):
+                    qubo_matrices /= np.max(np.abs(qubo_matrices))
                 elif self.cfg["model"]["norm_data"]:
                     qubo_matrices /= np.max(np.abs(qubo_matrices))
                     qubo_matrices = (qubo_matrices + 1) / 2.
@@ -426,6 +428,8 @@ class ReverseRegression(Classification):
                 all_problems_flat /= np.max(np.abs(all_problems_flat))
                 all_problems_flat *= self.cfg["model"]["norm_multiply"]
                 # qa4_diffnorm used 5., qa4_diffnorm_v2 used 10.
+            elif self.cfg["model"].get("norm_data_abs", False):
+                all_problems_flat /= np.max(np.abs(all_problems_flat))
             else:
                 all_problems_flat /= np.max(np.abs(all_problems_flat))
                 all_problems_flat = (all_problems_flat + 1) / 2.
