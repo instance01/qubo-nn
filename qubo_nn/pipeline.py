@@ -71,7 +71,7 @@ class Classification:
             problems, qubo_matrices = self.gen_qubo_matrices(
                 cls, n_problems, **kwargs
             )
-            generalized_params = self.generalization_cfgs[name]
+            generalized_params = self.generalization_cfgs.get(name, [])
 
             for params in generalized_params:
                 args = kwargs.copy()
