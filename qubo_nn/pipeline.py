@@ -90,7 +90,7 @@ class Classification:
 
             all_problems.append(problems)
             if self.scramble_qubos:
-                for j in range(n_problems * (generalized_order + 1)):
+                for j in range(len(qubo_matrices_)):
                     if random.random() > .5:
                         rand_idx1 = random.randint(0, self.qubo_size - 1)
                         rand_idx2 = random.randint(0, self.qubo_size - 1)
