@@ -10417,6 +10417,27 @@
         "dataset_id": "27_gen4",
         "base_cfg": "23",
         "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "generalization": {
+                "NP":   [{"size": 48},{"size": 32},{"size": 24}],
+                "MC":   [{"size": [48, 60]},{"size": [32, 40]},{"size": [24, 30]}],
+                "MVC":  [{"size": [48, 60]},{"size": [32, 40]},{"size": [24, 30]}],
+                "SP":   [{"size": [30, 48]},{"size": [20, 32]},{"size": [10, 24]}],
+                "M2SAT":[{"size": [48, 60]},{"size": [32, 40]},{"size": [24, 30]}],
+                "SPP":  [{"size": [30, 48]},{"size": [20, 32]},{"size": [10, 24]}],
+                "GC":   [{"size": [8, 10], "n_colors": 7},{"size": [8, 10], "n_colors": 6},{"size": [8, 10], "n_colors": 5}],
+                "QA":   [{"size": 7},{"size": 6},{"size": 5}],
+                "QK":   [{"size": 42, "constraint": 40},{"size": 27, "constraint": 30},{"size": 20, "constraint": 10}],
+                "M3SAT":[{"size": [20, 24]},{"size": [10, 22]},{"size": [10, 12]}],
+                "TSP":  [{"size": 7},{"size": 6},{"size": 5}]
+            }
+        }
+    },
+    "27_gen4_scramble": {
+        "dataset_id": "27_gen4_scramble",
+        "base_cfg": "23",
+        "problems": {
             "scramble_qubos": true,
             "n_problems": 10000,
             "generalization": {
