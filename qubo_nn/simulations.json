@@ -9319,7 +9319,7 @@
             "fc_sizes": [20000],
 
             "batch_size": 50,
-            "lr": 0.0001,
+            "lr": 0.00003,
             "optimizer": "Adam"
         }
     },
@@ -9467,7 +9467,7 @@
             "fc_sizes": [20000],
 
             "batch_size": 50,
-            "lr": 0.0001,
+            "lr": 0.00003,
             "optimizer": "Adam"
         }
     },
@@ -9615,7 +9615,7 @@
             "fc_sizes": [20000],
 
             "batch_size": 50,
-            "lr": 0.0001,
+            "lr": 0.00003,
             "optimizer": "Adam"
         }
     },
@@ -9687,7 +9687,7 @@
             "activation": "ReLU",
             "n_epochs": 4000,
             "batch_size": 500,
-            "lr": 0.1,
+            "lr": 0.05,
             "fc_sizes": []
         }
     },
@@ -10168,6 +10168,404 @@
                 "M3SAT":[{"size": [20, 24]},{"size": [10, 22]},{"size": [10, 12]}],
                 "TSP":  [{"size": 7},{"size": 6},{"size": 5}]
             }
+        }
+    },
+
+    "tsp2_2_r2": {
+        "dataset_id": "tsp2_2_r2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 40000,
+            "problems": ["TSP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 100,
+            "batch_size": 100,
+            "lr": 0.011,
+            "fc_sizes": [4096]
+        }
+    },
+    "tsp_test": {
+        "dataset_id": "tsp_test",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.011,
+            "fc_sizes": [128]
+        }
+    },
+    "tsp_test2": {
+        "dataset_id": "tsp_test",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.015,
+            "fc_sizes": [64]
+        }
+    },
+    "tsp_test2": {
+        "dataset_id": "tsp_test",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.015,
+            "fc_sizes": [64]
+        }
+    },
+    "tsp_test3": {
+        "dataset_id": "tsp_test3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.012,
+            "fc_sizes": []
+        }
+    },
+    "tsp_test4": {
+        "dataset_id": "tsp_test3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.012,
+            "fc_sizes": [256]
+        }
+    },
+    "tsp_test4_1": {
+        "dataset_id": "tsp_test4_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 40000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.012,
+            "fc_sizes": [256]
+        }
+    },
+    "tsp_test5": {
+        "dataset_id": "tsp_test3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.012,
+            "fc_sizes": [512]
+        }
+    },
+    "tsp_test6": {
+        "dataset_id": "tsp_test3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.013,
+            "fc_sizes": [4096]
+        }
+    },
+    "tsp_test7": {
+        "dataset_id": "tsp_test3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.013,
+            "fc_sizes": [10000]
+        }
+    },
+
+    "AAA": {
+        "dataset_id": "AAA",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 40000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.013,
+            "fc_sizes": [256]
+        }
+    },
+    "BBB": {
+        "dataset_id": "AAA",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 40000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.013,
+            "fc_sizes": [10000]
+        }
+    },
+
+    "BBB_generalization": {
+        "dataset_id": "BBB_generalization",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": [{"size": 7}, {"size": 6}, {"size": 5}]
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.013,
+            "fc_sizes": [10000]
+        }
+    },
+
+    "tsp_gen1": {
+        "dataset_id": "tsp_gen1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 40000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.013,
+            "fc_sizes": [10000]
+        }
+    },
+    "tsp_gen2": {
+        "dataset_id": "tsp_gen2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": [{"size": 7}]
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.013,
+            "fc_sizes": [10000]
+        }
+    },
+    "tsp_gen3": {
+        "dataset_id": "tsp_gen3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": [{"size": 7}, {"size": 6}]
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.013,
+            "fc_sizes": [10000]
+        }
+    },
+    "tsp_gen4": {
+        "dataset_id": "tsp_gen4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "TSP": {
+                "size": 8
+            },
+            "generalization": {
+                "TSP": [{"size": 7}, {"size": 6}, {"size": 5}]
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.013,
+            "fc_sizes": [10000]
         }
     }
 }

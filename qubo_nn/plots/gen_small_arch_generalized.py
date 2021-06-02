@@ -5,9 +5,9 @@ import pickle
 from lib import aggregate_single
 
 
-def aggregate(paths, min_len, len_, req_len=None):
-    r2 = aggregate_single(paths, 'Custom/R2', min_len, req_len=req_len)
-    eval_loss = aggregate_single(paths, 'Loss/Eval', min_len, req_len=req_len)
+def aggregate(paths, min_len, max_len, req_len=None):
+    r2 = aggregate_single(paths, 'Custom/R2', min_len, req_len=req_len, cutoff=max_len)
+    eval_loss = aggregate_single(paths, 'Loss/Eval', min_len, req_len=req_len, cutoff=max_len)
     return r2, eval_loss
 
 
@@ -16,30 +16,30 @@ def run():
     req_len = 20
     base_paths = ['../runs/', '../runs3/', '../runs5/', '../runs7/']
     problems = [
-        ('np19_LONG_generalized_gen2_small_arch', 10),
-        ('tsp2_generalized_gen2_small_arch', 10),
-        ('qa_N_144_norm3_generalized_50k_gen2_small_arch', 10),
-        ('a19_2_generalized_gen2_small_arch', 10),
-        ('mvc3_generalized_gen2_small_arch', 10),
-        ('gc1_generalized_gen2_small_arch', 10),
-        ('np19_LONG_generalized_gen3_small_arch', 10),
-        ('tsp2_generalized_gen3_small_arch', 10),
-        ('qa_N_144_norm3_generalized_50k_gen3_small_arch', 10),
-        ('a19_2_generalized_gen3_small_arch', 10),
-        ('mvc3_generalized_gen3_small_arch', 10),
-        ('gc1_generalized_gen3_small_arch', 10),
-        ('np19_LONG_generalized_gen4_small_arch', 10),
-        ('tsp2_generalized_gen4_small_arch', 10),
-        ('qa_N_144_norm3_generalized_50k_gen4_small_arch', 10),
-        ('a19_2_generalized_gen4_small_arch', 10),
-        ('mvc3_generalized_gen4_small_arch', 10),
-        ('gc1_generalized_gen4_small_arch', 10),
-        ('a19_2_r2', 10),
-        ('mvc3_r2', 10),
-        ('gc1_r2', 10),
-        ('np19_LONG_r2', 10),
-        ('tsp2_r2', 10),
-        ('qa_N_144_norm3', 10)
+        ('np19_LONG_generalized_gen2_small_arch', 20000),
+        ('tsp_gen2', 150),
+        ('qa_N_144_norm3_generalized_50k_gen2_small_arch', 20000),
+        ('a19_2_generalized_gen2_small_arch', 20000),
+        ('mvc3_generalized_gen2_small_arch', 20000),
+        ('gc1_generalized_gen2_small_arch', 20000),
+        ('np19_LONG_generalized_gen3_small_arch', 20000),
+        ('tsp_gen3', 150),
+        ('qa_N_144_norm3_generalized_50k_gen3_small_arch', 20000),
+        ('a19_2_generalized_gen3_small_arch', 20000),
+        ('mvc3_generalized_gen3_small_arch', 20000),
+        ('gc1_generalized_gen3_small_arch', 20000),
+        ('np19_LONG_generalized_gen4_small_arch', 20000),
+        ('tsp_gen4', 150),
+        ('qa_N_144_norm3_generalized_50k_gen4_small_arch', 20000),
+        ('a19_2_generalized_gen4_small_arch', 20000),
+        ('mvc3_generalized_gen4_small_arch', 20000),
+        ('gc1_generalized_gen4_small_arch', 20000),
+        ('a19_2_r2', 20000),
+        ('mvc3_r2', 20000),
+        ('gc1_r2', 20000),
+        ('np19_LONG_r2', 20000),
+        ('tsp_gen1', 150),
+        ('qa_N_144_norm3', 20000)
     ]
     kv = {}
     for problem in problems:
