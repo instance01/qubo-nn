@@ -18,6 +18,7 @@ def run():
     problems = [
         ('gc1_cnn_test1', 10),
         ('gc1_cnn_test11', 10),
+        ('gc1_cnn_test12', 10),
         ('gc1_generalized_6', 10)
     ]
     kv = {}
