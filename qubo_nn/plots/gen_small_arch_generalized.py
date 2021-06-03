@@ -22,24 +22,37 @@ def run():
         ('a19_2_generalized_gen2_small_arch', 20000),
         ('mvc3_generalized_gen2_small_arch', 20000),
         ('gc1_generalized_gen2_small_arch', 20000),
+
         ('np19_LONG_generalized_gen3_small_arch', 20000),
         ('tsp_gen3', 150),
         ('qa_N_144_norm3_generalized_50k_gen3_small_arch', 20000),
         ('a19_2_generalized_gen3_small_arch', 20000),
         ('mvc3_generalized_gen3_small_arch', 20000),
         ('gc1_generalized_gen3_small_arch', 20000),
+
         ('np19_LONG_generalized_gen4_small_arch', 20000),
         ('tsp_gen4', 150),
         ('qa_N_144_norm3_generalized_50k_gen4_small_arch', 20000),
         ('a19_2_generalized_gen4_small_arch', 20000),
         ('mvc3_generalized_gen4_small_arch', 20000),
         ('gc1_generalized_gen4_small_arch', 20000),
+
         ('a19_2_r2', 20000),
         ('mvc3_r2', 20000),
         ('gc1_r2', 20000),
         ('np19_LONG_r2', 20000),
         ('tsp_gen1', 150),
-        ('qa_N_144_norm3', 20000)
+        ('qa_N_144_norm3', 20000),
+
+        ('a19_2_generalized_gen2_small_arch_2', 20000),
+        ('mvc3_generalized_gen2_small_arch_2', 20000),
+        ('gc1_generalized_gen2_small_arch_2', 20000),
+        ('a19_2_generalized_gen3_small_arch_2', 20000),
+        ('mvc3_generalized_gen3_small_arch_2', 20000),
+        ('gc1_generalized_gen3_small_arch_2', 20000),
+        ('a19_2_generalized_gen4_small_arch_2', 20000),
+        ('mvc3_generalized_gen4_small_arch_2', 20000),
+        ('gc1_generalized_gen4_small_arch_2', 20000)
     ]
     kv = {}
     for problem in problems:

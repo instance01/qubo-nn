@@ -10102,6 +10102,58 @@
             "fc_sizes": [40000]
         }
     },
+    "gc1_cnn_test13": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 12, 8], ["cnn", 12, 96, 8], ["flatten"], ["fc", 645504, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.02,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_cnn_test14": {
+        "dataset_id": "gc1_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "use_cnn": true,
+            "cnn_cfg": [["cnn", 1, 1024, 8, 8], ["cnn", 1024, 4096, 8, 8], ["flatten"], ["fc", 4096, 257]],
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.02,
+            "fc_sizes": [40000]
+        }
+    },
 
     "test1": {
         "dataset_id": "test1",
@@ -10565,6 +10617,550 @@
             "n_epochs": 500,
             "batch_size": 100,
             "lr": 0.013,
+            "fc_sizes": [10000]
+        }
+    },
+
+    "-- gen4 big arch --": {},
+
+    "a19_2_generalized_gen3_big_arch": {
+        "dataset_id": "a19_2_generalized_gen3_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": [10000]
+        }
+    },
+    "a19_2_generalized_gen2_big_arch": {
+        "dataset_id": "a19_2_generalized_gen2_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MC": [{"size": [48, 60]}]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": [10000]
+        }
+    },
+
+    "mvc3_generalized_gen4_big_arch_2": {
+        "dataset_id": "mvc3_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 6000,
+            "batch_size": 500,
+            "lr": 1.0,
+            "fc_sizes": [10000]
+        }
+    },
+
+    "gc1_generalized_gen3_big_arch": {
+        "dataset_id": "gc1_generalized_gen3_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.5,
+            "fc_sizes": [40000]
+        }
+    },
+    "gc1_generalized_gen2_big_arch": {
+        "dataset_id": "gc1_generalized_gen2_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.5,
+            "fc_sizes": [40000]
+        }
+    },
+
+    "mvc3_generalized_gen4_big_arch_3": {
+        "dataset_id": "mvc3_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 6000,
+            "batch_size": 500,
+            "lr": 10.0,
+            "fc_sizes": [10000]
+        }
+    },
+    "mvc3_generalized_gen4_big_arch_4": {
+        "dataset_id": "mvc3_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 6000,
+            "batch_size": 500,
+            "fc_sizes": [10000],
+
+            "lr": 0.01,
+            "optimizer": "Adam"
+        }
+    },
+    "mvc3_generalized_gen3_big_arch_4": {
+        "dataset_id": "mvc3_generalized_gen3_big_arch_4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 6000,
+            "batch_size": 500,
+            "fc_sizes": [10000],
+
+            "lr": 0.01,
+            "optimizer": "Adam"
+        }
+    },
+    "mvc3_generalized_gen2_big_arch_4": {
+        "dataset_id": "mvc3_generalized_gen2_big_arch_4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 6000,
+            "batch_size": 500,
+            "fc_sizes": [10000],
+
+            "lr": 0.01,
+            "optimizer": "Adam"
+        }
+    },
+
+    "a19_2_generalized_gen2_small_arch_2": {
+        "dataset_id": "a19_2_generalized_gen2_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MC": [{"size": [48, 60]}]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": []
+        }
+    },
+    "a19_2_generalized_gen3_small_arch_2": {
+        "dataset_id": "a19_2_generalized_gen3_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": []
+        }
+    },
+    "a19_2_generalized_gen4_small_arch_2": {
+        "dataset_id": "a19_2_generalized_gen4_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": []
+        }
+    },
+
+    "mvc3_generalized_gen2_small_arch_2": {
+        "dataset_id": "mvc3_generalized_gen2_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 6000,
+            "batch_size": 500,
+            "lr": 1.0,
+            "fc_sizes": []
+        }
+    },
+    "mvc3_generalized_gen3_small_arch_2": {
+        "dataset_id": "mvc3_generalized_gen3_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 6000,
+            "batch_size": 500,
+            "lr": 1.0,
+            "fc_sizes": []
+        }
+    },
+    "mvc3_generalized_gen4_small_arch_2": {
+        "dataset_id": "mvc3_generalized_gen4_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 6000,
+            "batch_size": 500,
+            "lr": 1.0,
+            "fc_sizes": []
+        }
+    },
+
+    "gc1_generalized_gen2_small_arch_2": {
+        "dataset_id": "gc1_generalized_gen2_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": []
+        }
+    },
+    "gc1_generalized_gen3_small_arch_2": {
+        "dataset_id": "gc1_generalized_gen3_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": []
+        }
+    },
+    "gc1_generalized_gen4_small_arch_2": {
+        "dataset_id": "gc1_generalized_gen4_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": []
+        }
+    },
+
+    "a19_2_generalized_gen4_big_arch_5": {
+        "dataset_id": "a19_2_generalized_gen4_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "ReLU",
+            "n_epochs": 5000,
+            "batch_size": 500,
+            "lr": 3.0,
+            "fc_sizes": [10000]
+        }
+    },
+    "mvc3_generalized_gen4_big_arch_5": {
+        "dataset_id": "mvc3_generalized_gen4_small_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 6000,
+            "batch_size": 500,
+            "lr": 1.0,
+            "fc_sizes": [10000]
+        }
+    },
+    "gc1_generalized_gen4_big_arch_2": {
+        "dataset_id": "gc1_generalized_gen4_small_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": [10000]
+        }
+    },
+    "gc1_generalized_gen3_big_arch_2": {
+        "dataset_id": "gc1_generalized_gen3_big_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
+            "fc_sizes": [10000]
+        }
+    },
+    "gc1_generalized_gen2_big_arch_2": {
+        "dataset_id": "gc1_generalized_gen2_big_arch_2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 4000,
+            "batch_size": 500,
+            "lr": 0.05,
             "fc_sizes": [10000]
         }
     }
