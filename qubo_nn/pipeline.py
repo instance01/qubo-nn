@@ -83,7 +83,7 @@ class Classification:
                 # Padding
                 for k, matrix in enumerate(qubo_matrices_):
                     pad_width = qubo_size - matrix.shape[0]
-                    matrix = np.pad(matrix, ((0, pad_width), (0, pad_width)))
+                    matrix = np.pad(matrix, ((0, pad_width), (0, pad_width)), constant_values=0)
                     qubo_matrices_[k] = matrix
                 problems.extend(problems_)
                 qubo_matrices.extend(qubo_matrices_)
@@ -404,13 +404,40 @@ class ReverseRegression(Classification):
 
         all_problems_flat, output_size = self.flatten_problem_parameters(all_problems)
 
-        for i, prob in enumerate(all_problems_flat):
-            all_problems_flat[i] = np.pad(
-                prob,
-                (0, output_size - len(prob)),
-                'constant',
-                constant_values=(0, 0)
-            ).astype(float)
+
+        prob_type = self.cfg['problems']['problems']
+        if prob_type == ["MVC"] or prob_type == ["MC"]:
+            for i, prob in enumerate(all_problems_flat):
+                len_ = int(len(prob) ** .5)
+                pad_width = int(output_size ** .5) - len_
+                prob = np.reshape(prob, (len_, len_))
+                all_problems_flat[i] = np.pad(
+                    prob,
+                    ((0, pad_width), (0, pad_width)),
+                    'constant',
+                    constant_values=0
+                ).astype(float).reshape(output_size)
+        elif prob_type == ["GC"]:
+            for i, prob in enumerate(all_problems_flat):
+                len_ = int(len(prob) ** .5)
+                pad_width = int(output_size ** .5) - len_
+                val = prob[-1]
+                prob = np.reshape(prob[:-1], (len_, len_))
+                all_problems_flat[i] = np.pad(
+                    prob,
+                    ((0, pad_width), (0, pad_width)),
+                    'constant',
+                    constant_values=0
+                ).astype(float).reshape(output_size - 1)
+                all_problems_flat[i] = np.append(all_problems_flat[i], val)
+        else:
+            for i, prob in enumerate(all_problems_flat):
+                all_problems_flat[i] = np.pad(
+                    prob,
+                    (0, output_size - len(prob)),
+                    'constant',
+                    constant_values=(0, 0)
+                ).astype(float)
 
         all_problems_flat = np.array(all_problems_flat, dtype=float)
 
