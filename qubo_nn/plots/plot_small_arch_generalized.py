@@ -1,6 +1,5 @@
 import os
 import pickle
-import collections
 
 import numpy as np
 import scipy.stats as st
@@ -25,16 +24,16 @@ PLOT_TAGS = [
         'np19_LONG_generalized_gen4_small_arch': '64x64, 48x48, 32x32, 24x24',
     },
     {
-        'tsp2_r2': '64x64',
-        'tsp2_generalized_gen2_small_arch': '64x64, 49x49',
-        'tsp2_generalized_gen3_small_arch': '64x64, 49x49, 36x36',
-        'tsp2_generalized_gen4_small_arch': '64x64, 49x49, 36x36, 25x25',
+        'tsp_gen1': '64x64',
+        'tsp_gen2': '64x64, 49x49',
+        'tsp_gen3': '64x64, 49x49, 36x36',
+        'tsp_gen4': '64x64, 49x49, 36x36, 25x25',
     },
     {
         'qa_N_144_norm3': '144x144',
         'qa_N_144_norm3_generalized_50k_gen2_small_arch': '144x144, 100x100',
-        'qa_N_144_norm3_generalized_50k_gen3_small_arch': '144x144, 100x100, 64x64',
-        'qa_N_144_norm3_generalized_50k_gen4_small_arch': '144x144, 100x100, 64x64, 36x36',
+        'qa_N_144_norm3_generalized_50k_gen3_small_arch': '144x144, 100x100, 64x64',  # noqa
+        'qa_N_144_norm3_generalized_50k_gen4_small_arch': '144x144, 100x100, 64x64, 36x36',  # noqa
     },
     {
         'a19_2_r2': '64x64',
@@ -58,6 +57,14 @@ PLOT_TAGS = [
 PLOT_NAMES = [
     'np', 'tsp', 'qa', 'mc', 'mvc', 'gc'
 ]
+PLOT_LIMS = [
+    (0.95, 1.02, 10000),
+    (0.95, 1.02, 150),
+    (0.95, 1.02, 100),
+    (0.3, 1.02, 1000),
+    (0.3, 1.02, 1000),
+    (0.75, 1.02, 1000)
+]
 
 
 def gen_table(kv):
@@ -77,7 +84,6 @@ def gen_table(kv):
         return mean, range_
 
     for k, v in kv.items():
-        # arr = arr[:, 1:201]
         if not v:
             continue
         if len(v[0]) == 0:
@@ -87,8 +93,8 @@ def gen_table(kv):
         print(k, "R2", "%.3f" % mean, "+-", "%.3f" % range_)
 
 
-def plot(kv, tags, name):
-    fig, axs = plt.subplots(1, 1, figsize=(5, 3.5))
+def plot(kv, tags, name, lims):
+    fig, axs = plt.subplots(1, 1, figsize=(4, 3))
 
     def calc_ci(ax, key, arr):
         # arr = arr[~np.isnan(arr)]
@@ -106,12 +112,10 @@ def plot(kv, tags, name):
         ax.plot(x, mean, label=tags[key])
         ax.fill_between(x, ci[0], ci[1], alpha=.2)
 
-    for k, v in kv.items():
-        if k not in tags:
-            continue
-        print(k, v)
+    for k in tags:
+        v = kv[k]
         v = np.array(v)
-        calc_ci(axs, k, v[0][:, :1000])  # r2
+        calc_ci(axs, k, v[0][:, :lims[-1]])  # r2
 
         axs.legend()
         axs.set_ylabel(r'$R^2$')
@@ -119,7 +123,7 @@ def plot(kv, tags, name):
 
     # plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     plt.legend(frameon=False)
-    plt.ylim((0.5, 1.05))
+    plt.ylim(lims[0:2])
     plt.tight_layout()
     plt.show()
     fig.savefig(NAME + '_' + name + '.png')
@@ -130,8 +134,8 @@ def run():
     with open(NAME + '.pickle', 'rb') as f:
         kv = pickle.load(f)
     gen_table(kv)
-    for plot_tags, plot_name in zip(PLOT_TAGS, PLOT_NAMES):
-        plot(kv, plot_tags, plot_name)
+    for plot_tags, plot_name, lims in zip(PLOT_TAGS, PLOT_NAMES, PLOT_LIMS):
+        plot(kv, plot_tags, plot_name, lims)
 
 
 if __name__ == '__main__':
