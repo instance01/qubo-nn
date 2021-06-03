@@ -48,7 +48,7 @@ def plot(kv):
     tags = {
         'gc1_generalized_6': 'FC',
         'gc1_cnn_test1': 'CNN+maxpool',
-        'gc1_cnn_test11': 'CNN'
+        'gc1_cnn_test12': 'CNN'
     }
 
     fig, axs = plt.subplots(1, 1, figsize=(5, 3.5))
@@ -73,7 +73,7 @@ def plot(kv):
         if k not in tags:
             continue
         v = np.array(v)
-        calc_ci(axs, k, v[0][:, :1000])  # r2
+        calc_ci(axs, k, v[0][:, :1220])  # r2
 
         axs.legend()
         axs.set_ylabel(r'$R^2$')
