@@ -37,33 +37,33 @@ PLOT_TAGS = [
     },
     {
         'a19_2_r2': '64x64',
-        'a19_2_generalized_gen2_small_arch': '64x64, 48x48',
-        'a19_2_generalized_gen3_small_arch': '64x64, 48x48, 32x32',
-        'a19_2_generalized_gen4_small_arch': '64x64, 48x48, 32x32, 24x24',
+        'a19_2_generalized_gen2_small_arch_2': '64x64, 48x48',
+        'a19_2_generalized_gen3_small_arch_2': '64x64, 48x48, 32x32',
+        'a19_2_generalized_gen4_small_arch_2': '64x64, 48x48, 32x32, 24x24',
     },
     {
         'mvc3_r2': '64x64',
-        'mvc3_generalized_gen2_small_arch': '64x64, 48x48',
-        'mvc3_generalized_gen3_small_arch': '64x64, 48x48, 32x32',
-        'mvc3_generalized_gen4_small_arch': '64x64, 48x48, 32x32, 24x24',
+        'mvc3_generalized_gen2_small_arch_2': '64x64, 48x48',
+        'mvc3_generalized_gen3_small_arch_2': '64x64, 48x48, 32x32',
+        'mvc3_generalized_gen4_small_arch_2': '64x64, 48x48, 32x32, 24x24',
     },
     {
         'gc1_r2': '96x96',
-        'gc1_generalized_gen2_small_arch': '96x96, 80x80',
-        'gc1_generalized_gen3_small_arch': '96x96, 80x80, 64x64',
-        'gc1_generalized_gen4_small_arch': '96x96, 80x80, 64x64, 48x48',
+        'gc1_generalized_gen2_small_arch_2': '96x96, 80x80',
+        'gc1_generalized_gen3_small_arch_2': '96x96, 80x80, 64x64',
+        'gc1_generalized_gen4_small_arch_2': '96x96, 80x80, 64x64, 48x48',
     }
 ]
 PLOT_NAMES = [
     'np', 'tsp', 'qa', 'mc', 'mvc', 'gc'
 ]
 PLOT_LIMS = [
-    (0.95, 1.02, 10000),
-    (0.95, 1.02, 150),
-    (0.95, 1.02, 100),
-    (0.3, 1.02, 1000),
-    (0.3, 1.02, 1000),
-    (0.75, 1.02, 1000)
+    (0.95, 1.01, 10000),
+    (0.95, 1.01, 150),
+    (0.95, 1.01, 100),
+    (0.9, 1.01, 1000),
+    (0.9, 1.01, 1000),
+    (0.75, 1.01, 1000)
 ]
 
 
