@@ -13,7 +13,7 @@ def aggregate(paths, min_len, max_len, req_len=None):
 
 def run():
     min_len = 1000
-    req_len = 20
+    req_len = 30
     base_paths = ['../runs/', '../runs3/', '../runs5/', '../runs7/']
     problems = [
         ('np19_LONG_generalized_gen2_small_arch', 20000),
