@@ -609,13 +609,13 @@ class ReverseOptimizer(Optimizer):
 
                 return FP, FN, TOT
 
-            if debug:
-                FP, FN, TOT = print_debug(.3)
-                if (FP + FN) > 0:
-                    wrong_regressions3 += 1
-                tot3_fp += FP
-                tot3_fn += FN
-                tot3 += TOT
+            # if debug:
+            #     FP, FN, TOT = print_debug(.3)
+            #     if (FP + FN) > 0:
+            #         wrong_regressions3 += 1
+            #     tot3_fp += FP
+            #     tot3_fn += FN
+            #     tot3 += TOT
 
             total_loss += loss.item()
             if do_print and i % 1000 == 0:
@@ -655,8 +655,8 @@ class ReverseOptimizer(Optimizer):
 
         if debug:
             print('\n~~~~~ EVAL ~~~~~')
-            print('.3', tot3_fp, tot3_fn, tot3, (tot3_fp + tot3_fn) / tot3, wrong_regressions3, data_len)
-            self.logger.log_custom_reverse_kpi("FPFN_TOT_Ratio", (tot3_fp + tot3_fn) / tot3, epoch)
+            # print('.3', tot3_fp, tot3_fn, tot3, (tot3_fp + tot3_fn) / tot3, wrong_regressions3, data_len)
+            # self.logger.log_custom_reverse_kpi("FPFN_TOT_Ratio", (tot3_fp + tot3_fn) / tot3, epoch)
 
         return total_loss / data_len, tot3_fp, tot3_fn, tot3
 
