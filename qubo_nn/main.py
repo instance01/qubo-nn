@@ -1,4 +1,5 @@
 from qubo_nn.pipeline import Classification
+from qubo_nn.pipeline import DefeatClassification
 from qubo_nn.pipeline import ReverseRegression
 from qubo_nn.config import Config
 import argparse
@@ -45,3 +46,10 @@ if __name__ == '__main__':
         elif args.eval:
             c = ReverseRegression(cfg)
             c.eval(args.model)
+    elif args.type == 'defeat':
+        if args.gendata:
+            c = DefeatClassification(cfg)
+            c.gen_data_lmdb()
+        elif args.train:
+            c = DefeatClassification(cfg)
+            c.run_experiment(args.nruns)

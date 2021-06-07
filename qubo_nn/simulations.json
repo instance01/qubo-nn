@@ -11367,5 +11367,85 @@
             "fc_sizes": [100, 100, 100],
             "optimizer": "Adam"
         }
+    },
+
+    "def1_gen4": {
+        "dataset_id": "def1_gen4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK"],
+            "generalization": {
+                "NP":   [{"size": 48},{"size": 32},{"size": 24}],
+                "MC":   [{"size": [48, 60]},{"size": [32, 40]},{"size": [24, 30]}],
+                "MVC":  [{"size": [48, 60]},{"size": [32, 40]},{"size": [24, 30]}],
+                "SP":   [{"size": [30, 48]},{"size": [20, 32]},{"size": [10, 24]}],
+                "M2SAT":[{"size": [48, 60]},{"size": [32, 40]},{"size": [24, 30]}],
+                "SPP":  [{"size": [30, 48]},{"size": [20, 32]},{"size": [10, 24]}],
+                "GC":   [{"size": [8, 10], "n_colors": 7},{"size": [8, 10], "n_colors": 6},{"size": [8, 10], "n_colors": 5}],
+                "QA":   [{"size": 7},{"size": 6},{"size": 5}],
+                "QK":   [{"size": 42, "constraint": 40},{"size": 27, "constraint": 30},{"size": 20, "constraint": 10}],
+                "M3SAT":[{"size": [20, 24]},{"size": [10, 22]},{"size": [10, 12]}],
+                "TSP":  [{"size": 7},{"size": 6},{"size": 5}]
+            }
+        }
+    },
+    "def1": {
+        "dataset_id": "def1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP", "MC", "MVC"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 500,
+            "optimizer": "sgd",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.001,
+            "fc_sizes": [100, 3],
+            "noise_divisor": 1000
+        }
+    },
+    "def2": {
+        "dataset_id": "def2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "problems": ["NP", "MC", "MVC"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 500,
+            "optimizer": "sgd",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.001,
+            "fc_sizes": [100, 3],
+            "noise_divisor": 20
+        }
+    },
+    "def3": {
+        "dataset_id": "def3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "problems": ["NP", "MC", "MVC", "GC", "TSP"]
+        },
+        "model": {
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 500,
+            "optimizer": "sgd",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.001,
+            "fc_sizes": [100, 5],
+            "noise_divisor": 1000
+        }
     }
 }

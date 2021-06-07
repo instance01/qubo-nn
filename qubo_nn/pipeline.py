@@ -90,7 +90,7 @@ class Classification:
 
             all_problems.append(problems)
             if self.scramble_qubos:
-                for j in range(len(qubo_matrices_)):
+                for j in range(len(qubo_matrices)):
                     if random.random() > .5:
                         rand_idx1 = random.randint(0, self.qubo_size - 1)
                         rand_idx2 = random.randint(0, self.qubo_size - 1)
@@ -542,3 +542,95 @@ class AutoEncoder(Classification):
         optimizer.save(self.model_fname)
 
         self.logger.close()
+
+
+class DefeatClassification(Classification):
+    def __init__(self, cfg):
+        super(DefeatClassification, self).__init__(cfg)
+
+    def _gen_data(self, n_problems):
+        print("Generating data to defeat classification.")
+
+        qubo_size = self.qubo_size
+
+        all_problems = []
+        data = []
+        labels = []
+
+        generalized_params = self.cfg['problems'].get('generalization', {})
+        generalized_order = 0
+        if generalized_params:
+            k = list(generalized_params.keys())[0]
+            generalized_order = len(generalized_params[k])
+
+        for i, (cls, kwargs, name) in enumerate(self.problems):
+            print(name)
+            idx_start = i * n_problems
+            idx_end = (i + 1) * n_problems
+            problems, qubo_matrices = self.gen_qubo_matrices(
+                cls, n_problems, **kwargs
+            )
+
+            generalized_params = self.generalization_cfgs.get(name, [])
+
+            for params in generalized_params:
+                args = kwargs.copy()
+                args.update(params)
+                problems_, qubo_matrices_ = self.gen_qubo_matrices(
+                    cls, n_problems, **args
+                )
+
+                # Padding
+                for k, matrix in enumerate(qubo_matrices_):
+                    pad_width = qubo_size - matrix.shape[0]
+                    matrix = np.pad(matrix, ((0, pad_width), (0, pad_width)), constant_values=0)
+                    qubo_matrices_[k] = matrix
+                problems.extend(problems_)
+                qubo_matrices.extend(qubo_matrices_)
+
+            do_add_noise = name == "MC" or name == "MVC"
+            # do_add_noise = False
+
+            noise_divisor = self.cfg['model']['noise_divisor']
+
+            all_problems.append(problems)
+            for j in range(len(qubo_matrices)):
+                if self.scramble_qubos:
+                    if random.random() > .5:
+                        rand_idx1 = random.randint(0, self.qubo_size - 1)
+                        rand_idx2 = random.randint(0, self.qubo_size - 1)
+                        val = qubo_matrices[j][[rand_idx2, rand_idx1]]
+                        qubo_matrices[j][[rand_idx1, rand_idx2]] = val
+
+                if name == "MC":
+                    qubo_matrices[j] *= -1
+                    # qubo_matrices[j] /= 2.
+
+                if name == "MVC":
+                    qubo_matrices[j] /= 8.
+
+                if do_add_noise:
+                    noise = np.random.random(size=qubo_matrices[j].shape) / noise_divisor
+                    np.fill_diagonal(noise, 0.)
+                    qubo_matrices[j] += noise
+
+                # Normalize.
+                qubo_matrices[j] /= abs(qubo_matrices[j]).max()
+
+                if name == "MVC" or name == "MC":
+                    # qubo_matrices[j][np.where(qubo_matrices[j] > 0.05)] = 0.03
+                    qubo_matrices[j][np.where(qubo_matrices[j] > 0.01)] = 0.01
+                if name == "GC" or name == "TSP":
+                    diag = np.diag(qubo_matrices[j])
+                    qubo_matrices[j][np.where(qubo_matrices[j] > 0.01)] = 0.01
+                    np.fill_diagonal(qubo_matrices[j], diag / 2)
+            qubo_matrices = np.array(qubo_matrices)
+            print(cls, qubo_matrices.shape)
+
+            data.extend(qubo_matrices)
+            labels.extend([i for _ in range(len(qubo_matrices))])
+
+        print("TOTAL DATA LEN", len(data))
+        data = np.array(data, dtype=np.float32)
+        labels = np.array(labels, dtype=np.long)
+        return data, labels, all_problems
