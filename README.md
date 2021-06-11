@@ -43,6 +43,7 @@ Problems implemented so far:
 * Quadratic Knapsack
 * Max 3-SAT
 * Travelling Salesman (TSP)
+* Graph Isomorphism
 
 ## Setup
 
@@ -115,7 +116,8 @@ The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
     'QA': <class 'qubo_nn.problems.quadratic_assignment.QuadraticAssignment'>,
     'QK': <class 'qubo_nn.problems.quadratic_knapsack.QuadraticKnapsack'>,
     'M3SAT': <class 'qubo_nn.problems.max3sat.Max3SAT'>,
-    'TSP': <class 'qubo_nn.problems.tsp.TSP'>
+    'TSP': <class 'qubo_nn.problems.tsp.TSP'>,
+    'GI': <class 'qubo_nn.problems.graph_isomorphism.GraphIsomorphism'>
     ...
 }
 ```
@@ -157,17 +159,18 @@ Reversing some problems like Quadratic Knapsack might be possible - an algorithm
 
 |Problem|Reversibility|Comment|
 |-------|-------------|-------|
-|Graph Coloring|**+**|Likely trivial.|
+|Graph Coloring|**+**|Adjacency matrix found in QUBO.|
 |Maximum 2-SAT|**?**|Very complex to learn, but possible? C.f. `m2sat_to_bip.py` in `contrib`.|
 |Maximum 3-SAT|**?**|Very complex to learn, but possible?|
-|Maximum Cut|**+**|Likely trivial.|
-|Minimum Vertex Cover|**+**|Likely trivial.|
+|Maximum Cut|**+**|Adjacency matrix found in QUBO.|
+|Minimum Vertex Cover|**+**|Adjacency matrix found in QUBO.|
 |Number Partitioning|**+**|Easy, create equation system from the upper triangular part of the matrix (triu).|
 |Quadratic Assignment|**+**|Over-determined linear system of equations -> solvable. P does not act as salt. A bit complex to learn.|
-|Quadratic Knapsack|**?**|Budgets can be deduced easily (Find argmin in first row. This column contains all the budgets.), rest possibly but not easily.|
-|Set Packing|**?**|No idea. TODO|
-|Set Partitioning|**-**|P and costs cannot be deduced from one number.|
+|Quadratic Knapsack|**-**|Budgets can be deduced easily (Find argmin in first row. This column contains all the budgets.). P acts as a salt -> thus not reversible.|
+|Set Packing|**-**|Multiple problem instances lead to the same QUBO.|
+|Set Partitioning|**-**|Multiple problem instances lead to the same QUBO.|
 |Travelling Salesman|**+**|Find a quadrant with non-zero entries (w/ an identical diagonal), transpose, the entries are the distance matrix. Norm result to between 0 and 1.|
+|Graph Isomorphism||Not tested.|
 
 ## Contributing
 
