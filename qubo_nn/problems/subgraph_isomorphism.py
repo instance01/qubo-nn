@@ -18,8 +18,6 @@ class SubGraphIsomorphism(Problem):
 
         Q = np.zeros((n1 * n2, n1 * n2))
 
-        indices = []
-
         for i in range(n1):
             for j in range(n2):
                 idx = i * n2 + j

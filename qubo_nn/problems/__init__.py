@@ -11,6 +11,7 @@ from qubo_nn.problems.max3sat import Max3SAT
 from qubo_nn.problems.tsp import TSP
 from qubo_nn.problems.graph_isomorphism import GraphIsomorphism
 from qubo_nn.problems.subgraph_isomorphism import SubGraphIsomorphism
+from qubo_nn.problems.max_clique import MaxClique
 
 
 PROBLEM_REGISTRY = {
@@ -26,5 +27,6 @@ PROBLEM_REGISTRY = {
     "M3SAT": Max3SAT,
     "TSP": TSP,
     "GI": GraphIsomorphism,
-    "SGI": SubGraphIsomorphism
+    "SGI": SubGraphIsomorphism,
+    "MCQ": MaxClique
 }
