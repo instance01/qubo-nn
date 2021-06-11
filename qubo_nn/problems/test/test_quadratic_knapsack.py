@@ -9,6 +9,7 @@ class TestQuadraticKnapsack(unittest.TestCase):
 
         Test case from: https://arxiv.org/pdf/1811.11538.pdf
         """
+        cfg = {"problems": {"QK": {"random_P": False}}}
         projects = np.array([
             [2, 4, 3, 5],
             [4, 5, 1, 3],
@@ -16,7 +17,7 @@ class TestQuadraticKnapsack(unittest.TestCase):
             [5, 3, 2, 4]
         ])
         budgets = np.array([8, 6, 5, 3])
-        problem = QuadraticKnapsack({}, projects, budgets, 16, 10)
+        problem = QuadraticKnapsack(cfg, projects, budgets, 16, 10)
         matrix = problem.gen_qubo_matrix()
         want = [
             [1922.,-476.,-397.,-235., -80.,-160.,-320.,-640.],
@@ -31,21 +32,22 @@ class TestQuadraticKnapsack(unittest.TestCase):
         self.assertCountEqual(matrix.tolist(), want)
 
     def test_gen_problems(self):
+        cfg = {"problems": {"QK": {"random_P": False}}}
         st0 = np.random.get_state()
         np.random.seed(1)
-        data = QuadraticKnapsack.gen_problems({}, 1, size=4)
+        data = QuadraticKnapsack.gen_problems(cfg, 1, size=4)
         np.random.set_state(st0)
 
         self.assertCountEqual(
             data[0]["projects"].tolist(),
             [
-                [ 5, 11, 12,  8],
-                [ 9, 11,  5, 15],
-                [ 0, 16,  1, 12],
-                [ 7, 13, 28,  6]
+                [ 6, 10,  1,  8],
+                [10, 12, 17, 14],
+                [ 1, 17,  2, 29],
+                [ 8, 14, 29,  7]
             ]
         )
         self.assertCountEqual(
             data[0]["budgets"].tolist(),
-            [25, 18, 20, 5]
+            [26, 19, 21, 6]
         )
