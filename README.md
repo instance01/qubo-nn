@@ -36,14 +36,16 @@ Problems implemented so far:
 * Maximum Cut
 * Minimum Vertex Cover
 * Set Packing
-* Max 2-SAT
+* Maximum 2-SAT
 * Set Partitioning
 * Graph Coloring
 * Quadratic Assignment
 * Quadratic Knapsack
-* Max 3-SAT
+* Maximum 3-SAT
 * Travelling Salesman (TSP)
 * Graph Isomorphism
+* Sub-Graph Isomorphism
+* Maximum Clique
 
 ## Setup
 
@@ -117,7 +119,9 @@ The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
     'QK': <class 'qubo_nn.problems.quadratic_knapsack.QuadraticKnapsack'>,
     'M3SAT': <class 'qubo_nn.problems.max3sat.Max3SAT'>,
     'TSP': <class 'qubo_nn.problems.tsp.TSP'>,
-    'GI': <class 'qubo_nn.problems.graph_isomorphism.GraphIsomorphism'>
+    'GI': <class 'qubo_nn.problems.graph_isomorphism.GraphIsomorphism'>,
+    'SGI': <class 'qubo_nn.problems.subgraph_isomorphism.SubGraphIsomorphism'>,
+    'MCQ': <class 'qubo_nn.problems.max_clique.MaxClique'>
     ...
 }
 ```
@@ -171,6 +175,8 @@ Reversing some problems like Quadratic Knapsack might be possible - an algorithm
 |Set Partitioning|**-**|Multiple problem instances lead to the same QUBO.|
 |Travelling Salesman|**+**|Find a quadrant with non-zero entries (w/ an identical diagonal), transpose, the entries are the distance matrix. Norm result to between 0 and 1.|
 |Graph Isomorphism||Not tested.|
+|Sub-Graph Isomorphism||Not tested.|
+|Maximum Clique||Not tested.|
 
 ## Contributing
 
