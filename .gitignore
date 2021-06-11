@@ -8,3 +8,4 @@ qubo_nn/datasets/*.gz
 qubo_nn/datasets/*
 *.bak
 runs*/
+qubo_nn/models/*.pickle
