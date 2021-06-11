@@ -10,6 +10,7 @@ from qubo_nn.problems.quadratic_knapsack import QuadraticKnapsack
 from qubo_nn.problems.max3sat import Max3SAT
 from qubo_nn.problems.tsp import TSP
 from qubo_nn.problems.graph_isomorphism import GraphIsomorphism
+from qubo_nn.problems.subgraph_isomorphism import SubGraphIsomorphism
 
 
 PROBLEM_REGISTRY = {
@@ -24,5 +25,6 @@ PROBLEM_REGISTRY = {
     "QK": QuadraticKnapsack,
     "M3SAT": Max3SAT,
     "TSP": TSP,
-    "GI": GraphIsomorphism
+    "GI": GraphIsomorphism,
+    "SGI": SubGraphIsomorphism
 }

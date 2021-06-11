@@ -3,7 +3,7 @@ import networkx
 from qubo_nn.problems import GraphIsomorphism
 
 
-class TestGraphColoring(unittest.TestCase):
+class TestGraphIsomorphism(unittest.TestCase):
     def test_gen_qubo_matrix(self):
         """Test whether a correct QUBO is generated.
 
