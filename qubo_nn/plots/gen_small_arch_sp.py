@@ -19,7 +19,7 @@ def run():
         ('sp_gen1', 20000),
         ('sp_gen2', 20000),
         ('sp_gen3', 20000),
-        ('sp_gen3', 20000),
+        ('sp_gen4', 20000),
     ]
     kv = {}
     for problem in problems:
