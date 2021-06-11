@@ -1,6 +1,9 @@
 from qubo_nn.pipeline import Classification
 from qubo_nn.pipeline import DefeatClassification
 from qubo_nn.pipeline import ReverseRegression
+from qubo_nn.pipeline import A3
+from qubo_nn.pipeline import R1
+from qubo_nn.pipeline import R2
 from qubo_nn.config import Config
 import argparse
 
@@ -52,4 +55,25 @@ if __name__ == '__main__':
             c.gen_data_lmdb()
         elif args.train:
             c = DefeatClassification(cfg)
+            c.run_experiment(args.nruns)
+    elif args.type == 'a3':
+        if args.gendata:
+            c = A3(cfg)
+            c.gen_data_lmdb()
+        elif args.train:
+            c = A3(cfg)
+            c.run_experiment(args.nruns)
+    elif args.type == 'r1':
+        if args.gendata:
+            c = R1(cfg)
+            c.gen_data_lmdb()
+        elif args.train:
+            c = R1(cfg)
+            c.run_experiment(args.nruns)
+    elif args.type == 'r2':
+        if args.gendata:
+            c = R2(cfg)
+            c.gen_data_lmdb()
+        elif args.train:
+            c = R2(cfg)
             c.run_experiment(args.nruns)

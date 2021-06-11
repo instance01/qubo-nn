@@ -612,8 +612,8 @@
             "dynamic_size_multiplier": false,
             "n_problems": 200000,
             "scramble_qubos": false,
-            "qubo_size": 64,
             "chunks": 1,
+            "qubo_size": 64,
             "NP": {
                 "size": 64
             },
@@ -11446,6 +11446,166 @@
             "lr": 0.001,
             "fc_sizes": [100, 5],
             "noise_divisor": 1000
+        }
+    },
+
+    "a3_1": {
+        "dataset_id": "a3_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["NP", "MC", "MVC"]
+        },
+        "model": {
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.001,
+            "fc_sizes": [100, 3],
+            "noise_divisor": 1000
+        }
+    },
+
+    "r1_1": {
+        "dataset_id": "r1_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.1,
+            "fc_sizes": [100, 3],
+            "noise_divisor": 1000,
+            "lambda": 10.0
+        }
+    },
+    "r1_2": {
+        "dataset_id": "r1_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.01,
+            "fc_sizes": [100, 3],
+            "noise_divisor": 1000,
+            "lambda": 2.0
+        }
+    },
+    "r1_3": {
+        "dataset_id": "r1_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.01,
+            "fc_sizes": [100, 3],
+            "noise_divisor": 1000,
+            "lambda": 1.0
+        }
+    },
+
+    "r2_1": {
+        "dataset_id": "r2_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.001,
+            "fc_sizes": [100, 3]
         }
     }
 }

@@ -1,14 +1,20 @@
 import sys
 import pickle
+import itertools
 import collections
 
-import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
+from torch.autograd import Function
 
+import qubovert
+import numpy as np
 from dwave_qbsolv import QBSolv
+
+
+torch.set_printoptions(sci_mode=False)
 
 
 class FCNet(nn.Module):
@@ -65,6 +71,111 @@ class AutoEncoderFCNet(nn.Module):
         x = self.fc_net(x)
         size = int(self.input_size ** .5)
         return x.reshape(-1, size, size)
+
+
+class A3AutoEncoderFCNet(nn.Module):
+    def __init__(self, cfg):
+        super(A3AutoEncoderFCNet, self).__init__()
+        self.input_size = cfg['problems']['qubo_size'] ** 2
+
+        # self.encoder = nn.Linear(self.input_size, self.input_size)
+        self.encoder = nn.Sequential(
+            nn.Linear(self.input_size, self.input_size),
+            nn.Linear(self.input_size, self.input_size)
+        )
+        self.decoder = nn.Linear(self.input_size, self.input_size)
+        net = [
+            self.encoder,
+            nn.LeakyReLU(),
+            self.decoder,
+            nn.LeakyReLU()
+        ]
+        self.fc_net = nn.Sequential(*net)
+
+    def predict_encode(self, x):
+        x = torch.flatten(x, 1)
+        x = self.encoder(x)
+        return nn.LeakyReLU()(x)  # TODO Hm..
+        # return x
+
+    def forward(self, x):
+        x = torch.flatten(x, 1)
+        x = self.fc_net(x)
+        size = int(self.input_size ** .5)
+        return x.reshape(-1, size, size)
+
+
+class R1AutoEncoderFCNet(nn.Module):
+    def __init__(self, cfg):
+        super(R1AutoEncoderFCNet, self).__init__()
+        self.input_size = cfg['problems']['qubo_size'] ** 2
+
+        self.encoder = nn.Linear(self.input_size, self.input_size)
+        # self.encoder = nn.Sequential(
+        #     nn.Linear(self.input_size, self.input_size),
+        #     nn.Linear(self.input_size, self.input_size)
+        # )
+        self.decoder = nn.Linear(self.input_size, self.input_size)
+        net = [
+            self.encoder,
+            # nn.LeakyReLU(),
+            self.decoder,
+            # nn.LeakyReLU()
+        ]
+        self.fc_net = nn.Sequential(*net)
+
+    def predict_encode(self, x):
+        x = torch.flatten(x, 1)
+        x = self.encoder(x)
+        # return nn.LeakyReLU()(x)  # TODO Hm..
+        return x
+
+    def forward(self, x):
+        x = torch.flatten(x, 1)
+        x = self.fc_net(x)
+        size = int(self.input_size ** .5)
+        return x.reshape(-1, size, size)
+
+
+class R2AutoEncoderFCNet(nn.Module):
+    def __init__(self, cfg):
+        super(R2AutoEncoderFCNet, self).__init__()
+        self.input_size = cfg['problems']['qubo_size'] ** 2
+
+        # self.encoder = nn.Linear(self.input_size, self.input_size)
+        self.encoder = nn.Sequential(
+            nn.Linear(self.input_size, self.input_size),
+            nn.Linear(self.input_size, self.input_size)
+        )
+        self.decoder = nn.Linear(self.input_size, self.input_size)
+        net = [
+            self.encoder,
+            # nn.LeakyReLU(),
+            self.decoder,
+            nn.LeakyReLU()
+        ]
+        self.fc_net = nn.Sequential(*net)
+
+        sol_net = [
+            nn.Linear(self.input_size, self.input_size),
+            nn.LeakyReLU()
+        ]
+        self.sol_fc = nn.Sequential(*sol_net)
+        self.sol_head = nn.Linear(self.input_size, int(self.input_size ** .5))
+
+    def predict_encode(self, x):
+        x = torch.flatten(x, 1)
+        x = self.encoder(x)
+        # return nn.LeakyReLU()(x)  # TODO Hm..
+        return x
+
+    def forward(self, x):
+        x = torch.flatten(x, 1)
+        x = self.fc_net(x)
+        sol = self.sol_head(self.sol_fc(x))
+
+        size = int(self.input_size ** .5)
+        return x.reshape(-1, size, size), sol
 
 
 class ReverseFCNet(nn.Module):
@@ -898,3 +1009,344 @@ class RNNOptimizer(Optimizer):
             self.logger.log_custom_reverse_kpi("FPFN_TOT_Ratio", (tot3_fp + tot3_fn) / tot3, epoch)
 
         return total_loss / data_len, problem_losses, tot3_fp, tot3_fn, tot3
+
+
+def solve_qubo2(batch):
+    qubo_size = 8  # TODO Hardcoded!
+
+    sols = []
+    for item in batch:
+        Q = qubovert.utils.matrix_to_qubo(item.reshape(qubo_size, qubo_size))
+        sol = Q.solve_bruteforce(all_solutions=False)
+        sol_ = [0 for _ in range(qubo_size)]
+        for k, v in sol.items():
+            sol_[k] = v
+        sols.append(sol_)
+    return torch.FloatTensor(sols)
+
+
+class QBSolvFunction(torch.autograd.Function):
+    """Reference: Differentiable blackbox combinatorial solvers."""
+    @staticmethod
+    def forward(ctx, weights, lambda_val):
+        # weights is the 'suggested' QUBO.
+        ctx.weights = weights.detach().cpu().numpy()
+        ctx.lambda_val = lambda_val
+        ctx.suggested_sol = solve_qubo2(ctx.weights).numpy()
+        return torch.from_numpy(ctx.suggested_sol).float().to(weights.device)
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        assert grad_output.shape == ctx.suggested_sol.shape
+        # TODO repeat (1,8) added!
+        grad_output_numpy = grad_output.repeat((1, 8)).detach().cpu().numpy()
+        weights_prime = ctx.weights + ctx.lambda_val * grad_output_numpy
+        better_sol = solve_qubo2(weights_prime).numpy()
+        gradient = -(ctx.suggested_sol - better_sol) / ctx.lambda_val
+        return torch.from_numpy(gradient).to(grad_output.device).repeat((1, 8)), None
+
+
+class A3Optimizer:
+    def __init__(self, cfg, lmdb_loader, logger):
+        self.cfg = cfg
+        self.lmdb_loader = lmdb_loader
+        self.logger = logger
+
+        # Load cfg variables.
+        lr = cfg['model']['lr']
+        sgd_momentum = cfg['model']['optimizer_sgd_momentum']
+        self.batch_size = cfg['model']['batch_size']
+        self.n_epochs = cfg['model']['n_epochs']
+        self.train_eval_split = cfg['model']['train_eval_split']
+        self.n_problems = len(cfg['problems']['problems'])
+
+        # Set it all up.
+        self.nets = []
+        for _ in range(self.n_problems):
+            self.nets.append(A3AutoEncoderFCNet(cfg))
+        self.criterion = nn.MSELoss()
+        self.optimizers = []
+        for i in range(self.n_problems):
+            self.optimizers.append(optim.SGD(
+                self.nets[i].parameters(), lr=lr, momentum=sgd_momentum
+            ))
+
+        # TODO Hardcoded!!
+        self.batch_size = 2
+
+        self.qubo_size = self.cfg['problems']['qubo_size'] 
+        print(self.nets)
+
+    def solve_qubo(self, batch):
+        # TODO Don't solve QUBOs on the fly.. This needs fixing.
+        ret_batch = []
+        qb = QBSolv()
+        for item in batch:
+            item = item.reshape(self.qubo_size, self.qubo_size)
+
+            Q = {}
+            # We can assume a quadratic matrix.
+            for i in range(item.shape[0]):
+                for j in range(item.shape[1]):
+                    if item[i][j] != 0:
+                        Q[(i, j)] = item[i][j]
+            response = qb.sample_qubo(Q, num_repeats=100)
+            ret = [0] * self.qubo_size
+            for k, v in response.samples()[0].items():
+                ret[k] = v
+            ret_batch.append(ret)
+        return torch.FloatTensor(ret_batch)
+
+    def train(self):
+        [net.train() for net in self.nets]
+        for epoch in range(self.n_epochs):
+            batch_loss = 0.
+
+            all_inputs = list(self.lmdb_loader.train_data_loader)
+
+            len_ = len(all_inputs[0][0][0])
+            for i in range(len_):
+                chosen_data = []
+                for problem_specific_input, _ in all_inputs:
+                    curr_data = []
+                    for j in range(self.batch_size):
+                        idx = np.random.randint(0, len_)
+                        curr_data.append(problem_specific_input[0][idx].unsqueeze(0))
+
+                    tensor = torch.Tensor(
+                        self.batch_size,
+                        self.qubo_size,
+                        self.qubo_size
+                    )
+                    torch.cat(curr_data, out=tensor)
+                    chosen_data.append(tensor)
+
+                loss = 0
+                latent_outputs = []
+
+                debug_losses = []
+
+                [optimizer.zero_grad() for optimizer in self.optimizers]
+                for j, inputs in enumerate(chosen_data):
+                    outputs = self.nets[j](inputs)
+                    latent_output = self.nets[j].predict_encode(inputs)
+                    latent_outputs.append(latent_output)
+                    qubo_loss = self.criterion(outputs, inputs)
+
+                    true_sol = solve_qubo2(inputs)  # TODO: This should happen in gendata phase.
+                    suggested_sol = QBSolvFunction.apply(latent_output, 10.0)
+                    # print(suggested_sol)
+                    # print(true_sol)
+                    qbsolv_loss = self.criterion(suggested_sol, true_sol)
+
+                    loss += qubo_loss
+                    loss += qbsolv_loss
+                    debug_losses.append(qubo_loss.item())
+                    debug_losses.append(qbsolv_loss.item())
+
+                # TODO Uncomment again! Just to make it easier for now.
+                # for l1, l2 in itertools.combinations(latent_outputs, 2):
+                #     # similarity_loss = self.criterion(l1, l2) / len_
+                #     similarity_loss = self.criterion(l1, l2)
+                #     loss += similarity_loss
+                #     debug_losses.append(similarity_loss.item())
+
+                print(debug_losses)
+
+                loss.backward()
+                [optimizer.step() for optimizer in self.optimizers]
+
+                batch_loss += loss.item() * self.batch_size
+                if i % 1 == 0:
+                    avg_loss = batch_loss / (i + 1)
+                    msg = '[%d, %5d] loss: %.3f' % (epoch + 1, i, avg_loss)
+                    sys.stdout.write('\r' + msg)
+                    sys.stdout.flush()
+
+                if i % 100 == 0:
+                    data = {
+                        "loss_train": batch_loss / (i + 1)
+                    }
+                    self.logger.log_train(data, len_ * epoch + i)
+        print('')
+
+    def eval(self, do_print=True):
+        # TODO
+        return {}, 0, {}, {}
+
+    def save(self, model_fname):
+        for i, net in enumerate(self.nets):
+            torch.save(net.state_dict(), 'models/' + model_fname + "-" + str(i))
+
+    def load(self, model_fname):
+        self.net = A3AutoEncoderFCNet(self.cfg)
+        self.net.load_state_dict(torch.load(model_fname))
+
+
+class Resistance1:
+    """Reference: Differentiable blackbox combinatorial solvers."""
+    def __init__(self, cfg, lmdb_loader, logger):
+        self.cfg = cfg
+        self.lmdb_loader = lmdb_loader
+        self.logger = logger
+
+        # Load cfg variables.
+        lr = cfg['model']['lr']
+        sgd_momentum = cfg['model']['optimizer_sgd_momentum']
+        self.batch_size = cfg['model']['batch_size']
+        self.n_epochs = cfg['model']['n_epochs']
+        self.train_eval_split = cfg['model']['train_eval_split']
+        self.n_problems = len(cfg['problems']['problems'])
+
+        # Set it all up.
+        self.net = R1AutoEncoderFCNet(cfg)
+        self.criterion = nn.MSELoss()
+        self.optimizer = optim.SGD(self.net.parameters(), lr=lr, momentum=sgd_momentum)
+
+        # TODO Hardcoded!
+        self.batch_size = 2
+
+        self.qubo_size = self.cfg['problems']['qubo_size'] 
+
+        print(self.net)
+        print(self.batch_size)
+
+    def train(self):
+        lambda_ = self.cfg["model"]["lambda"]
+
+        self.net.train()
+        for epoch in range(self.n_epochs):
+            batch_loss = 0.
+
+            len_ = len(self.lmdb_loader.train_data_loader)
+
+            for i, (inputs, _) in enumerate(self.lmdb_loader.train_data_loader):
+                loss = 0
+                self.optimizer.zero_grad()
+
+                outputs = self.net(inputs)
+                latent_output = self.net.predict_encode(inputs)
+                qubo_loss = self.criterion(outputs, inputs)
+
+                true_sol = solve_qubo2(inputs)  # TODO: This should happen in gendata phase.
+                suggested_sol = QBSolvFunction.apply(latent_output, lambda_)
+                qbsolv_loss = self.criterion(suggested_sol, true_sol)
+
+                if i % 500 == 0:
+                    print(inputs)
+                    print(outputs)
+                    print(latent_output)
+
+                loss += qubo_loss
+                loss += qbsolv_loss
+
+                loss.backward()
+                self.optimizer.step()
+
+                batch_loss += loss.item() * self.batch_size
+                if i % 10 == 0:
+                    avg_loss = batch_loss / (i + 1)
+                    msg = '[%d, %5d] loss: %.3f | %.4f %.4f' % (epoch + 1, i, avg_loss, qubo_loss.item(), qbsolv_loss.item())
+                    sys.stdout.write('\r' + msg)
+                    sys.stdout.flush()
+
+                if i % 100 == 0:
+                    data = {
+                        "loss_train": batch_loss / (i + 1)
+                    }
+                    self.logger.log_train(data, len_ * epoch + i)
+        print('')
+
+    def eval(self, do_print=True):
+        # TODO
+        return {}, 0, {}, {}
+
+    def save(self, model_fname):
+        for i, net in enumerate(self.nets):
+            torch.save(net.state_dict(), 'models/' + model_fname + "-" + str(i))
+
+    def load(self, model_fname):
+        self.net = R1AutoEncoderFCNet(self.cfg)
+        self.net.load_state_dict(torch.load(model_fname))
+
+
+class Resistance2:
+    """Two heads."""
+    def __init__(self, cfg, lmdb_loader, logger):
+        self.cfg = cfg
+        self.lmdb_loader = lmdb_loader
+        self.logger = logger
+
+        # Load cfg variables.
+        lr = cfg['model']['lr']
+        sgd_momentum = cfg['model']['optimizer_sgd_momentum']
+        self.batch_size = cfg['model']['batch_size']
+        self.n_epochs = cfg['model']['n_epochs']
+        self.train_eval_split = cfg['model']['train_eval_split']
+        self.n_problems = len(cfg['problems']['problems'])
+
+        # Set it all up.
+        self.net = R2AutoEncoderFCNet(cfg)
+        self.criterion = nn.MSELoss()
+        self.optimizer = optim.SGD(self.net.parameters(), lr=lr, momentum=sgd_momentum)
+
+        # TODO Hardcoded!
+        self.batch_size = 2
+        self.qubo_size = self.cfg['problems']['qubo_size'] 
+        print(self.net)
+
+    def train(self):
+        self.net.train()
+        for epoch in range(self.n_epochs):
+            batch_loss = 0.
+
+            len_ = len(self.lmdb_loader.train_data_loader)
+
+            for i, (inputs, _) in enumerate(self.lmdb_loader.train_data_loader):
+                loss = 0
+                self.optimizer.zero_grad()
+
+                outputs, pred_sol = self.net(inputs)
+                latent_output = self.net.predict_encode(inputs)
+                qubo_loss = self.criterion(outputs, inputs)
+
+                true_sol = solve_qubo2(inputs)  # TODO: This should happen in gendata phase.
+                # pred_sol = solve_qubo2(latent_output)
+                qbsolv_loss = self.criterion(pred_sol, true_sol) / 10.
+
+                if i % 500 == 0:
+                    print(inputs)
+                    print(outputs)
+                    print(latent_output)
+
+                loss += qubo_loss
+                loss += qbsolv_loss
+
+                loss.backward()
+                self.optimizer.step()
+
+                batch_loss += loss.item() * self.batch_size
+                if i % 10 == 0:
+                    avg_loss = batch_loss / (i + 1)
+                    msg = '[%d, %5d] loss: %.4f | %.4f %.4f' % (epoch + 1, i, avg_loss, qubo_loss.item(), qbsolv_loss.item())
+                    sys.stdout.write('\r' + msg)
+                    sys.stdout.flush()
+
+                if i % 100 == 0:
+                    data = {
+                        "loss_train": batch_loss / (i + 1)
+                    }
+                    self.logger.log_train(data, len_ * epoch + i)
+        print('')
+
+    def eval(self, do_print=True):
+        # TODO
+        return {}, 0, {}, {}
+
+    def save(self, model_fname):
+        for i, net in enumerate(self.nets):
+            torch.save(net.state_dict(), 'models/' + model_fname + "-" + str(i))
+
+    def load(self, model_fname):
+        self.net = R1AutoEncoderFCNet(self.cfg)
+        self.net.load_state_dict(torch.load(model_fname))
