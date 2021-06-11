@@ -81,22 +81,23 @@ class A3AutoEncoderFCNet(nn.Module):
         # self.encoder = nn.Linear(self.input_size, self.input_size)
         self.encoder = nn.Sequential(
             nn.Linear(self.input_size, self.input_size),
+            nn.LeakyReLU(),
             nn.Linear(self.input_size, self.input_size)
         )
         self.decoder = nn.Linear(self.input_size, self.input_size)
         net = [
             self.encoder,
-            nn.LeakyReLU(),
+            # nn.LeakyReLU(),
             self.decoder,
-            nn.LeakyReLU()
+            # nn.LeakyReLU()
         ]
         self.fc_net = nn.Sequential(*net)
 
     def predict_encode(self, x):
         x = torch.flatten(x, 1)
         x = self.encoder(x)
-        return nn.LeakyReLU()(x)  # TODO Hm..
-        # return x
+        # return nn.LeakyReLU()(x)  # TODO Hm..
+        return x
 
     def forward(self, x):
         x = torch.flatten(x, 1)
@@ -1072,12 +1073,13 @@ class A3Optimizer:
             ))
 
         # TODO Hardcoded!!
-        self.batch_size = 2
+        self.batch_size = 10
 
         self.qubo_size = self.cfg['problems']['qubo_size'] 
         print(self.nets)
 
     def solve_qubo(self, batch):
+        # NOTE: Unused function.
         # TODO Don't solve QUBOs on the fly.. This needs fixing.
         ret_batch = []
         qb = QBSolv()
@@ -1098,6 +1100,9 @@ class A3Optimizer:
         return torch.FloatTensor(ret_batch)
 
     def train(self):
+        use_qbsolv_loss = self.cfg['problems'].get('use_qbsolv_loss', False)
+        use_similarity_loss = self.cfg['problems'].get('use_similarity_loss', False)
+
         [net.train() for net in self.nets]
         for epoch in range(self.n_epochs):
             batch_loss = 0.
@@ -1126,43 +1131,46 @@ class A3Optimizer:
 
                 debug_losses = []
 
-                [optimizer.zero_grad() for optimizer in self.optimizers]
+                for optimizer in self.optimizers:
+                    optimizer.zero_grad()
+
                 for j, inputs in enumerate(chosen_data):
                     outputs = self.nets[j](inputs)
                     latent_output = self.nets[j].predict_encode(inputs)
                     latent_outputs.append(latent_output)
                     qubo_loss = self.criterion(outputs, inputs)
+                    debug_losses.append(qubo_loss.item())
 
-                    true_sol = solve_qubo2(inputs)  # TODO: This should happen in gendata phase.
-                    suggested_sol = QBSolvFunction.apply(latent_output, 10.0)
-                    # print(suggested_sol)
-                    # print(true_sol)
-                    qbsolv_loss = self.criterion(suggested_sol, true_sol)
+                    if use_qbsolv_loss:
+                        true_sol = solve_qubo2(inputs)  # TODO: This should happen in gendata phase.
+                        suggested_sol = QBSolvFunction.apply(latent_output, 10.0)
+                        # print(suggested_sol)
+                        # print(true_sol)
+                        qbsolv_loss = self.criterion(suggested_sol, true_sol)
+                        loss += qbsolv_loss
+                        debug_losses.append(qbsolv_loss.item())
 
                     loss += qubo_loss
-                    loss += qbsolv_loss
                     debug_losses.append(qubo_loss.item())
-                    debug_losses.append(qbsolv_loss.item())
 
-                # TODO Uncomment again! Just to make it easier for now.
-                # for l1, l2 in itertools.combinations(latent_outputs, 2):
-                #     # similarity_loss = self.criterion(l1, l2) / len_
-                #     similarity_loss = self.criterion(l1, l2)
-                #     loss += similarity_loss
-                #     debug_losses.append(similarity_loss.item())
-
-                print(debug_losses)
+                if use_similarity_loss:
+                    for l1, l2 in itertools.combinations(latent_outputs, 2):
+                        # similarity_loss = self.criterion(l1, l2) / len_
+                        similarity_loss = self.criterion(l1, l2)
+                        loss += similarity_loss
+                        debug_losses.append(similarity_loss.item())
 
                 loss.backward()
-                [optimizer.step() for optimizer in self.optimizers]
+                for optimizer in self.optimizers:
+                    optimizer.step()
 
                 batch_loss += loss.item() * self.batch_size
-                if i % 1 == 0:
+                if i % 100 == 0:
                     avg_loss = batch_loss / (i + 1)
                     msg = '[%d, %5d] loss: %.3f' % (epoch + 1, i, avg_loss)
                     sys.stdout.write('\r' + msg)
                     sys.stdout.flush()
-
+                    print(debug_losses)
                 if i % 100 == 0:
                     data = {
                         "loss_train": batch_loss / (i + 1)

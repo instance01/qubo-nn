@@ -730,6 +730,7 @@ class A3(Classification):
         return data, labels, all_problems
 
     def run_experiment(self, n_runs=1):
+        print("Running A3.")
         lmdb_loader = LMDBDataLoader(self.cfg)
         for _ in range(n_runs):
             self.model_fname = self.get_model_fname()
@@ -817,6 +818,7 @@ class R1(Classification):
         return data, labels, all_problems
 
     def run_experiment(self, n_runs=1):
+        print("Running R1.")
         lmdb_loader = LMDBDataLoader(self.cfg)
         for _ in range(n_runs):
             self.model_fname = self.get_model_fname()
@@ -904,6 +906,7 @@ class R2(Classification):
         return data, labels, all_problems
 
     def run_experiment(self, n_runs=1):
+        print("Running R2.")
         lmdb_loader = LMDBDataLoader(self.cfg)
         for _ in range(n_runs):
             self.model_fname = self.get_model_fname()
