@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 mpl.font_manager._rebuild()
 plt.rc('font', family='Raleway')
+mpl.rcParams['figure.dpi'] = 200
 
 
 problems = ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK", "M3SAT", "TSP", "GI", "SGI", "MCQ"]  # noqa
@@ -24,16 +25,17 @@ def plot(small_size=False):
             # cmap=plt.cm.get_cmap("jet", 11),
             cmap=plt.cm.get_cmap("Spectral", 14),
             marker='.',
-            s=6 if small_size else 9
+            s=6 if small_size else 8  # 9
         )
-        plt.clim(-0.5, 10.5)
+        plt.clim(-0.5, 13.5)
         # plt.title("Perplexity %d" % i)
-        cbar = plt.colorbar(ticks=list(range(11)))
+        cbar = plt.colorbar(ticks=list(range(14)))
         cbar.ax.set_yticklabels(problems)
         plt.tight_layout()
         fname = "tsne_30_gen4_%d" % i
         if small_size:
             fname += '_small'
+        plt.axis('equal')
         plt.savefig(fname + ".png")
         plt.savefig(fname + ".pdf")
         plt.show()
