@@ -30,9 +30,9 @@ def plot_confusion(id_):
 
     # mc_table = np.mean(mc_tables, axis=0)
     mean = np.mean(mc_tables, axis=0)
-    mean = mean.reshape(11 * 11)
+    mean = mean.reshape(14 * 14)
     var = st.sem(mc_tables, axis=0)
-    var = var.reshape(11 * 11)
+    var = var.reshape(14 * 14)
 
     ci = st.t.interval(
         0.95,
@@ -41,8 +41,8 @@ def plot_confusion(id_):
         scale=var
     )
 
-    mean = mean.reshape((11, 11))
-    ci = mean - ci[0].reshape((11, 11))
+    mean = mean.reshape((14, 14))
+    ci = mean - ci[0].reshape((14, 14))
 
     fig, ax = plt.subplots(figsize=(7, 7))
     plt.ylabel('True label')
@@ -58,10 +58,11 @@ def plot_confusion(id_):
                 '%.02f \n± %.02f' % (mean[i][j], ci[i][j]),
                 ha="center",
                 va="center",
-                color="w"
+                color="w",
+                fontsize=9
             )
 
-    problems = ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK", "M3SAT", "TSP"]  # noqa
+    problems = ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK", "M3SAT", "TSP", "GI", "SGI", "MCQ"]  # noqa
     plt.xticks(list(range(len(problems))), problems)
     plt.yticks(list(range(len(problems))), problems)
 
@@ -72,7 +73,7 @@ def plot_confusion(id_):
 
 
 def plot(id_):
-    with open('tot_misclassifications_gen4_%s.pickle' % id_, 'rb') as f:
+    with open('tot_misclassifications_30_gen4_%s.pickle' % id_, 'rb') as f:
         arr1, confusion_matrix = pickle.load(f)
 
     fig, ax = plt.subplots(figsize=(3.5, 3))
