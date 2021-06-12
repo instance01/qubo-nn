@@ -174,9 +174,9 @@ Reversing some problems like Quadratic Knapsack might be possible - an algorithm
 |Set Packing|**-**|Multiple problem instances lead to the same QUBO.|
 |Set Partitioning|**-**|Multiple problem instances lead to the same QUBO.|
 |Travelling Salesman|**+**|Find a quadrant with non-zero entries (w/ an identical diagonal), transpose, the entries are the distance matrix. Norm result to between 0 and 1.|
-|Graph Isomorphism||Not tested.|
-|Sub-Graph Isomorphism||Not tested.|
-|Maximum Clique||Not tested.|
+|Graph Isomorphism|**+**|Adjacency matrix found in QUBO.|
+|Sub-Graph Isomorphism|**+**|Adjacency matrix found in QUBO.|
+|Maximum Clique|**+**|Adjacency matrix found in QUBO.|
 
 ## Contributing
 
