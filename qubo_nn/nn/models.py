@@ -1100,8 +1100,8 @@ class A3Optimizer:
         return torch.FloatTensor(ret_batch)
 
     def train(self):
-        use_qbsolv_loss = self.cfg['problems'].get('use_qbsolv_loss', False)
-        use_similarity_loss = self.cfg['problems'].get('use_similarity_loss', False)
+        use_qbsolv_loss = self.cfg['model'].get('use_qbsolv_loss', False)
+        use_similarity_loss = self.cfg['model'].get('use_similarity_loss', False)
 
         [net.train() for net in self.nets]
         for epoch in range(self.n_epochs):

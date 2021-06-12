@@ -405,6 +405,16 @@ class ReverseRegression(Classification):
                 data = np.array(new_data)
                 print(data[0])
 
+        if self.cfg['problems']['problems'] == ["MCQ"]:
+            len_ = len(all_problems[0])
+            data = data[:len_]
+            labels = labels[:len_]
+
+            data -= 2  # NOTE: LOL
+
+            print(data[0])
+            print(all_problems[0][0])
+
         all_problems_flat, output_size = self.flatten_problem_parameters(all_problems)
 
 
