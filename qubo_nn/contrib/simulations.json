@@ -1,0 +1,62 @@
+{   
+    "1": {
+        "ppo": {
+            "network": "mlp",
+            "total_timesteps": 2e6,
+            "seed": 42,
+            "ent_coef": 0.0,
+            "lr": 3e-5,
+            "vf_coef": 0.5,
+            "max_grad_norm": 0.5,
+            "gamma": 0.99,
+            "lam": 0.95,
+            "log_interval": 10,
+            "nminibatches": 1,
+            "noptepochs": 4,
+            "cliprange": 0.1,
+            "save_interval": 0,
+            "num_layers": 2,
+            "num_hidden": 64
+        }
+    },
+    "2": {
+        "ppo": {
+            "network": "mlp",
+            "total_timesteps": 2e6,
+            "seed": 42,
+            "ent_coef": 0.0,
+            "lr": 3e-5,
+            "vf_coef": 0.5,
+            "max_grad_norm": 0.5,
+            "gamma": 0.99,
+            "lam": 0.95,
+            "log_interval": 10,
+            "nminibatches": 1,
+            "noptepochs": 4,
+            "cliprange": 0.3,
+            "save_interval": 0,
+            "num_layers": 2,
+            "num_hidden": 64
+        }
+    },
+    "3": {
+        "ppo": {
+            "network": "mlp",
+            "total_timesteps": 2e6,
+            "seed": 42,
+            "ent_coef": 0.0,
+            "lr": 1e-7,
+            "vf_coef": 0.5,
+            "max_grad_norm": 0.5,
+            "gamma": 0.99,
+            "lam": 0.99,
+            "log_interval": 10,
+            "nminibatches": 1,
+            "noptepochs": 4,
+            "cliprange": 0.1,
+            "save_interval": 0,
+            "num_layers": 1,
+            "num_hidden": 256
+        }
+    }
+}
