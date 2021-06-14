@@ -5,6 +5,7 @@ import numpy as np
 import scipy.stats as st
 import matplotlib as mpl
 from matplotlib import pyplot as plt
+from labellines import labelLines
 
 
 NAME = os.path.splitext(os.path.basename(__file__))[0][5:]
@@ -18,15 +19,15 @@ plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.Set2.colors)
 
 PLOT_TAGS = [
     {
-        'sim_6_4': '60%/40%',
-        'sim_6_3': '60%/30%',
-        'sim_5_4': '50%/40%',
-        'sim_4_4': '40%/40%',
-        'sim_4_3': '40%/30%',
-        'sim_3_3': '30%/30%',
-        'sim_2_2': '20%/20%',
+        'sim_0_0': '0%/0%',
         'sim_1_1': '10%/10%',
-        'sim_0_0': '0%/0%'
+        'sim_2_2': '20%/20%',
+        'sim_3_3': '30%/30%',
+        'sim_4_3': '40%/30%',
+        'sim_4_4': '40%/40%',
+        'sim_5_4': '50%/40%',
+        'sim_6_3': '60%/30%',
+        'sim_6_4': '60%/40%'
     }
 ]
 PLOT_ACC = [
@@ -73,7 +74,7 @@ def gen_table(kv):
 
 
 def plot(kv, tags, name, lims):
-    fig, axs = plt.subplots(1, 1, figsize=(4, 3))
+    fig, axs = plt.subplots(1, 1, figsize=(8, 4))
 
     def calc_ci(ax, key, arr):
         # arr = arr[~np.isnan(arr)]
@@ -96,8 +97,8 @@ def plot(kv, tags, name, lims):
     timeseries_classif_mc = []
     timeseries_classif_mc_err = []
     for k in tags:
-        timeseries_acc_mc.append(PLOT_ACC[0][k][0])
-        timeseries_acc_np.append(PLOT_ACC[0][k][1])
+        timeseries_acc_mc.append(1 - PLOT_ACC[0][k][0])
+        timeseries_acc_np.append(1 - PLOT_ACC[0][k][1])
         v = kv[k]
         v = np.array(v)
         x, mean, err = calc_ci(axs, k, v[0][:, :lims[-1]])  # r2
@@ -105,22 +106,27 @@ def plot(kv, tags, name, lims):
         timeseries_classif_mc_err.append(err[-1])
 
     x = np.arange(len(timeseries_classif_mc))
-    axs.errorbar(x, timeseries_classif_mc, timeseries_classif_mc_err)
-    axs.set_xlabel('Noise')
-    axs.set_ylabel('Misclassification Ratio', color='r')
+    axs.errorbar(x, timeseries_classif_mc, timeseries_classif_mc_err, color=plt.cm.Set2.colors[2])  # noqa
+    axs.set_xlabel('Noise (MC/NP)')
+    ticks = list(tags.values())
+    ticks.insert(0, '')
+    axs.set_xticklabels(ticks)
+    axs.set_ylabel('Misclassification Ratio', color=plt.cm.Set2.colors[2], fontsize=14, fontweight='bold')  # noqa
 
     axs2 = axs.twinx()
-    axs2.plot(timeseries_acc_mc)
-    axs2.plot(timeseries_acc_np)
-    axs2.set_ylabel('QUBO Solution Quality', color='b')
+    axs2.plot(timeseries_acc_mc, color=plt.cm.Set2.colors[4], label='MC')
+    axs2.plot(timeseries_acc_np, color=plt.cm.Set2.colors[4], label='NP')
+    axs2.set_ylabel('QUBO Solution Quality', color=plt.cm.Set2.colors[4], fontsize=14, fontweight='bold')  # noqa
+    labelLines(plt.gca().get_lines(), zorder=2.5)
 
     # plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
-    plt.legend(frameon=False)
+    plt.xticks(rotation=90)
+    # plt.legend(frameon=False)
     # plt.ylim(lims[0:2])
     plt.tight_layout()
     plt.show()
-    # fig.savefig(NAME + '_' + name + '.png')
-    # fig.savefig(NAME + '_' + name + '.pdf')
+    fig.savefig(NAME + '_' + name + '.png')
+    fig.savefig(NAME + '_' + name + '.pdf')
 
 
 def run():
