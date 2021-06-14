@@ -6,9 +6,9 @@ from lib import aggregate_single
 
 
 def aggregate(paths, min_len, max_len, req_len=None):
-    r2 = aggregate_single(paths, 'Custom/R2', min_len, req_len=req_len, cutoff=max_len)
+    mc = aggregate_single(paths, 'Total_Misclassifications', min_len, req_len=req_len, cutoff=max_len)
     eval_loss = aggregate_single(paths, 'Loss/Eval', min_len, req_len=req_len, cutoff=max_len)
-    return r2, eval_loss
+    return mc, eval_loss
 
 
 def run():
@@ -40,6 +40,7 @@ def run():
     fname = os.path.splitext(__file__)[0][4:] + '.pickle'
     print("Saving in", fname)
     with open(fname, 'wb+') as f:
+        print(kv)
         pickle.dump(kv, f)
 
 

@@ -12788,5 +12788,31 @@
         "model": {
             "n_epochs": 500
         }
+    },
+
+    "sgi_gen2_3_big_arch_1": {
+        "dataset_id": "sgi_gen2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "n_problems": 50000,
+            "SGI": {
+                "size1": [4, 4], "size2": [16, 20]
+            },
+            "generalization": {
+                "SGI":   [{"size1": [4, 4], "size2": [14, 20]}]
+            },
+            "problems": ["SGI"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.00002,
+            "fc_sizes": [10000],
+            "optimizer": "Adam"
+        }
     }
 }
