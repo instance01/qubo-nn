@@ -11454,7 +11454,7 @@
         "base_cfg": "23",
         "problems": {
             "scramble_qubos": false,
-            "n_problems": 1000,
+            "n_problems": 10000,
             "qubo_size": 8,
             "NP": {
                 "size": 8
@@ -12645,6 +12645,148 @@
             "lr": 0.0001,
             "fc_sizes": [10000],
             "optimizer": "Adam"
+        }
+    },
+
+    "sim_0_0": {
+        "dataset_id": "sim_0_0",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            }
+        }
+    },
+    "sim_6_4": {
+        "dataset_id": "sim_6_4",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            }
+        },
+        "model": {
+            "n_epochs": 500
+        }
+    },
+    "sim_6_3": {
+        "dataset_id": "sim_6_3",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            }
+        },
+        "model": {
+            "n_epochs": 500
+        }
+    },
+    "sim_5_4": {
+        "dataset_id": "sim_5_4",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            }
+        },
+        "model": {
+            "n_epochs": 500
+        }
+    },
+    "sim_4_4": {
+        "dataset_id": "sim_4_4",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            }
+        },
+        "model": {
+            "n_epochs": 500
+        }
+    },
+    "sim_4_3": {
+        "dataset_id": "sim_4_3",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            }
+        },
+        "model": {
+            "n_epochs": 500
+        }
+    },
+    "sim_3_3": {
+        "dataset_id": "sim_3_3",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            }
+        },
+        "model": {
+            "n_epochs": 500
+        }
+    },
+    "sim_2_2": {
+        "dataset_id": "sim_2_2",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            }
+        },
+        "model": {
+            "n_epochs": 500
+        }
+    },
+    "sim_1_1": {
+        "dataset_id": "sim_1_1",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            }
+        },
+        "model": {
+            "n_epochs": 500
         }
     }
 }

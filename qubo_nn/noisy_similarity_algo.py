@@ -73,7 +73,7 @@ def make_similar(our_data, their_data, sols, factor=.1):
     return our_data, binary_err, real_err, total_val
 
 
-factors = [.1, .1]
+factors = [.4, .4]
 
 mc_data_ = mc_data.copy()
 mc_data, binary_err_mc, real_err_mc, total_val_mc = make_similar(mc_data, np_data, sols1, factors[0])
@@ -86,7 +86,9 @@ print("COS DIST", distance.cosine(mc_data.flatten(), np_data.flatten()))
 
 
 def save(data, cfg_id):
-    labels = np.array([0 for _ in range(len(data))])
+    labels = [0 for _ in range(int(len(data) / 2))]
+    labels.extend([1 for _ in range(int(len(data) / 2))])
+    labels = np.array(labels)
     dirpath = 'datasets/%s/'
     db = px.Writer(
         dirpath=dirpath % cfg_id,
@@ -99,5 +101,5 @@ def save(data, cfg_id):
 
 data = np.concatenate([mc_data, np_data])
 cfg_id = "sim_%d_%d" % tuple(int(10 * f)  for f in factors)
-save(mc_data, cfg_id)
+save(data, cfg_id)
 print(cfg_id)
