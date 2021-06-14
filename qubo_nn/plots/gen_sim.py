@@ -40,7 +40,6 @@ def run():
     fname = os.path.splitext(__file__)[0][4:] + '.pickle'
     print("Saving in", fname)
     with open(fname, 'wb+') as f:
-        print(kv)
         pickle.dump(kv, f)
 
 
