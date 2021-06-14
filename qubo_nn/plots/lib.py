@@ -25,14 +25,17 @@ def aggregate_single(paths, desired_tag, min_len, cutoff=None, req_len=None):
             continue
         path = path[0]
 
-        data = []
-        for event in my_summary_iterator(path):
-            if not event.summary.value:
-                continue
-            tag = event.summary.value[0].tag
-            if tag.endswith(desired_tag):
-                val = event.summary.value[0].simple_value
-                data.append(val)
+        try:
+            data = []
+            for event in my_summary_iterator(path):
+                if not event.summary.value:
+                    continue
+                tag = event.summary.value[0].tag
+                if tag.endswith(desired_tag):
+                    val = event.summary.value[0].simple_value
+                    data.append(val)
+        except:
+            continue
 
         # data = smooth(data, 20)[10:-9]
         # data = smooth(data, 60)[30:-29]
