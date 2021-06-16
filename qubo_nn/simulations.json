@@ -11482,6 +11482,71 @@
             "noise_divisor": 1000
         }
     },
+    "a3dbg_all": {
+        "dataset_id": "a3dbg_all",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 9,
+            "NP": {
+                "size": 9
+            },
+            "MC": {
+                "size": [9, 10]
+            },
+            "MVC": {
+                "size": [9, 10]
+            },
+            "SP": {
+                "size": [6, 9]
+            },
+            "M2SAT": {
+                "size": [9, 10]
+            },
+            "SPP": {
+                "size": [6, 9]
+            },
+            "QA": {
+                "size": 3
+            },
+            "QK": {
+                "size": 6,
+                "constraint": 6
+            },
+            "M3SAT": {
+                "size": [5, 4]
+            },
+            "TSP": {
+                "size": 3
+            },
+            "MCQ": {
+                "size": [9, 10]
+            },
+            "problems": ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "QA", "QK", "M3SAT", "TSP", "MCQ"]
+        },
+        "model": {
+            "use_similarity_loss": true,
+            "use_qbsolv": false,
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.001,
+            "fc_sizes": [2],
+            "noise_divisor": 1000
+        }
+    },
+    "a3dbg_all_mini": {
+        "dataset_id": "a3dbg_all_mini",
+        "base_cfg": "a3dbg_all",
+        "problems": {
+            "n_problems": 100
+        }
+    },
 
     "a3_1": {
         "dataset_id": "a3_1",
@@ -12812,6 +12877,275 @@
             "batch_size": 50,
             "lr": 0.00002,
             "fc_sizes": [10000],
+            "optimizer": "Adam"
+        }
+    },
+
+    "sim_mult_0_40": {
+        "dataset_id": "sim_mult_0_40",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+    "sim_mult_0_60": {
+        "dataset_id": "sim_mult_0_60",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+    "sim_all_60_60": {
+        "dataset_id": "sim_all_60_60",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+    "sim_pair_50_50": {
+        "dataset_id": "sim_pair_50_50",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+    "sim_pair_40_40": {
+        "dataset_id": "sim_pair_40_40",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+    "sim_pair_30_30": {
+        "dataset_id": "sim_pair_30_30",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+    "sim_pair_20_20": {
+        "dataset_id": "sim_pair_20_20",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+    "sim_pair_10_10": {
+        "dataset_id": "sim_pair_10_10",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+
+    "-- big arch gi/sgi/mcq AGAIN --": {},
+
+    "mcq_gen4_big_arch_2": {
+        "dataset_id": "mcq_gen4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "n_problems": 25000,
+            "MCQ": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MCQ":   [{"size": [48, 60]},{"size": [32, 40]},{"size": [24, 30]}]
+            },
+            "problems": ["MCQ"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.00001,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+    "mcq_gen3_big_arch_2": {
+        "dataset_id": "mcq_gen3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "n_problems": 33333,
+            "MCQ": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MCQ":   [{"size": [48, 60]},{"size": [32, 40]}]
+            },
+            "problems": ["MCQ"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.00001,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+    "mcq_gen2_big_arch_2": {
+        "dataset_id": "mcq_gen2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "n_problems": 50000,
+            "MCQ": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MCQ":   [{"size": [48, 60]}]
+            },
+            "problems": ["MCQ"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.00001,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+    "mcq_gen1_big_arch_2": {
+        "dataset_id": "mcq_gen1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "n_problems": 100000,
+            "MCQ": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MCQ":   []
+            },
+            "problems": ["MCQ"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.00001,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+
+    "sgi_gen4_3_big_arch_2": {
+        "dataset_id": "sgi_gen4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "n_problems": 25000,
+            "SGI": {
+                "size1": [4, 4], "size2": [16, 20]
+            },
+            "generalization": {
+                "SGI":   [{"size1": [4, 4], "size2": [14, 20]},{"size1": [4, 4], "size2": [12, 16]},{"size1": [4, 4], "size2": [10, 16]}]
+            },
+            "problems": ["SGI"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.00001,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+    "sgi_gen3_3_big_arch_2": {
+        "dataset_id": "sgi_gen3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "n_problems": 33333,
+            "SGI": {
+                "size1": [4, 4], "size2": [16, 20]
+            },
+            "generalization": {
+                "SGI":   [{"size1": [4, 4], "size2": [14, 20]},{"size1": [4, 4], "size2": [12, 16]}]
+            },
+            "problems": ["SGI"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.00001,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+    "sgi_gen2_3_big_arch_2": {
+        "dataset_id": "sgi_gen2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "n_problems": 50000,
+            "SGI": {
+                "size1": [4, 4], "size2": [16, 20]
+            },
+            "generalization": {
+                "SGI":   [{"size1": [4, 4], "size2": [14, 20]}]
+            },
+            "problems": ["SGI"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.00001,
+            "fc_sizes": [20000],
+            "optimizer": "Adam"
+        }
+    },
+    "sgi_gen1_3_big_arch_2": {
+        "dataset_id": "sgi_gen1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "n_problems": 100000,
+            "SGI": {
+                "size1": [4, 4], "size2": [16, 20]
+            },
+            "generalization": {
+                "SGI":   []
+            },
+            "problems": ["SGI"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.00001,
+            "fc_sizes": [20000],
             "optimizer": "Adam"
         }
     }
