@@ -43,7 +43,6 @@ prob = ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "QA", "QK", "M3SAT", "TSP", "MC
 def make_similar(sols_all, factors=.1):
     for i in range(11):
         if i % 2 == 0:
-            print("Making", i, "similar.")
             if i == 10:
                 diff2 = (data_copy[i] - data[i-1]) * factors[i]
                 data[i] += diff1
@@ -75,18 +74,26 @@ def check(i, our_data, cached_data, sols):
         real_err += abs(best_val - new_val)
         total_val += abs(best_val)
     # print(prob[i], binary_err, binary_err / total_len, real_err, real_err / total_val)
-    print(prob[i], binary_err / total_len)
+    print(prob[i], "\t", binary_err / total_len)
     return our_data
 
 
 # factors = [.5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5]
-factors = [.4, .4, .4, .4, .4, .4, .4, .4, .4, .4, .4]
+# factors = [.4, .4, .4, .4, .4, .4, .4, .4, .4, .4, .4]
+# factors = [.3, .3, .3, .3, .3, .3, .3, .3, .3, .3, .3]
+# factors = [.2, .2, .2, .2, .2, .2, .2, .2, .2, .2, .2]
+# factors = [.6, .4, .6, .4, .6, .4, .6, .4, .6, .4, .6]
+# factors = [.5, .4, .5, .4, .5, .4, .5, .4, .5, .4, .5]
+# factors = [.4, .3, .4, .3, .4, .3, .4, .3, .4, .3, .4]
+# factors = [.6, .4, .6, .4, .6, .4, .6, .4, .6, .4, .6]
+# factors = [0.] * 11
+# factors = [0.05] * 11
+factors = [0.6] * 11
 make_similar(sols, factors)
-print(data[0] - data[1])
 
 data_flattened = [d.flatten() for d in data]
 print("COS DIST")
-print(np.diag(cosine_distances(data_flattened).round(2), 1))
+print(cosine_distances(data_flattened).round(2))
 
 
 def save(data, labels, cfg_id):

@@ -12905,6 +12905,15 @@
             "train_eval_split": 0.9
         }
     },
+
+    "sim_pair_60_40": {
+        "dataset_id": "sim_pair_60_40",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
     "sim_pair_50_50": {
         "dataset_id": "sim_pair_50_50",
         "base_cfg": "a3dbg_all",
@@ -12913,8 +12922,24 @@
             "train_eval_split": 0.9
         }
     },
+    "sim_pair_50_40": {
+        "dataset_id": "sim_pair_50_40",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
     "sim_pair_40_40": {
         "dataset_id": "sim_pair_40_40",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+    "sim_pair_40_30": {
+        "dataset_id": "sim_pair_40_30",
         "base_cfg": "a3dbg_all",
         "model": {
             "fc_sizes": [50, 11],
@@ -12939,6 +12964,22 @@
     },
     "sim_pair_10_10": {
         "dataset_id": "sim_pair_10_10",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+    "sim_pair_5_5": {
+        "dataset_id": "sim_pair_5_5",
+        "base_cfg": "a3dbg_all",
+        "model": {
+            "fc_sizes": [50, 11],
+            "train_eval_split": 0.9
+        }
+    },
+    "sim_pair_0_0": {
+        "dataset_id": "sim_pair_0_0",
         "base_cfg": "a3dbg_all",
         "model": {
             "fc_sizes": [50, 11],

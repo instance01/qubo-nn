@@ -417,7 +417,6 @@ class ReverseRegression(Classification):
 
         all_problems_flat, output_size = self.flatten_problem_parameters(all_problems)
 
-
         prob_type = self.cfg['problems']['problems']
         if prob_type == ["MVC"] or prob_type == ["MC"]:
             for i, prob in enumerate(all_problems_flat):
