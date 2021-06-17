@@ -13189,5 +13189,48 @@
             "fc_sizes": [20000],
             "optimizer": "Adam"
         }
+    },
+
+    "30_sgi_gi_same": {
+        "dataset_id": "30_sgi_gi_same",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "n_problems": 50000,
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "GI": {
+                "size": [8, 10]
+            },
+            "SGI": {
+                "size1": [8, 10],
+                "size2": [8, 10]
+            },
+            "generalization": {
+                "GI":   [{"size": [7, 10]},{"size": [6, 8]},{"size": [5, 8]}],
+                "SGI":   [{"size1": [7, 10], "size2": [7, 10]},{"size1": [6, 8], "size2": [6, 8]},{"size1": [5, 8], "size2": [5, 8]}]
+            },
+            "problems": ["GI", "SGI"]
+        }
+    },
+    "30_sgi_gi_same_but_diff_edges": {
+        "dataset_id": "30_sgi_gi_same_but_diff_edges",
+        "base_cfg": "30_gen4",
+        "problems": {
+            "n_problems": 50000,
+            "scramble_qubos": false,
+            "qubo_size": 64,
+            "GI": {
+                "size": [8, 10]
+            },
+            "SGI": {
+                "size1": [8, 8],
+                "size2": [8, 12]
+            },
+            "generalization": {
+                "GI":   [{"size": [7, 10]},{"size": [6, 8]},{"size": [5, 8]}],
+                "SGI":   [{"size1": [7, 8], "size2": [7, 12]},{"size1": [6, 6], "size2": [6, 10]},{"size1": [5, 6], "size2": [5, 10]}]
+            },
+            "problems": ["GI", "SGI"]
+        }
     }
 }
