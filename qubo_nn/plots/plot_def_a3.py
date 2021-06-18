@@ -35,7 +35,7 @@ PLOT_LIMS = [
 
 
 def plot(kv, tags, name, lims):
-    fig, axs = plt.subplots(1, 1, figsize=(4, 3))
+    fig, axs = plt.subplots(1, 1, figsize=(5, 3.75))
 
     def calc_ci(ax, key, arr):
         # arr = arr[~np.isnan(arr)]
