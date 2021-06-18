@@ -13388,5 +13388,31 @@
             "fc_sizes": [10000],
             "optimizer": "Adam"
         }
+    },
+
+    "tsp_gen1_81": {
+        "dataset_id": "tsp_gen1_81",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 40000,
+            "qubo_size": 81,
+            "TSP": {
+                "size": 9
+            },
+            "generalization": {
+                "TSP": []
+            },
+            "problems": ["TSP"]
+        },
+        "model": {
+            "norm_data": false,
+            "norm_data_abs": true,
+            "activation": "ReLU",
+            "n_epochs": 500,
+            "batch_size": 100,
+            "lr": 0.013,
+            "fc_sizes": [10000]
+        }
     }
 }
