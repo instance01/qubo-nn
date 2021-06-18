@@ -14,7 +14,7 @@ def aggregate(paths, min_len, max_len, req_len=None):
 def run():
     min_len = 1000
     req_len = 20
-    base_paths = ['../runs/', '../runs3/', '../runs5/', '../runs7/']
+    base_paths = ['../runs/', '../runs3/', '../runs5/', '../runs7/', '../runs8/']
     problems = [
         ('tsp2_r2', 150),
         ('tsp_gen1', 150),
