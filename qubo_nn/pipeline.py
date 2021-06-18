@@ -11,6 +11,7 @@ import qubovert
 import pyxis as px
 import numpy as np
 import networkx as nx
+import qubo_nn.problems
 from qubo_nn.nn import Optimizer
 from qubo_nn.nn import ReverseOptimizer
 from qubo_nn.nn import AutoEncoderOptimizer
@@ -940,7 +941,40 @@ class QbsolvRegression(Classification):
         super(QbsolvRegression, self).__init__(cfg)
         self.qubo_size = self.cfg["problems"]["qubo_size"]
 
+    def gen_qubo_matrices(self, cls, n_problems, **kwargs):
+        problems = cls.gen_problems(self.cfg, n_problems, **kwargs)
+        qubo_matrices = []
+        for i, problem in enumerate(problems):
+            if i % 100000 == 0:
+                print(i)
+            qubo_matrices.append(cls(self.cfg, **problem).gen_qubo_matrix())
+            del problem
+        return qubo_matrices
+
+    def _gen_data(self, n_problems):
+        qubo_size = self.qubo_size
+        data = []
+
+        labels = []
+        for i, (cls, kwargs, name) in enumerate(self.problems):
+            cls = qubo_nn.problems.max_cut.MaxCutMemoryEfficient
+            qubo_matrices = self.gen_qubo_matrices(
+                cls, n_problems, **kwargs
+            )
+
+            qubo_matrices = np.array(qubo_matrices)
+            print(cls, qubo_matrices.shape)
+
+            data.extend(qubo_matrices)
+            labels.extend([i for _ in range(len(qubo_matrices))])
+
+        print("TOTAL DATA LEN", len(data))
+        data = np.array(data, dtype=np.dtype('b'))
+        labels = np.array(labels, dtype=np.long)
+        return data, labels, []
+
     def solve_qubo(self, qubo):
+        qubo = qubo.copy().astype(np.dtype('i4'))
         Q = qubovert.utils.matrix_to_qubo(qubo)
         sol = Q.solve_bruteforce(all_solutions=False)
         sol_ = [0 for _ in range(self.qubo_size)]
@@ -955,7 +989,7 @@ class QbsolvRegression(Classification):
         labels = []
 
         for i, qubo in enumerate(data):
-            if i % 10000 == 0:
+            if i % 100000 == 0:
                 print(i)
             labels.append(self.solve_qubo(qubo))
         labels = np.array(labels)

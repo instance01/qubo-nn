@@ -6,7 +6,7 @@ from qubo_nn.problems.util import gen_graph
 
 class GraphIsomorphism(SubGraphIsomorphism):
     def __init__(self, cfg, graph1, graph2):
-        super(GraphIsomorphism, self).__init__(cfg, graph1, graph2, a=1, b=1)
+        super(GraphIsomorphism, self).__init__(cfg, graph1, graph2, a=1, b=2)
 
     @classmethod
     def gen_problems(self, cfg, n_problems, size, seed=None, **kwargs):

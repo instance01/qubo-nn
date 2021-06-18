@@ -13300,12 +13300,12 @@
             "optimizer": "Adam"
         }
     },
-    "qb1_10M": {
-        "dataset_id": "qb1_10M",
+    "qb1_5M": {
+        "dataset_id": "qb1_5M",
         "base_cfg": "1",
         "problems": {
             "scramble_qubos": false,
-            "n_problems": 10000000,
+            "n_problems": 5000000,
             "qubo_size": 8,
             "MC": {
                 "size": [8, 10]
@@ -13324,7 +13324,7 @@
     },
 
     "qb2_100k": {
-        "dataset_id": "qb1_100k",
+        "dataset_id": "qb2_100k",
         "base_cfg": "1",
         "problems": {
             "scramble_qubos": false,
@@ -13346,7 +13346,7 @@
         }
     },
     "qb2_1M": {
-        "dataset_id": "qb1_1M",
+        "dataset_id": "qb2_1M",
         "base_cfg": "1",
         "problems": {
             "scramble_qubos": false,
@@ -13367,12 +13367,34 @@
             "optimizer": "Adam"
         }
     },
-    "qb2_10M": {
-        "dataset_id": "qb1_10M",
+    "qb2_5M": {
+        "dataset_id": "qb2_5M",
         "base_cfg": "1",
         "problems": {
             "scramble_qubos": false,
-            "n_problems": 10000000,
+            "n_problems": 5000000,
+            "qubo_size": 10,
+            "MC": {
+                "size": [10, 12]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 1000,
+            "batch_size": 100,
+            "lr": 0.0001,
+            "fc_sizes": [10000],
+            "optimizer": "Adam"
+        }
+    },
+    "qb3_1M": {
+        "dataset_id": "qb3_1M",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000000,
             "qubo_size": 10,
             "MC": {
                 "size": [10, 12]
