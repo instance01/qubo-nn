@@ -6,6 +6,8 @@ import pickle
 import datetime
 import itertools
 
+import torch
+import qubovert
 import pyxis as px
 import numpy as np
 import networkx as nx
@@ -16,6 +18,7 @@ from qubo_nn.nn import RNNOptimizer
 from qubo_nn.nn import A3Optimizer
 from qubo_nn.nn import Resistance1
 from qubo_nn.nn import Resistance2
+from qubo_nn.nn import QbsolvOptimizer
 from qubo_nn.logger import Logger
 from qubo_nn.problems import PROBLEM_REGISTRY
 from qubo_nn.data import LMDBDataLoader
@@ -930,3 +933,53 @@ class R2(Classification):
     def _eval(self, optimizer):
         # TODO
         pass
+
+
+class QbsolvRegression(Classification):
+    def __init__(self, cfg):
+        super(QbsolvRegression, self).__init__(cfg)
+        self.qubo_size = self.cfg["problems"]["qubo_size"]
+
+    def solve_qubo(self, qubo):
+        Q = qubovert.utils.matrix_to_qubo(qubo)
+        sol = Q.solve_bruteforce(all_solutions=False)
+        sol_ = [0 for _ in range(self.qubo_size)]
+        for k, v in sol.items():
+            sol_[k] = v
+        # return torch.FloatTensor(sol_)
+        return sol_
+
+    def gen_data_lmdb(self):
+        data, _, _ = self._gen_data(self.n_problems)
+
+        labels = []
+
+        for i, qubo in enumerate(data):
+            if i % 10000 == 0:
+                print(i)
+            labels.append(self.solve_qubo(qubo))
+        labels = np.array(labels)
+
+        print(data.shape, labels.shape)
+
+        print("NORM?", not self.cfg["model"]["no_norm"], self.cfg["model"]["norm_multiply"])
+
+        db = px.Writer(
+            dirpath='datasets/%s/' % self.cfg['cfg_id'],
+            map_size_limit=60000,
+            ram_gb_limit=60
+        )
+        db.put_samples('input', data, 'target', labels)
+        db.close()
+
+    def run_experiment(self, n_runs=1):
+        lmdb_loader = LMDBDataLoader(self.cfg)
+
+        for _ in range(n_runs):
+            self.model_fname = self.get_model_fname()
+            self.logger = Logger(self.model_fname, self.cfg)
+            self.logger.log_config()
+            optimizer = QbsolvOptimizer(self.cfg, lmdb_loader, self.logger)
+            optimizer.train()
+            optimizer.save(self.model_fname)
+            self.logger.close()

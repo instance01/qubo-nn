@@ -4,6 +4,7 @@ from qubo_nn.pipeline import ReverseRegression
 from qubo_nn.pipeline import A3
 from qubo_nn.pipeline import R1
 from qubo_nn.pipeline import R2
+from qubo_nn.pipeline import QbsolvRegression
 from qubo_nn.config import Config
 import argparse
 
@@ -76,4 +77,11 @@ if __name__ == '__main__':
             c.gen_data_lmdb()
         elif args.train:
             c = R2(cfg)
+            c.run_experiment(args.nruns)
+    elif args.type == 'qbsolv':
+        if args.gendata:
+            c = QbsolvRegression(cfg)
+            c.gen_data_lmdb()
+        elif args.train:
+            c = QbsolvRegression(cfg)
             c.run_experiment(args.nruns)
