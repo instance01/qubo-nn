@@ -75,6 +75,8 @@ def plot(id_):
     with open('tot_misclassifications_gen4_%s.pickle' % id_, 'rb') as f:
         arr1, confusion_matrix = pickle.load(f)
 
+    arr1 = arr1[:, :50]
+
     fig, ax = plt.subplots(figsize=(3.5, 3))
 
     def sub_plot(arr, col):

@@ -44,17 +44,22 @@ def gen_table(kv):
         print(k, "R2", "%.3f" % mean, "+-", "%.3f" % range_)
 
 
-def plot(kv):
-    tags = {
-        'tsp2_r2': 'old model',
-        'tsp_gen1': 'new model'
+PLOT_TAGS = [
+    {
+        'tsp2_r2': 'Old Model',
+        'tsp_gen1': 'New Model'
+    },
+    {
+        'tsp_gen1_81': 'QUBO size 81x81'
     }
+]
+PLOT_NAMES = ['comp', '81']
 
+
+def plot(kv, tags, name):
     fig, axs = plt.subplots(1, 1, figsize=(5, 3.5))
 
     def calc_ci(ax, key, arr):
-        # arr = arr[~np.isnan(arr)]
-        # arr = arr[arr != 0.]
         mean = np.mean(arr, axis=0)
         ci = st.t.interval(
             0.95,
@@ -78,20 +83,20 @@ def plot(kv):
         axs.set_ylabel(r'$R^2$')
         axs.set_xlabel("Epoch")
 
-    # plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     plt.legend(frameon=False)
-    plt.ylim((0.95, 1.02))
+    plt.ylim((0.95, 1.01))
     plt.tight_layout()
     plt.show()
-    fig.savefig(NAME + '.png')
-    fig.savefig(NAME + '.pdf')
+    fig.savefig(NAME + '_' + name + '.png')
+    fig.savefig(NAME + '_' + name + '.pdf')
 
 
 def run():
     with open(NAME + '.pickle', 'rb') as f:
         kv = pickle.load(f)
     gen_table(kv)
-    plot(kv)
+    plot(kv, PLOT_TAGS[0], PLOT_NAMES[0])
+    plot(kv, PLOT_TAGS[1], PLOT_NAMES[1])
 
 
 if __name__ == '__main__':
