@@ -17,7 +17,9 @@ def run():
     base_paths = ['../runs/', '../runs3/', '../runs5/', '../runs7/']
     problems = [
         ('tsp2_r2', 150),
-        ('tsp_gen1', 150)
+        ('tsp_gen1', 150),
+        ('tsp_gen1_81', 150),
+        ('tsp_gen1_81_2', 150)
     ]
     kv = {}
     for problem in problems:
