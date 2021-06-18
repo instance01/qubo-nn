@@ -113,7 +113,7 @@ def plot(kv, tags, name, lims):
     ticks = list(tags.values())
     ticks.insert(0, '')
     axs.set_xticklabels(ticks)
-    axs.set_ylabel('Misclassification Ratio', color=plt.cm.Set2.colors[2], fontsize=14, fontweight='bold')  # noqa
+    axs.set_ylabel('Misclassification rate', color=plt.cm.Set2.colors[2], fontsize=14, fontweight='bold')  # noqa
 
     prob = ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "QA", "QK", "M3SAT",
             "TSP", "MCQ"]
