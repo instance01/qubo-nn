@@ -13322,6 +13322,28 @@
             "optimizer": "Adam"
         }
     },
+    "qb1_10M": {
+        "dataset_id": "qb1_10M",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000000,
+            "qubo_size": 8,
+            "MC": {
+                "size": [8, 10]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 1000,
+            "batch_size": 100,
+            "lr": 0.0001,
+            "fc_sizes": [10000],
+            "optimizer": "Adam"
+        }
+    },
 
     "qb2_100k": {
         "dataset_id": "qb2_100k",
@@ -13373,6 +13395,28 @@
         "problems": {
             "scramble_qubos": false,
             "n_problems": 5000000,
+            "qubo_size": 10,
+            "MC": {
+                "size": [10, 12]
+            },
+            "problems": ["MC"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 1000,
+            "batch_size": 100,
+            "lr": 0.0001,
+            "fc_sizes": [10000],
+            "optimizer": "Adam"
+        }
+    },
+    "qb2_10M": {
+        "dataset_id": "qb2_10M",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000000,
             "qubo_size": 10,
             "MC": {
                 "size": [10, 12]
