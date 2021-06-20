@@ -78,6 +78,9 @@ class A3AutoEncoderFCNet(nn.Module):
         super(A3AutoEncoderFCNet, self).__init__()
         self.input_size = cfg['problems']['qubo_size'] ** 2
         n_layers = cfg['model']['fc_sizes'][0]
+        n_layers2 = 1
+        if len(cfg['model']['fc_sizes']) > 1:
+            n_layers2 = cfg['model']['fc_sizes'][1]
 
         encoder_net = []
         for _ in range(n_layers):
@@ -85,7 +88,12 @@ class A3AutoEncoderFCNet(nn.Module):
             encoder_net.append(nn.LeakyReLU())
         self.encoder = nn.Sequential(*encoder_net[:-1])
 
-        self.decoder = nn.Linear(self.input_size, self.input_size)
+        decoder_net = []
+        for _ in range(n_layers2):
+            decoder_net.append(nn.Linear(self.input_size, self.input_size))
+            decoder_net.append(nn.LeakyReLU())
+        self.decoder = nn.Sequential(*decoder_net[:-1])
+
         net = [
             self.encoder,
             self.decoder,
