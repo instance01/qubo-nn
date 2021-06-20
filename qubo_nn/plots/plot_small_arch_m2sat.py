@@ -25,7 +25,7 @@ PLOT_TAGS = [
     }
 ]
 PLOT_NAMES = ['m2sat']
-PLOT_LIMS = [(0.0, 1.0, 10000)]
+PLOT_LIMS = [(0.0, 1.0, 200)]
 
 
 def gen_table(kv):
