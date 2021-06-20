@@ -14233,5 +14233,194 @@
             "fc_sizes": [100, 100, 100, 100],
             "optimizer": "Adam"
         }
+    },
+
+    "a3ng": {
+        "dataset_id": "a3ng",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["NP", "MC", "MVC"]
+        },
+        "model": {
+            "use_similarity_loss": true,
+            "use_qbsolv_loss": true,
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.01,
+            "fc_sizes": [3],
+            "noise_divisor": 1000
+        }
+    },
+    "a3ng_1": {
+        "dataset_id": "a3ng",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["NP", "MC", "MVC"]
+        },
+        "model": {
+            "use_similarity_loss": true,
+            "use_qbsolv_loss": true,
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.04,
+            "fc_sizes": [3],
+            "noise_divisor": 1000
+        }
+    },
+    "a3ng_2": {
+        "dataset_id": "a3ng",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["NP", "MC", "MVC"]
+        },
+        "model": {
+            "use_similarity_loss": true,
+            "use_qbsolv_loss": true,
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.04,
+            "fc_sizes": [3, 2],
+            "noise_divisor": 1000
+        }
+    },
+
+    "np19_LONG_generalized_gen4_big_arch_2": {
+        "dataset_id": "np19_LONG_generalized_gen4_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "NP": {
+                "size": 64
+            },
+            "generalization": {
+                "NP": [{"size": 48}, {"size": 32}, {"size": 24}]
+            },
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 15000,
+            "batch_size": 500,
+            "lr": 0.006,
+            "fc_sizes": [10000]
+        }
+    },
+    "np19_LONG_generalized_gen3_big_arch_2": {
+        "dataset_id": "np19_LONG_generalized_gen3_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 13333,
+            "NP": {
+                "size": 64
+            },
+            "generalization": {
+                "NP": [{"size": 48}, {"size": 32}]
+            },
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 15000,
+            "batch_size": 500,
+            "lr": 0.006,
+            "fc_sizes": [10000]
+        }
+    },
+    "np19_LONG_generalized_gen2_big_arch_2": {
+        "dataset_id": "np19_LONG_generalized_gen2_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 20000,
+            "NP": {
+                "size": 64
+            },
+            "generalization": {
+                "NP": [{"size": 48}]
+            },
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 15000,
+            "batch_size": 500,
+            "lr": 0.006,
+            "fc_sizes": [10000]
+        }
+    },
+    "np19_LONG_generalized_gen1_big_arch_2": {
+        "dataset_id": "np19_LONG_generalized_gen1_big_arch",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 40000,
+            "NP": {
+                "size": 64
+            },
+            "generalization": {
+                "NP": []
+            },
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 15000,
+            "batch_size": 500,
+            "lr": 0.006,
+            "fc_sizes": [10000]
+        }
     }
 }
