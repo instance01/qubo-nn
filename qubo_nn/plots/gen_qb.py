@@ -6,7 +6,7 @@ from lib import aggregate_single
 
 
 def aggregate(paths, min_len, max_len, req_len=None):
-    r2 = aggregate_single(paths, 'Total_Misclassifications', min_len, req_len=req_len, cutoff=max_len)
+    r2 = aggregate_single(paths, 'Custom/R2', min_len, req_len=req_len, cutoff=max_len)
     eval_loss = aggregate_single(paths, 'Loss/Eval', min_len, req_len=req_len, cutoff=max_len)
     return r2, eval_loss
 
