@@ -1155,11 +1155,13 @@ class A3Optimizer:
             len_ = len(all_inputs[0][0][0])
             for i in range(len_):
                 chosen_data = []
-                for problem_specific_input, _ in all_inputs:
+                for problem_specific_input, labels in all_inputs:
                     curr_data = []
+                    curr_labels = []
                     for j in range(self.batch_size):
                         idx = np.random.randint(0, len_)
                         curr_data.append(problem_specific_input[0][idx].unsqueeze(0))
+                        curr_labels.append(labels[0][idx])
 
                     tensor = torch.Tensor(
                         self.batch_size,
@@ -1167,7 +1169,12 @@ class A3Optimizer:
                         self.qubo_size
                     )
                     torch.cat(curr_data, out=tensor)
-                    chosen_data.append(tensor)
+
+                    tensor2 = torch.Tensor(self.batch_size, self.qubo_size)
+                    torch.cat(curr_labels, out=tensor2)
+                    tensor2 = tensor2.reshape((10, 8))
+
+                    chosen_data.append((tensor, tensor2))
 
                 loss = 0
                 latent_outputs = []
@@ -1177,7 +1184,7 @@ class A3Optimizer:
                 for optimizer in self.optimizers:
                     optimizer.zero_grad()
 
-                for j, inputs in enumerate(chosen_data):
+                for j, (inputs, labels) in enumerate(chosen_data):
                     outputs = self.nets[j](inputs)
                     latent_output = self.nets[j].predict_encode(inputs)
                     latent_outputs.append(latent_output)
@@ -1185,7 +1192,8 @@ class A3Optimizer:
                     debug_losses.append(qubo_loss.item())
 
                     if use_qbsolv_loss:
-                        true_sol = solve_qubo2(inputs)  # TODO: This should happen in gendata phase.
+                        # true_sol = solve_qubo2(inputs)  # TODO: This should happen in gendata phase.
+                        true_sol = labels
                         suggested_sol = QBSolvFunction.apply(latent_output, 10.0)
                         # print(suggested_sol)
                         # print(true_sol)

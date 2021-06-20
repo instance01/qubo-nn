@@ -11,7 +11,8 @@ class MaxCut(Problem):
         n = self.graph.order()
         nodes = list(self.graph.nodes)
 
-        Q = np.zeros((n, n), dtype=np.dtype('b'))
+        # dtype 'b' would be nice here..
+        Q = np.zeros((n, n), dtype=np.dtype(np.int32))
         for edge in self.graph.edges:
             idx1 = nodes.index(edge[0])
             idx2 = nodes.index(edge[1])

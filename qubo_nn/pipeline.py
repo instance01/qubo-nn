@@ -134,7 +134,7 @@ class Classification:
 
         print("TOTAL DATA LEN", len(data))
         data = np.array(data, dtype=np.float32)
-        labels = np.array(labels, dtype=np.long)
+        labels = np.array(labels, dtype=np.int32)
         return data, labels, all_problems
 
     def gen_data_gzip_pickle(self):
@@ -648,13 +648,21 @@ class DefeatClassification(Classification):
 
         print("TOTAL DATA LEN", len(data))
         data = np.array(data, dtype=np.float32)
-        labels = np.array(labels, dtype=np.long)
+        labels = np.array(labels, dtype=np.int32)
         return data, labels, all_problems
 
 
 class A3(Classification):
     def __init__(self, cfg):
         super(A3, self).__init__(cfg)
+
+    def solve_qubo2(self, item):
+        Q = qubovert.utils.matrix_to_qubo(item.reshape(self.qubo_size, self.qubo_size))
+        sol = Q.solve_bruteforce(all_solutions=False)
+        sol_ = [0 for _ in range(self.qubo_size)]
+        for k, v in sol.items():
+            sol_[k] = v
+        return sol_
 
     def _gen_data(self, n_problems):
         print("Generating data for A3.")
@@ -722,7 +730,8 @@ class A3(Classification):
                 #     qubo_matrices[j] += noise
 
                 # Normalize.
-                qubo_matrices[j] /= abs(qubo_matrices[j]).max()
+                # qubo_matrices[j] /= abs(qubo_matrices[j]).max()
+                qubo_matrices[j] = qubo_matrices[j] / abs(qubo_matrices[j]).max()
 
                 # if name == "MVC" or name == "MC":
                 #     # qubo_matrices[j][np.where(qubo_matrices[j] > 0.05)] = 0.03
@@ -735,15 +744,17 @@ class A3(Classification):
             print(cls, qubo_matrices.shape)
 
             data.append(qubo_matrices)  # NOTE: We append, not extend here!!
-            labels.append([i for _ in range(len(qubo_matrices))])
+            labels.append([self.solve_qubo2(q) for q in qubo_matrices])
+            # labels.append([i for _ in range(len(qubo_matrices))])
 
         print("TOTAL DATA LEN", len(data))
         data = np.array(data, dtype=np.float32)
-        labels = np.array(labels, dtype=np.long)
+        labels = np.array(labels, dtype=np.int32)
         return data, labels, all_problems
 
     def run_experiment(self, n_runs=1):
         print("Running A3.")
+        print(torch.get_num_threads())
         lmdb_loader = LMDBDataLoader(self.cfg)
         for _ in range(n_runs):
             self.model_fname = self.get_model_fname()
@@ -827,7 +838,7 @@ class R1(Classification):
 
         print("TOTAL DATA LEN", len(data))
         data = np.array(data, dtype=np.float32)
-        labels = np.array(labels, dtype=np.long)
+        labels = np.array(labels, dtype=np.int32)
         return data, labels, all_problems
 
     def run_experiment(self, n_runs=1):
@@ -915,7 +926,7 @@ class R2(Classification):
 
         print("TOTAL DATA LEN", len(data))
         data = np.array(data, dtype=np.float32)
-        labels = np.array(labels, dtype=np.long)
+        labels = np.array(labels, dtype=np.int32)
         return data, labels, all_problems
 
     def run_experiment(self, n_runs=1):
@@ -970,7 +981,7 @@ class QbsolvRegression(Classification):
 
         print("TOTAL DATA LEN", len(data))
         data = np.array(data, dtype=np.dtype('b'))
-        labels = np.array(labels, dtype=np.long)
+        labels = np.array(labels, dtype=np.int32)
         return data, labels, []
 
     def solve_qubo(self, qubo):

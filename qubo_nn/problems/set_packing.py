@@ -48,7 +48,7 @@ class SetPacking(Problem):
         uniques = set()
 
         set_ = list(range(size[0]))
-        for _ in range(n_problems):
+        for _ in range(n_problems * 3):
             subsets = set()
             for _ in range(size[1]):
                 x = list(filter(lambda x: random.random() < 0.5, set_))
@@ -72,6 +72,8 @@ class SetPacking(Problem):
                 B = B[idx]
 
             problems.append(B)
+            if len(problems) == n_problems:
+                break
 
         print("SP generated problems:", len(problems))
         return [{"subset_matrix": matrix} for matrix in problems]
