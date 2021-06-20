@@ -11647,6 +11647,105 @@
             "noise_divisor": 1000
         }
     },
+    "a3_4": {
+        "dataset_id": "a3_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["NP", "MC", "MVC"]
+        },
+        "model": {
+            "use_similarity_loss": true,
+            "use_qbsolv_loss": true,
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.02,
+            "fc_sizes": [3],
+            "noise_divisor": 1000
+        }
+    },
+    "a3_5": {
+        "dataset_id": "a3_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["NP", "MC", "MVC"]
+        },
+        "model": {
+            "use_similarity_loss": true,
+            "use_qbsolv_loss": true,
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.04,
+            "fc_sizes": [3],
+            "noise_divisor": 1000
+        }
+    },
+    "a3_6": {
+        "dataset_id": "a3_1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["NP", "MC", "MVC"]
+        },
+        "model": {
+            "use_similarity_loss": true,
+            "use_qbsolv_loss": true,
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.05,
+            "fc_sizes": [3, 2],
+            "noise_divisor": 1000
+        }
+    },
 
     "r1_1": {
         "dataset_id": "r1_1",
@@ -13271,7 +13370,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [10000],
@@ -13293,7 +13392,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [10000],
@@ -13315,7 +13414,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [10000],
@@ -13337,7 +13436,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [10000],
@@ -13360,7 +13459,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [10000],
@@ -13382,7 +13481,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [10000],
@@ -13404,7 +13503,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [10000],
@@ -13426,7 +13525,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [10000],
@@ -13547,7 +13646,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [20000],
@@ -13569,7 +13668,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [20000],
@@ -13591,7 +13690,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [20000],
@@ -13614,7 +13713,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [20000],
@@ -13636,7 +13735,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [20000],
@@ -13658,7 +13757,7 @@
         "model": {
             "no_norm": true,
             "activation": "LeakyReLU",
-            "n_epochs": 1000,
+            "n_epochs": 200,
             "batch_size": 100,
             "lr": 0.0001,
             "fc_sizes": [20000],

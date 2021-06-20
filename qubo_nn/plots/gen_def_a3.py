@@ -14,7 +14,7 @@ def aggregate(paths, min_len, max_len, req_len=None):
 
 def run():
     min_len = 1000
-    base_paths = ['../runs/']
+    base_paths = ['../runs/', '../runs9/']
     problems = [
         ('a3_1', 5),
         ('a3_2', 5000),
