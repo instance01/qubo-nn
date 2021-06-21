@@ -301,20 +301,21 @@ class RedAEFCNet(nn.Module):
         super(RedAEFCNet, self).__init__()
         self.input_size = cfg['problems']['qubo_size'] ** 2
         n_layers = cfg['model']['fc_sizes'][0]
-        n_layers2 = 1
-        if len(cfg['model']['fc_sizes']) > 1:
-            n_layers2 = cfg['model']['fc_sizes'][1]
+        n_layers2 = cfg['model']['fc_sizes'][1]
 
         encoder_net = []
-        for _ in range(n_layers):
-            encoder_net.append(nn.Linear(self.input_size, self.input_size))
+        prev_size = self.input_size
+        for size in n_layers:
+            encoder_net.append(nn.Linear(prev_size, size))
             encoder_net.append(nn.LeakyReLU())
+            prev_size = size
         self.encoder = nn.Sequential(*encoder_net[:-1])
 
         decoder_net = []
-        for _ in range(n_layers2):
-            decoder_net.append(nn.Linear(self.input_size, self.input_size))
+        for size in n_layers2:
+            decoder_net.append(nn.Linear(prev_size, size))
             decoder_net.append(nn.LeakyReLU())
+            prev_size = size
         self.decoder = nn.Sequential(*decoder_net[:-1])
 
         net = [
@@ -322,6 +323,11 @@ class RedAEFCNet(nn.Module):
             self.decoder,
         ]
         self.fc_net = nn.Sequential(*net)
+        print(net)
+        n_params = sum(
+            p.numel() for p in self.fc_net.parameters() if p.requires_grad
+        )
+        print("Number of trainable params:", n_params)
 
     def predict_encode(self, x):
         x = torch.flatten(x, 1)
@@ -1605,7 +1611,7 @@ class RedAEOptimizer:
                 batch_loss += loss.item() * self.batch_size
                 if i % 10 == 0:
                     avg_loss = batch_loss / (i + 1)
-                    msg = '[%d, %5d] loss: %.4f | %.4f %.4f' % (epoch + 1, i, avg_loss, qubo_loss.item(), qbsolv_loss.item())
+                    msg = '[%d, %5d] loss: %.4f' % (epoch + 1, i, avg_loss)
                     sys.stdout.write('\r' + msg)
                     sys.stdout.flush()
 
@@ -1631,17 +1637,16 @@ class RedAEOptimizer:
         self.net.eval()
         total_loss = 0.0
         for i, data in enumerate(self.lmdb_loader.test_data_loader):
-            inputs, labels = data
-            labels = labels.float()
+            inputs, _ = data
             outputs = self.net(inputs.float())
 
-            loss = self.criterion(outputs, labels)
+            loss = self.criterion(inputs, outputs)
 
-            sse += ((labels.numpy() - outputs[0].detach().numpy()) ** 2).sum()
+            sse += ((inputs.numpy() - outputs[0].detach().numpy()) ** 2).sum()
             if ssm_mean is None:
-                ssm_mean = labels.numpy()
+                ssm_mean = inputs.numpy()
             else:
-                ssm_mean += labels.numpy()
+                ssm_mean += inputs.numpy()
             n += 1
 
             total_loss += loss.item()
@@ -1653,8 +1658,8 @@ class RedAEOptimizer:
         ssm_mean /= n
         ssm = 0
         for i, data in enumerate(self.lmdb_loader.test_data_loader):
-            inputs, labels = data
-            ssm += ((labels.numpy() - ssm_mean) ** 2).sum()
+            inputs, _ = data
+            ssm += ((inputs.numpy() - ssm_mean) ** 2).sum()
         R2 = 1 - (sse / ssm)
         print(" ", sse, ssm)
         print("R2", R2)
