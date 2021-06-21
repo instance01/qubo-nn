@@ -14422,5 +14422,33 @@
             "lr": 0.006,
             "fc_sizes": [10000]
         }
+    },
+
+    "red1": {
+        "dataset_id": "red1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 1000,
+            "qubo_size": 64,
+            "NP": {
+                "size": 64
+            },
+            "problems": ["NP"]
+        },
+        "model": {
+            "use_similarity_loss": true,
+            "use_qbsolv_loss": true,
+            "shuffle_data": false,
+            "train_eval_split": 1.0,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.04,
+            "fc_sizes": [3, 2],
+            "noise_divisor": 1000
+        }
     }
 }

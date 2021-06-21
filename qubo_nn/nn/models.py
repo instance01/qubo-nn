@@ -296,6 +296,45 @@ class QbsolvFCNet(nn.Module):
         return self.fc_net(x)
 
 
+class RedAEFCNet(nn.Module):
+    def __init__(self, cfg):
+        super(RedAEFCNet, self).__init__()
+        self.input_size = cfg['problems']['qubo_size'] ** 2
+        n_layers = cfg['model']['fc_sizes'][0]
+        n_layers2 = 1
+        if len(cfg['model']['fc_sizes']) > 1:
+            n_layers2 = cfg['model']['fc_sizes'][1]
+
+        encoder_net = []
+        for _ in range(n_layers):
+            encoder_net.append(nn.Linear(self.input_size, self.input_size))
+            encoder_net.append(nn.LeakyReLU())
+        self.encoder = nn.Sequential(*encoder_net[:-1])
+
+        decoder_net = []
+        for _ in range(n_layers2):
+            decoder_net.append(nn.Linear(self.input_size, self.input_size))
+            decoder_net.append(nn.LeakyReLU())
+        self.decoder = nn.Sequential(*decoder_net[:-1])
+
+        net = [
+            self.encoder,
+            self.decoder,
+        ]
+        self.fc_net = nn.Sequential(*net)
+
+    def predict_encode(self, x):
+        x = torch.flatten(x, 1)
+        x = self.encoder(x)
+        return x
+
+    def forward(self, x):
+        x = torch.flatten(x, 1)
+        x = self.fc_net(x)
+        size = int(self.input_size ** .5)
+        return x.reshape(-1, size, size)
+
+
 class Optimizer:
     def __init__(self, cfg, lmdb_loader, logger):
         self.cfg = cfg
@@ -1523,4 +1562,113 @@ class QbsolvOptimizer(Optimizer):
 
     def load(self, model_fname):
         self.net = ReverseFCNet(self.cfg)
+        self.net.load_state_dict(torch.load(model_fname))
+
+
+class RedAEOptimizer:
+    def __init__(self, cfg, lmdb_loader, logger):
+        self.cfg = cfg
+        self.lmdb_loader = lmdb_loader
+        self.logger = logger
+
+        # Load cfg variables.
+        lr = cfg['model']['lr']
+        sgd_momentum = cfg['model']['optimizer_sgd_momentum']
+        self.batch_size = cfg['model']['batch_size']
+        self.n_epochs = cfg['model']['n_epochs']
+        self.train_eval_split = cfg['model']['train_eval_split']
+        self.n_problems = len(cfg['problems']['problems'])
+
+        # Set it all up.
+        self.net = RedAEFCNet(cfg)
+        self.criterion = nn.MSELoss()
+        self.optimizer = optim.SGD(self.net.parameters(), lr=lr, momentum=sgd_momentum)
+
+        self.qubo_size = self.cfg['problems']['qubo_size'] 
+
+    def train(self):
+        self.net.train()
+        for epoch in range(self.n_epochs):
+            batch_loss = 0.
+
+            len_ = len(self.lmdb_loader.train_data_loader)
+
+            for i, (inputs, _) in enumerate(self.lmdb_loader.train_data_loader):
+                self.optimizer.zero_grad()
+
+                outputs = self.net(inputs)
+                loss = self.criterion(outputs, inputs)
+
+                loss.backward()
+                self.optimizer.step()
+
+                batch_loss += loss.item() * self.batch_size
+                if i % 10 == 0:
+                    avg_loss = batch_loss / (i + 1)
+                    msg = '[%d, %5d] loss: %.4f | %.4f %.4f' % (epoch + 1, i, avg_loss, qubo_loss.item(), qbsolv_loss.item())
+                    sys.stdout.write('\r' + msg)
+                    sys.stdout.flush()
+
+                if i % 100 == 0:
+                    data = {
+                        "loss_train": batch_loss / (i + 1)
+                    }
+                    self.logger.log_train(data, len_ * epoch + i)
+
+            self.net.eval()
+            data = {}
+            test_loss, _, _, _ = self.eval(epoch, do_print=False, debug=epoch % 10 == 0)
+            data['loss_eval'] = test_loss
+            self.logger.log_eval_reverse(data, epoch)
+            self.net.train()
+        print('')
+
+    def eval(self, epoch, do_print=True, debug=False):
+        sse = 0
+        ssm_mean = None
+        n = 0
+
+        self.net.eval()
+        total_loss = 0.0
+        for i, data in enumerate(self.lmdb_loader.test_data_loader):
+            inputs, labels = data
+            labels = labels.float()
+            outputs = self.net(inputs.float())
+
+            loss = self.criterion(outputs, labels)
+
+            sse += ((labels.numpy() - outputs[0].detach().numpy()) ** 2).sum()
+            if ssm_mean is None:
+                ssm_mean = labels.numpy()
+            else:
+                ssm_mean += labels.numpy()
+            n += 1
+
+            total_loss += loss.item()
+            if do_print and i % 1000 == 0:
+                msg = '[%d] loss: %.3f' % (i, total_loss / (i + 1))
+                sys.stdout.write('\r' + msg)
+                sys.stdout.flush()
+
+        ssm_mean /= n
+        ssm = 0
+        for i, data in enumerate(self.lmdb_loader.test_data_loader):
+            inputs, labels = data
+            ssm += ((labels.numpy() - ssm_mean) ** 2).sum()
+        R2 = 1 - (sse / ssm)
+        print(" ", sse, ssm)
+        print("R2", R2)
+
+        self.logger.log_custom_reverse_kpi("R2", R2, epoch)
+
+        data_len = len(self.lmdb_loader.test_data_loader)
+
+        return total_loss / data_len, 0, 0, 0
+
+    def save(self, model_fname):
+        for i, net in enumerate(self.nets):
+            torch.save(net.state_dict(), 'models/' + model_fname + "-" + str(i))
+
+    def load(self, model_fname):
+        self.net = RedAEFCNet(self.cfg)
         self.net.load_state_dict(torch.load(model_fname))

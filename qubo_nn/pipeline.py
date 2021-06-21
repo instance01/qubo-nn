@@ -20,6 +20,7 @@ from qubo_nn.nn import A3Optimizer
 from qubo_nn.nn import Resistance1
 from qubo_nn.nn import Resistance2
 from qubo_nn.nn import QbsolvOptimizer
+from qubo_nn.nn import RedAEOptimizer
 from qubo_nn.logger import Logger
 from qubo_nn.problems import PROBLEM_REGISTRY
 from qubo_nn.data import LMDBDataLoader
@@ -1025,6 +1026,70 @@ class QbsolvRegression(Classification):
             self.logger = Logger(self.model_fname, self.cfg)
             self.logger.log_config()
             optimizer = QbsolvOptimizer(self.cfg, lmdb_loader, self.logger)
+            optimizer.train()
+            optimizer.save(self.model_fname)
+            self.logger.close()
+
+
+class RedAERegression(Classification):
+    def __init__(self, cfg):
+        super(RedAERegression, self).__init__(cfg)
+        self.qubo_size = self.cfg["problems"]["qubo_size"]
+
+    def gen_qubo_matrices(self, cls, n_problems, **kwargs):
+        problems = cls.gen_problems(self.cfg, n_problems, **kwargs)
+        qubo_matrices = []
+        for i, problem in enumerate(problems):
+            if i % 100000 == 0:
+                print(i)
+            qubo_matrices.append(cls(self.cfg, **problem).gen_qubo_matrix())
+            del problem
+        return qubo_matrices
+
+    def _gen_data(self, n_problems):
+        qubo_size = self.qubo_size
+        data = []
+
+        labels = []
+        for i, (cls, kwargs, name) in enumerate(self.problems):
+            cls = qubo_nn.problems.max_cut.MaxCutMemoryEfficient
+            qubo_matrices = self.gen_qubo_matrices(
+                cls, n_problems, **kwargs
+            )
+
+            qubo_matrices = np.array(qubo_matrices)
+            print(cls, qubo_matrices.shape)
+
+            data.extend(qubo_matrices)
+            labels.extend([i for _ in range(len(qubo_matrices))])
+
+        print("TOTAL DATA LEN", len(data))
+        data = np.array(data, dtype=np.dtype('b'))
+        labels = np.array(labels, dtype=np.int32)
+        return data, labels, []
+
+    def gen_data_lmdb(self):
+        data, labels, _ = self._gen_data(self.n_problems)
+        print(data.shape, labels.shape)
+
+        print("NORM?", not self.cfg["model"]["no_norm"], self.cfg["model"]["norm_multiply"])
+
+        db = px.Writer(
+            dirpath='datasets/%s/' % self.cfg['cfg_id'],
+            map_size_limit=60000,
+            ram_gb_limit=60
+        )
+        db.put_samples('input', data, 'target', labels)
+        db.close()
+
+    def run_experiment(self, n_runs=1):
+        lmdb_loader = LMDBDataLoader(self.cfg)
+
+        for _ in range(n_runs):
+            self.model_fname = self.get_model_fname()
+            self.logger = Logger(self.model_fname, self.cfg)
+            self.logger.log_config()
+            optimizer = RedAEOptimizer(self.cfg, lmdb_loader, self.logger)
             optimizer.train()
             optimizer.save(self.model_fname)
             self.logger.close()

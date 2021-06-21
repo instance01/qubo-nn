@@ -5,6 +5,7 @@ from qubo_nn.pipeline import A3
 from qubo_nn.pipeline import R1
 from qubo_nn.pipeline import R2
 from qubo_nn.pipeline import QbsolvRegression
+from qubo_nn.pipeline import RedAERegression
 from qubo_nn.config import Config
 import argparse
 
@@ -84,4 +85,11 @@ if __name__ == '__main__':
             c.gen_data_lmdb()
         elif args.train:
             c = QbsolvRegression(cfg)
+            c.run_experiment(args.nruns)
+    elif args.type == 'red':
+        if args.gendata:
+            c = RedAERegression(cfg)
+            c.gen_data_lmdb()
+        elif args.train:
+            c = RedAERegression(cfg)
             c.run_experiment(args.nruns)
