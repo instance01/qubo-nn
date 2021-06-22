@@ -18,7 +18,11 @@ def run():
     problems = [
         ('a3_1', 5),
         ('a3_2', 5000),
-        ('a3_3', 5000)
+        ('a3_3', 5000),
+        ('a3ng', 1000),
+        ('a3ng_1', 1000),
+        ('a3ng_2', 1000),
+        ('a3ng_3', 1000)
     ]
     kv = {}
     for problem in problems:
@@ -28,7 +32,7 @@ def run():
             paths.extend(glob.glob(base_path + '*-' + problem[0]))
         print(len(paths))
         print(paths)
-        data = aggregate(paths, min_len, 20000, req_len=problem[1])
+        data = aggregate(paths, min_len, 10000000, req_len=problem[1])
         kv[problem[0]] = data
 
     fname = os.path.splitext(__file__)[0][4:] + '.pickle'
