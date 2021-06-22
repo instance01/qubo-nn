@@ -115,7 +115,7 @@ class Classification:
                     qubo_matrices /= np.max(np.abs(qubo_matrices))
                     qubo_matrices *= self.cfg["model"]["norm_multiply"]
                 elif self.cfg["model"].get("norm_data_abs", False):
-                    qubo_matrices /= np.max(np.abs(qubo_matrices))
+                    qubo_matrices =  qubo_matrices / np.max(np.abs(qubo_matrices))
                 elif self.cfg["model"]["norm_data"]:
                     qubo_matrices /= np.max(np.abs(qubo_matrices))
                     qubo_matrices = (qubo_matrices + 1) / 2.
@@ -1039,8 +1039,6 @@ class RedAERegression(Classification):
     def gen_data_lmdb(self):
         data, labels, _ = self._gen_data(self.n_problems)
         print(data.shape, labels.shape)
-
-        print("NORM?", not self.cfg["model"]["no_norm"], self.cfg["model"]["norm_multiply"])
 
         db = px.Writer(
             dirpath='datasets/%s/' % self.cfg['cfg_id'],
