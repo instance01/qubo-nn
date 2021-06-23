@@ -1191,13 +1191,13 @@ class A3Optimizer:
         use_qbsolv_loss = self.cfg['model'].get('use_qbsolv_loss', False)
         use_similarity_loss = self.cfg['model'].get('use_similarity_loss', False)
 
+        all_inputs = list(self.lmdb_loader.train_data_loader)
+
         [net.train() for net in self.nets]
         for epoch in range(self.n_epochs):
             batch_loss = 0.
 
-            all_inputs = list(self.lmdb_loader.train_data_loader)
-
-            len_ = len(all_inputs[0][0][0])
+            len_ = int(len(all_inputs[0][0][0]) * self.train_eval_split)
             for i in range(len_):
                 chosen_data = []
                 for problem_specific_input, labels in all_inputs:
@@ -1272,11 +1272,76 @@ class A3Optimizer:
                         "loss_train": batch_loss / (i + 1)
                     }
                     self.logger.log_train(data, len_ * epoch + i)
+
+            self.net.eval()
+            data = {}
+            test_loss = self.eval(epoch, all_inputs)
+            data['loss_eval'] = test_loss
+            self.logger.log_eval_reverse(data, epoch)
+            self.net.train()
         print('')
 
-    def eval(self, do_print=True):
-        # TODO
-        return {}, 0, {}, {}
+    def eval(self, epoch, all_inputs):
+        if self.train_eval_split == 1.0:
+            return 0.
+
+        total_loss = 0.0
+        train_len_ = int(len(all_inputs[0][0][0]) * self.train_eval_split)
+        test_len_ = int(len(all_inputs[0][0][0]) * (1 - self.train_eval_split))
+        for i in range(len_):
+            chosen_data = []
+            for problem_specific_input, labels in all_inputs:
+                curr_data = []
+                curr_labels = []
+
+                # Just one sample. No batching here.
+                idx = np.random.randint(0, test_len_)
+                curr_data.append(problem_specific_input[0][train_len_+idx].unsqueeze(0))
+                curr_labels.append(labels[0][idx])
+
+                tensor = torch.Tensor(
+                    self.batch_size,
+                    self.qubo_size,
+                    self.qubo_size
+                )
+                torch.cat(curr_data, out=tensor)
+
+                tensor2 = torch.Tensor(self.batch_size, self.qubo_size)
+                torch.cat(curr_labels, out=tensor2)
+                tensor2 = tensor2.reshape((1, 8))
+
+                chosen_data.append((tensor, tensor2))
+
+            loss = 0
+            latent_outputs = []
+
+            debug_losses = []
+
+            for j, (inputs, labels) in enumerate(chosen_data):
+                outputs = self.nets[j](inputs)
+                latent_output = self.nets[j].predict_encode(inputs)
+                latent_outputs.append(latent_output)
+                qubo_loss = self.criterion(outputs, inputs)
+                debug_losses.append(qubo_loss.item())
+
+                if use_qbsolv_loss:
+                    true_sol = labels
+                    suggested_sol = QBSolvFunction.apply(latent_output, 10.0)
+                    qbsolv_loss = self.criterion(suggested_sol, true_sol)
+                    loss += qbsolv_loss
+                    debug_losses.append(qbsolv_loss.item())
+
+                loss += qubo_loss
+                debug_losses.append(qubo_loss.item())
+
+            if use_similarity_loss:
+                for l1, l2 in itertools.combinations(latent_outputs, 2):
+                    similarity_loss = self.criterion(l1, l2)
+                    loss += similarity_loss
+                    debug_losses.append(similarity_loss.item())
+
+            total_loss += loss.item()
+        return total_loss / test_len_
 
     def save(self, model_fname):
         for i, net in enumerate(self.nets):
@@ -1671,8 +1736,7 @@ class RedAEOptimizer:
         return total_loss / data_len, 0, 0, 0
 
     def save(self, model_fname):
-        for i, net in enumerate(self.nets):
-            torch.save(net.state_dict(), 'models/' + model_fname + "-" + str(i))
+        torch.save(self.net.state_dict(), 'models/' + model_fname + "-" + str(i))
 
     def load(self, model_fname):
         self.net = RedAEFCNet(self.cfg)
