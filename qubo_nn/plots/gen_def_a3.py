@@ -24,7 +24,7 @@ def run():
         ('a3ng_2', 1000),
         ('a3ng_3', 1000),
         ('a3ng_v2', 1000),
-        ('a3ng_v2_e1', 1000)
+        ('a3ng_v2_e1', 100)
     ]
     kv = {}
     for problem in problems:
