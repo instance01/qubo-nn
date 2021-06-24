@@ -1273,22 +1273,25 @@ class A3Optimizer:
                     }
                     self.logger.log_train(data, len_ * epoch + i)
 
-            self.net.eval()
+            [net.eval() for net in self.nets]
             data = {}
             test_loss = self.eval(epoch, all_inputs)
             data['loss_eval'] = test_loss
             self.logger.log_eval_reverse(data, epoch)
-            self.net.train()
+            [net.train() for net in self.nets]
         print('')
 
     def eval(self, epoch, all_inputs):
         if self.train_eval_split == 1.0:
             return 0.
 
+        use_qbsolv_loss = self.cfg['model'].get('use_qbsolv_loss', False)
+        use_similarity_loss = self.cfg['model'].get('use_similarity_loss', False)
+
         total_loss = 0.0
         train_len_ = int(len(all_inputs[0][0][0]) * self.train_eval_split)
         test_len_ = int(len(all_inputs[0][0][0]) * (1 - self.train_eval_split))
-        for i in range(len_):
+        for i in range(test_len_):
             chosen_data = []
             for problem_specific_input, labels in all_inputs:
                 curr_data = []
