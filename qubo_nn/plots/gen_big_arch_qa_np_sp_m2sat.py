@@ -28,7 +28,7 @@ def run():
         ('qa_N_144_norm3_generalized_50k_gen3_big_arch', 20000, 10),
         ('qa_N_144_norm3_generalized_50k_gen4_big_arch', 20000, 10),
         ('np19_LONG_generalized_gen1_big_arch', 5000, 3000),
-        ('np19_LONG_generalized_gen2_big_arch', 5000, 3000),
+        ('np19_LONG_generalized_gen2_big_arch', 5000, 2000),
         ('np19_LONG_generalized_gen3_big_arch', 5000, 3000),
         ('np19_LONG_generalized_gen4_big_arch', 5000, 3000)
     ]
