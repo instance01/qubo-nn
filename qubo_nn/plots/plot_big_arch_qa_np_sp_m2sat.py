@@ -24,10 +24,10 @@ PLOT_TAGS = [
         'sp_gen4_big_arch': '64x64, 49x49, 36x36, 25x25'
     },
     {
-        'm2sat_8x8_10_gen1_big_arch': '16x16',
-        'm2sat_8x8_10_gen2_big_arch': '16x16, 14x14',
-        'm2sat_8x8_10_gen3_big_arch': '16x16, 14x14, 12x12',
-        'm2sat_8x8_10_gen4_big_arch': '16x16, 14x14, 12x12, 10x10'
+        'm2sat_8x8_10_gen1_big_arch_3': '16x16',
+        'm2sat_8x8_10_gen2_big_arch_3': '16x16, 14x14',
+        'm2sat_8x8_10_gen3_big_arch_3': '16x16, 14x14, 12x12',
+        'm2sat_8x8_10_gen4_big_arch_3': '16x16, 14x14, 12x12, 10x10'
     },
     {
         'qa_N_144_norm3_generalized_50k_gen1_big_arch': '144x144',

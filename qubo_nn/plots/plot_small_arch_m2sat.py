@@ -18,10 +18,10 @@ plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.Set2.colors)
 
 PLOT_TAGS = [
     {
-        'm2sat_8x8_10_gen1': '16x16',
-        'm2sat_8x8_10_gen2': '16x16, 14x14',
-        'm2sat_8x8_10_gen3': '16x16, 14x14, 12x12',
-        'm2sat_8x8_10_gen4': '16x16, 14x14, 12x12, 10x10',
+        'm2sat_8x8_10_gen1_3': '16x16',
+        'm2sat_8x8_10_gen2_3': '16x16, 14x14',
+        'm2sat_8x8_10_gen3_3': '16x16, 14x14, 12x12',
+        'm2sat_8x8_10_gen4_3': '16x16, 14x14, 12x12, 10x10',
     }
 ]
 PLOT_NAMES = ['m2sat']
