@@ -16,10 +16,10 @@ def run():
     req_len = 30
     base_paths = ['../runs/']
     problems = [
-        ('m2sat_8x8_10_gen1', 20000),
-        ('m2sat_8x8_10_gen2', 20000),
-        ('m2sat_8x8_10_gen3', 20000),
-        ('m2sat_8x8_10_gen4', 20000),
+        ('m2sat_8x8_10_gen1_3', 20000),
+        ('m2sat_8x8_10_gen2_3', 20000),
+        ('m2sat_8x8_10_gen3_3', 20000),
+        ('m2sat_8x8_10_gen4_3', 20000),
     ]
     kv = {}
     for problem in problems:

@@ -14963,5 +14963,209 @@
             "fc_sizes": [3],
             "noise_divisor": 1000
         }
+    },
+
+    "m2sat_8x8_10_gen1_3": {
+        "dataset_id": "m2sat_8x8_10_gen1_3",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 10]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 100,
+            "batch_size": 100,
+            "lr": 0.002,
+            "fc_sizes": [688, 688],
+            "optimizer": "Adam"
+        }
+    },
+    "m2sat_8x8_10_gen2_3": {
+        "dataset_id": "m2sat_8x8_10_gen2_3",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 10]
+            },
+            "generalization": {
+                "M2SAT": [{"size": [12, 10], "check_duplicates": true}]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 100,
+            "batch_size": 100,
+            "lr": 0.002,
+            "fc_sizes": [688, 688],
+            "optimizer": "Adam"
+        }
+    },
+    "m2sat_8x8_10_gen3_3": {
+        "dataset_id": "m2sat_8x8_10_gen3_3",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 33333,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 10]
+            },
+            "generalization": {
+                "M2SAT": [{"size": [12, 10], "check_duplicates": true}, {"size": [14, 10], "check_duplicates": true}]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 100,
+            "batch_size": 100,
+            "lr": 0.002,
+            "fc_sizes": [688, 688],
+            "optimizer": "Adam"
+        }
+    },
+    "m2sat_8x8_10_gen4_3": {
+        "dataset_id": "m2sat_8x8_10_gen4_3",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 25000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 10]
+            },
+            "generalization": {
+                "M2SAT": [{"size": [10, 10], "check_duplicates": true}, {"size": [12, 10], "check_duplicates": true}, {"size": [14, 10], "check_duplicates": true}]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 100,
+            "batch_size": 100,
+            "lr": 0.002,
+            "fc_sizes": [688, 688],
+            "optimizer": "Adam"
+        }
+    },
+
+    "m2sat_8x8_10_gen1_big_arch_3": {
+        "dataset_id": "m2sat_8x8_10_gen1_3",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 100000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 10]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 100,
+            "batch_size": 100,
+            "lr": 0.002,
+            "fc_sizes": [688, 688, 688],
+            "optimizer": "Adam"
+        }
+    },
+    "m2sat_8x8_10_gen2_big_arch_3": {
+        "dataset_id": "m2sat_8x8_10_gen2_3",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 50000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 10]
+            },
+            "generalization": {
+                "M2SAT": [{"size": [12, 10], "check_duplicates": true}]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 100,
+            "batch_size": 100,
+            "lr": 0.002,
+            "fc_sizes": [688, 688, 688],
+            "optimizer": "Adam"
+        }
+    },
+    "m2sat_8x8_10_gen3_big_arch_3": {
+        "dataset_id": "m2sat_8x8_10_gen3_3",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 33333,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 10]
+            },
+            "generalization": {
+                "M2SAT": [{"size": [12, 10], "check_duplicates": true}, {"size": [14, 10], "check_duplicates": true}]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 100,
+            "batch_size": 100,
+            "lr": 0.002,
+            "fc_sizes": [688, 688, 688],
+            "optimizer": "Adam"
+        }
+    },
+    "m2sat_8x8_10_gen4_big_arch_3": {
+        "dataset_id": "m2sat_8x8_10_gen4_3",
+        "base_cfg": "1",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 25000,
+            "qubo_size": 16,
+            "M2SAT": {
+                "check_duplicates": true,
+                "size": [16, 10]
+            },
+            "generalization": {
+                "M2SAT": [{"size": [10, 10], "check_duplicates": true}, {"size": [12, 10], "check_duplicates": true}, {"size": [14, 10], "check_duplicates": true}]
+            },
+            "problems": ["M2SAT"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 100,
+            "batch_size": 100,
+            "lr": 0.002,
+            "fc_sizes": [688, 688, 688],
+            "optimizer": "Adam"
+        }
     }
 }
