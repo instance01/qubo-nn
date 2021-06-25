@@ -22,15 +22,25 @@ PLOT_TAGS = [
     },
     {
         'a3_3': 'AutoEncoder + Similarity Loss + QBSolv Loss'
+    },
+    {
+        'a3ng': 'AutoEncoder + Similarity Loss + QBSolv Loss [100k]'
+    },
+    {
+        'a3ng_v2_e1': 'AutoEncoder + Similarity Loss + QBSolv Loss [1M]'
     }
 ]
 PLOT_NAMES = [
     'a3_1',
-    'a3_3'
+    'a3_3',
+    'a3ng',
+    'a3ng_v2_e1'
 ]
 PLOT_LIMS = [
     (-0.05, 1.01, 50000),
-    (9, 16, 50000),
+    (5, 16, 50000),
+    (5, 16, 50000),
+    (5, 16, 50000)
 ]
 
 
@@ -50,10 +60,13 @@ def plot(kv, tags, name, lims):
 
         x = np.arange(len(mean))
 
+        print(mean[-1], "+-", mean[-1] - ci[0][-1])
+
         ax.plot(x, mean, label=tags[key])
         ax.fill_between(x, ci[0], ci[1], alpha=.2)
 
     for k in tags:
+        print(k)
         v = kv[k]
         v = np.array(v)
         calc_ci(axs, k, v[1][:, :lims[-1]])  # train loss
