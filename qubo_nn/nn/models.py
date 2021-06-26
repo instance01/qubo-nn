@@ -373,6 +373,7 @@ class Optimizer:
             batch_loss = 0.
             for i, data in enumerate(self.lmdb_loader.train_data_loader):
                 inputs, labels = data
+                labels = labels.long()
 
                 self.optimizer.zero_grad()
 
@@ -430,6 +431,7 @@ class Optimizer:
         total_loss = 0.0
         for i, data in enumerate(self.lmdb_loader.test_data_loader):
             inputs, labels = data
+            labels = labels.long()
             outputs = self.net(inputs)
             loss = self.criterion(outputs, labels)
 
