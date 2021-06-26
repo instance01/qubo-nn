@@ -14525,7 +14525,7 @@
             "norm_multiply": 1.0,
             "shuffle_data": true,
             "network": "FC",
-            "n_epochs": 200,
+            "n_epochs": 400,
             "batch_size": 100,
             "optimizer": "adam",
             "optimizer_sgd_momentum": 0.9,
@@ -14937,6 +14937,40 @@
         "problems": {
             "scramble_qubos": false,
             "n_problems": 5000000,
+            "qubo_size": 8,
+            "NP": {
+                "size": 8
+            },
+            "MC": {
+                "size": [8, 10]
+            },
+            "MVC": {
+                "size": [8, 10]
+            },
+            "problems": ["NP", "MC", "MVC"]
+        },
+        "model": {
+            "use_similarity_loss": true,
+            "use_qbsolv_loss": true,
+            "shuffle_data": false,
+            "train_eval_split": 0.9,
+            "activation": "LeakyReLU",
+            "n_epochs": 2000,
+            "batch_size": 1,
+            "optimizer": "adam",
+            "optimizer_sgd_momentum": 0.9,
+            "lr": 0.05,
+            "fc_sizes": [3],
+            "noise_divisor": 1000
+        }
+    },
+
+    "a3ng_v4_e1": {
+        "dataset_id": "a3ng_v4_e1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000000,
             "qubo_size": 8,
             "NP": {
                 "size": 8
