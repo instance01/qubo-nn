@@ -2,6 +2,8 @@ import os
 import glob
 
 import numpy as np
+import seaborn as sns
+import matplotlib.colors as colors
 from tensorflow.core.util import event_pb2
 from tensorflow.python.lib.io import tf_record
 
@@ -64,3 +66,13 @@ def aggregate_single(paths, desired_tag, min_len, cutoff=None, req_len=None):
         )
     arr = np.array(aggregated_)
     return arr
+
+
+def truncate_colormap2(cmapIn, minval=0.0, maxval=1.0, n=100):
+    return colors.LinearSegmentedColormap.from_list(
+        'trunc({n},{a:.2f},{b:.2f})'.format(n=cmapIn.name, a=minval, b=maxval),
+        cmapIn(np.linspace(minval, maxval, n)))
+
+
+cmap_mod = sns.color_palette("mako", as_cmap=True)
+cmap_mod = truncate_colormap2(cmap_mod, minval=.0, maxval=1.)

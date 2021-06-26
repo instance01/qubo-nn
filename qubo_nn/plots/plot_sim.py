@@ -107,7 +107,7 @@ def plot(kv, tags, name, lims):
 
     x = np.arange(len(timeseries_classif_mc))
     axs.errorbar(x, timeseries_classif_mc, timeseries_classif_mc_err, color=plt.cm.Set2.colors[2])  # noqa
-    axs.set_xlabel('Noise (MC/NP)')
+    axs.set_xlabel('Noise factor (MC/NP)')
     ticks = list(tags.values())
     ticks.insert(0, '')
     axs.set_xticklabels(ticks)

@@ -5,7 +5,9 @@ import numpy as np
 import scipy.stats as st
 import matplotlib as mpl
 from matplotlib import pyplot as plt
-from labellines import labelLines
+# from labellines import labelLines
+
+from qubo_nn.plots.lib import cmap_mod
 
 
 NAME = os.path.splitext(os.path.basename(__file__))[0][5:]
@@ -73,12 +75,8 @@ def gen_table(kv):
         print(k, "R2", "%.3f" % mean, "+-", "%.3f" % range_)
 
 
-def plot(kv, tags, name, lims):
-    fig, axs = plt.subplots(1, 1, figsize=(8, 4))
-
-    def calc_ci(ax, key, arr):
-        # arr = arr[~np.isnan(arr)]
-        # arr = arr[arr != 0.]
+def _get_data(kv, tags, lims):
+    def calc_ci(key, arr):
         mean = np.mean(arr, axis=0)
         ci = st.t.interval(
             0.95,
@@ -89,9 +87,6 @@ def plot(kv, tags, name, lims):
         x = np.arange(len(mean))
         return x, mean, mean - ci[0]
 
-        # ax.plot(x, mean, label=tags[key])
-        # ax.fill_between(x, ci[0], ci[1], alpha=.2)
-
     timeseries_acc_ = [[] for _ in range(11)]
     timeseries_classif = []
     timeseries_classif_err = []
@@ -100,23 +95,29 @@ def plot(kv, tags, name, lims):
             timeseries_acc_[j].append(1 - acc)
         v = kv[k]
         v = np.array(v)
-        x, mean, err = calc_ci(axs, k, v[0][:, :lims[-1]])  # r2
+        x, mean, err = calc_ci(k, v[0][:, :lims[-1]])  # r2
         timeseries_classif.append(mean[-1])
         timeseries_classif_err.append(err[-1])
 
     timeseries_acc_ = np.array(timeseries_acc_)
-    _, timeseries_acc, timeseries_acc_err = calc_ci(None, '', timeseries_acc_)
+    _, timeseries_acc, timeseries_acc_err = calc_ci('', timeseries_acc_)
+
+    return timeseries_acc_, timeseries_acc, timeseries_acc_err, timeseries_classif, timeseries_classif_err  # noqa
+
+
+def plot(kv, tags, name, lims):
+    fig, axs = plt.subplots(1, 1, figsize=(8, 4))
+
+    _, timeseries_acc, timeseries_acc_err, timeseries_classif, timeseries_classif_err = _get_data(kv, tags, lims)  # noqa
 
     x = np.arange(len(timeseries_classif))
     axs.errorbar(x, timeseries_classif, timeseries_classif_err, color=plt.cm.Set2.colors[2])  # noqa
-    axs.set_xlabel('Noise between pair')
+    axs.set_xlabel('Noise factor between pair')
     ticks = list(tags.values())
     ticks.insert(0, '')
     axs.set_xticklabels(ticks)
     axs.set_ylabel('Misclassification rate', color=plt.cm.Set2.colors[2], fontsize=14, fontweight='bold')  # noqa
 
-    prob = ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "QA", "QK", "M3SAT",
-            "TSP", "MCQ"]
     axs2 = axs.twinx()
     # print(timeseries_acc_err[0])
     axs2.errorbar(x, timeseries_acc, timeseries_acc_err, color=plt.cm.Set2.colors[4])  # noqa
@@ -135,12 +136,44 @@ def plot(kv, tags, name, lims):
     fig.savefig(NAME + '_' + name + '.pdf')
 
 
+def plot_matrix(kv, tags, lims):
+    fig, ax = plt.subplots(1, 1, figsize=(9, 8.5))
+
+    all_data, _, _, _, _ = _get_data(kv, tags, lims)  # noqa
+
+    ticks = list(tags.values())
+    ax.set_xticklabels(ticks, rotation=90)
+    ax.set_xticks(np.arange(len(ticks)))
+
+    prob = ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "QA", "QK", "M3SAT",
+            "TSP", "MCQ"]
+    ax.set_yticklabels(prob)
+    ax.set_yticks(np.arange(len(prob)))
+
+    ax.set_xlabel('Noise factor between pair')
+
+    im = ax.imshow(all_data, vmin=0, vmax=1, cmap=cmap_mod)
+    for i in range(len(prob)):
+        for j in range(len(all_data[0])):
+            txt = "%.2f" % round(all_data[i][j], 3)
+            ax.text(j, i, txt, ha="center", va="center", color="#000000")
+    cbar = ax.figure.colorbar(im, ax=[ax], aspect=30)
+    cbar.ax.set_ylabel('Solution quality', rotation=-90, va="bottom")
+    for i in range(5):
+        plt.axhline(y=i * 2 + 1.5, c='#000000', lw=.5)
+    plt.show()
+    fig.savefig(NAME + '_all_matrix.png')
+    fig.savefig(NAME + '_all_matrix.pdf')
+
+
 def run():
     with open(NAME + '.pickle', 'rb') as f:
         kv = pickle.load(f)
     gen_table(kv)
     for plot_tags, plot_name, lims in zip(PLOT_TAGS, PLOT_NAMES, PLOT_LIMS):
         plot(kv, plot_tags, plot_name, lims)
+
+    plot_matrix(kv, PLOT_TAGS[0], PLOT_LIMS[0])
 
 
 if __name__ == '__main__':
