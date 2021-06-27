@@ -15294,6 +15294,13 @@
             "gen_edges": false
         }
     },
+    "100_genX_2": {
+        "dataset_id": "100_genX",
+        "base_cfg": "100_genX",
+        "model": {
+            "fc_sizes": [500, 14]
+        }
+    },
 
     "sim_pair2_50_50": {
         "dataset_id": "sim_pair2_50_50",

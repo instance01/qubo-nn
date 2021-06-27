@@ -18,7 +18,7 @@ def smooth(y, box_pts):
     return y_smooth
 
 
-def aggregate(base_paths, id_):
+def aggregate(base_paths, id_, req_len, confusion_matrix_req=True):
     paths = []
     for base_path in base_paths:
         paths.extend(glob.glob('%s*-%s' % (base_path, id_)))
@@ -44,23 +44,24 @@ def aggregate(base_paths, id_):
 
         print(len(data))
 
-        # Also, let's get the confusion matrix:
-        path = glob.glob(os.path.join(path, "confusion_matrix_data.pickle"))
-        if not path:
-            continue  # We now require a confusion matrix.
-        path = path[0]
-        with open(path, "rb") as f:
-            matrix = pickle.load(f)
-        aggregated_confusion_matrices.append(matrix)
+        if confusion_matrix_req:
+            # Also, let's get the confusion matrix:
+            path = glob.glob(os.path.join(path, "confusion_matrix_data.pickle"))
+            if not path:
+                continue  # We now require a confusion matrix.
+            path = path[0]
+            with open(path, "rb") as f:
+                matrix = pickle.load(f)
+            aggregated_confusion_matrices.append(matrix)
 
-        if len(data) < 40:
+        if len(data) < req_len:
             continue
         # data = smooth(data, 20)[10:-9]
         # data = smooth(data, 60)[30:-29]
         data = data[:200]
         aggregated.append(data)
 
-    print(len(aggregated_confusion_matrices))
+    print("Confusion matrices", len(aggregated_confusion_matrices))
     if not aggregated:
         return []
     max_len = max(len(x) for x in aggregated)
@@ -83,7 +84,8 @@ def aggregate(base_paths, id_):
 
 
 def run():
-    aggregate(['../runs/'], '100_genX')
+    aggregate(['../runs/'], '100_genX', 50)
+    aggregate(['../runs/'], '100_genX_2', 15, False)
 
 
 if __name__ == '__main__':
