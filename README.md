@@ -200,3 +200,7 @@ Cristian S. Calude, Michael J. Dinneen and Richard Hua. "QUBO Formulations for t
 [QUBO-NN - Reverse-Engineering QUBO matrices](https://blog.xa0.de/post/QUBO-NN%20---%20Reverse-Engineering-QUBO-matrices/)
 
 [A note on Adiabatic Evolution in Quantum Annealing](https://blog.xa0.de/post/A-note-on-Adiabatic-Evolution-in-Quantum-Annealing/)
+
+[Quantum Annealing Hamiltonian Example Calculation](https://blog.xa0.de/post/Quantum-Annealing-Hamiltonian-Example-Calculation/)
+
+[List of QUBO formulations (48)](https://blog.xa0.de/post/List-of-QUBO-formulations/)
