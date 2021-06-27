@@ -14525,7 +14525,7 @@
             "norm_multiply": 1.0,
             "shuffle_data": true,
             "network": "FC",
-            "n_epochs": 400,
+            "n_epochs": 200,
             "batch_size": 100,
             "optimizer": "adam",
             "optimizer_sgd_momentum": 0.9,
