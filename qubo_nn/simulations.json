@@ -15771,5 +15771,7 @@
             "fc_sizes": [3, 2],
             "noise_divisor": 1000
         }
-    }
+    },
+
+    "red_mvc_19_1": {"dataset_id": "red_mvc_1", "base_cfg": "red_base", "problems": {"n_problems": 100000, "problems": ["MVC"]}, "model": {"lr": 15.0, "fc_sizes": [[3891], [4096]]}}
 }

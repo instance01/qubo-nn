@@ -16,7 +16,6 @@ def aggregate(paths, min_len, max_len, req_len=None):
 
 def run():
     min_len = 1000
-    req_len = 10
     base_paths = ['../runs/']
     problems = []
     for short in problems_short:
@@ -32,6 +31,9 @@ def run():
             paths.extend(glob.glob(base_path + '*-' + problem[0]))
         print(len(paths))
         print(paths)
+        req_len = 150
+        if "gc" in problem[0] or "qa" in problem[0] or "mcq" in problem[0]:
+            req_len = 10
         data = aggregate(paths, min_len, problem[1], req_len=req_len)
         kv[problem[0]] = data
 
