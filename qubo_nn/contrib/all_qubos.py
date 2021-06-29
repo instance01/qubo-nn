@@ -1,3 +1,4 @@
+import numpy as np
 from qubo_nn.problems.number_partitioning import NumberPartitioning
 from qubo_nn.problems.max_cut import MaxCut
 from qubo_nn.problems.minimum_vertex_cover import MinimumVertexCover
@@ -9,6 +10,12 @@ from qubo_nn.problems.quadratic_assignment import QuadraticAssignment
 from qubo_nn.problems.quadratic_knapsack import QuadraticKnapsack
 from qubo_nn.problems.max3sat import Max3SAT
 from qubo_nn.problems.tsp import TSP
+from qubo_nn.problems.graph_isomorphism import GraphIsomorphism
+from qubo_nn.problems.subgraph_isomorphism import SubGraphIsomorphism
+from qubo_nn.problems.max_clique import MaxClique
+
+
+np.set_printoptions(precision=2, suppress=True, linewidth=160)
 
 
 cfg = {
@@ -47,6 +54,16 @@ cfg = {
         },
         "TSP": {
             "size": 4
+        },
+        "GI": {
+            "size": [4, 4]
+        },
+        "SGI": {
+            "size1": [4, 4],
+            "size2": [4, 4]
+        },
+        "MCQ": {
+            "size": [16, 20]
         }
     }
 }
@@ -106,4 +123,19 @@ print(qubo)
 prob = TSP.gen_problems(cfg, 1, **cfg["problems"]["TSP"])
 qubo = TSP(cfg, **prob[0]).gen_qubo_matrix()
 print("TSP")
+print(qubo)
+
+prob = GraphIsomorphism.gen_problems(cfg, 1, **cfg["problems"]["GI"])
+qubo = GraphIsomorphism(cfg, **prob[0]).gen_qubo_matrix()
+print("GI")
+print(qubo)
+
+prob = SubGraphIsomorphism.gen_problems(cfg, 1, **cfg["problems"]["SGI"])
+qubo = SubGraphIsomorphism(cfg, **prob[0]).gen_qubo_matrix()
+print("SGI")
+print(qubo)
+
+prob = MaxClique.gen_problems(cfg, 1, **cfg["problems"]["MCQ"])
+qubo = MaxClique(cfg, **prob[0]).gen_qubo_matrix()
+print("MCQ")
 print(qubo)

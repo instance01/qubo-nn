@@ -1038,6 +1038,13 @@ class RedAERegression(Classification):
 
     def gen_data_lmdb(self):
         data, labels, _ = self._gen_data(self.n_problems)
+
+        # TODO: NP is weird tbh fam. Get rid of this.
+        # if self.cfg['problems']['problems'] == ["NP"]:
+        #     for i, d in enumerate(data):
+        #         np.fill_diagonal(data[i], np.diag(data[i] / 4.))
+        # print(data[0])
+
         print(data.shape, labels.shape)
 
         db = px.Writer(
