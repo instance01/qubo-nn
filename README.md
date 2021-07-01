@@ -1,6 +1,6 @@
 ## QUBO - NN
 
-<img alt="qubo heat map" src="qubo_nn/plots/qubo_map_singles.png">
+<img alt="qubo heat map" src="https://raw.githubusercontent.com/instance01/qubo-nn/master/qubo_nn/plots/qubo_map_singles.png">
 <p align="center">
   9 problems and their respective QUBO matrices.
 </p>
@@ -13,6 +13,10 @@ Now, these matrices are quite an interesting construct.. Thus, a few questions a
 * Is it possible to reverse-engineer the problem parameters that led to a QUBO matrix?
 
 Let's find out.
+
+```
+pip install qubo-nn
+```
 
 ## Project Structure
 
@@ -48,6 +52,12 @@ Problems implemented so far:
 * Maximum Clique
 
 ## Setup
+
+```
+pip install qubo-nn
+```
+
+OR
 
 ```
 pip3 install -r requirements.txt
@@ -130,7 +140,7 @@ The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
 
 The pipeline of interest is as follows.
 
-<img alt="Reverse-engineering pipeline/architecture." src="qubo_nn/plots/architecture.png">
+<img alt="Reverse-engineering pipeline/architecture." src="https://raw.githubusercontent.com/instance01/qubo-nn/master/qubo_nn/plots/architecture.png">
 
 Given some QUBO matrix that was generated using a set of problem parameters, we first classify the problem in step a and then predict the parameters in step b.
 
@@ -145,19 +155,19 @@ sizes such as 32x32. The smaller sizes are zero-padded to the biggest supported
 size, which most of the time is 64x64 and in rare cases goes up to 144x144 (for
 Quadratic Assignment).
 
-<img alt="Avg total misclassification rate" src="qubo_nn/plots/tot_mc_100_genX_100_genX.png">
+<img alt="Avg total misclassification rate" src="https://raw.githubusercontent.com/instance01/qubo-nn/master/qubo_nn/plots/tot_mc_100_genX_100_genX.png">
 
 The t-SNE plot for this experiment is shown below.
 
-<img alt="t-SNE" src="qubo_nn/plots/tsne_100_genX_10.png">
+<img alt="t-SNE" src="https://raw.githubusercontent.com/instance01/qubo-nn/master/qubo_nn/plots/tsne_100_genX_10.png">
 
 ### Reverse regression
 
 This is preliminary. Some of the problems are easily learned by a neural network regressor. Each line represents 10 models and includes the 95% confidence interval.
 
-<img alt="Reversal regression losses over multiple problems" src="qubo_nn/plots/reverse_loss.png">
+<img alt="Reversal regression losses over multiple problems" src="https://raw.githubusercontent.com/instance01/qubo-nn/master/qubo_nn/plots/reverse_loss.png">
 
-<img alt="Reversal regression R**2 over multiple problems" src="qubo_nn/plots/reverse_r2.png">
+<img alt="Reversal regression R**2 over multiple problems" src="https://raw.githubusercontent.com/instance01/qubo-nn/master/qubo_nn/plots/reverse_r2.png">
 
 ### Reversibility
 
@@ -190,7 +200,7 @@ Reversing some problems like Quadratic Knapsack might be possible - an algorithm
 The figure below shows that there are major differences between problem classes
 in terms of their overall redundancy.
 
-<img alt="Redundacy of QUBos with AutoEncoders, R**2" src="qubo_nn/plots/red_ae_all_matrix.png">
+<img alt="Redundacy of QUBos with AutoEncoders, R**2" src="https://raw.githubusercontent.com/instance01/qubo-nn/master/qubo_nn/plots/red_ae_all_matrix.png">
 
 ## Contributing
 
