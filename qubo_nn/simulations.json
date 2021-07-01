@@ -15773,5 +15773,6 @@
         }
     },
 
-    "red_mvc_19_1": {"dataset_id": "red_mvc_1", "base_cfg": "red_base", "problems": {"n_problems": 100000, "problems": ["MVC"]}, "model": {"lr": 15.0, "fc_sizes": [[3891], [4096]]}}
+    "red_mvc_19_1": {"dataset_id": "red_mvc_1", "base_cfg": "red_base", "problems": {"n_problems": 100000, "problems": ["MVC"]}, "model": {"lr": 15.0, "fc_sizes": [[3891], [4096]]}},
+    "red_np_test1": {"dataset_id": "red_np_test1", "base_cfg": "red_base", "problems": {"n_problems": 100000, "problems": ["NP"]}, "model": {"lr": 40.0, "fc_sizes": [[4096], [4096]]}}
 }
