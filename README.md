@@ -136,13 +136,20 @@ Given some QUBO matrix that was generated using a set of problem parameters, we 
 
 ### Classification
 
-Using parameter configuration `18_lr2_leaky` (see `simulations.json`), the average total misclassification rate over 38 models goes to near zero. The figure includes the 95% confidence interval.
+Using parameter configuration `100_genX` (see `simulations.json`), the average
+total misclassification rate over 20 models goes to near zero. The figure
+includes the 95% confidence interval. Scrambling QUBOs leads to a nearly
+similar effect. Note that this is using a generalized dataset, i.e. the dataset
+consists of not just 64x64 QUBO matrices for each problem, but also smaller
+sizes such as 32x32. The smaller sizes are zero-padded to the biggest supported
+size, which most of the time is 64x64 and in rare cases goes up to 144x144 (for
+Quadratic Assignment).
 
-<img alt="Avg total misclassification rate" src="qubo_nn/plots/tot_mc_18_lr2_leaky.png">
+<img alt="Avg total misclassification rate" src="qubo_nn/plots/tot_mc_100_genX_100_genX.png">
 
-Using parameter configuration `27_scramble_100k` (see `simulations.json`), the average total misclassification rate over 20 models goes to near zero. This includes QUBO scrambling (randomly switching out columns or rows, i.e. `renaming` QuBits). The figure includes the 95% confidence interval.
+The t-SNE plot for this experiment is shown below.
 
-<img alt="Avg total misclassification rate" src="qubo_nn/plots/tot_mc_27_scramble_100k.png">
+<img alt="t-SNE" src="qubo_nn/plots/tsne_100_genX_10.png">
 
 ### Reverse regression
 
@@ -177,6 +184,13 @@ Reversing some problems like Quadratic Knapsack might be possible - an algorithm
 |Graph Isomorphism|**+**|Adjacency matrix found in QUBO.|
 |Sub-Graph Isomorphism|**+**|Adjacency matrix found in QUBO.|
 |Maximum Clique|**+**|Adjacency matrix found in QUBO.|
+
+### Redundancy of QUBOs with AutoEncoders 
+
+The figure below shows that there are major differences between problem classes
+in terms of their overall redundancy.
+
+<img alt="Redundacy of QUBos with AutoEncoders, R**2" src="qubo_nn/plots/red_ae_all_matrix.png">
 
 ## Contributing
 
