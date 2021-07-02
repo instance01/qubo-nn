@@ -18,65 +18,69 @@ plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.Set2.colors)
 
 PLOT_TAGS = [
     {
-        'a3_1': 'AutoEncoder + Similarity Loss'
-    },
-    {
-        'a3_3': 'AutoEncoder + Similarity Loss + QBSolv Loss'
-    },
-    {
-        'a3ng': 'AutoEncoder + Similarity Loss + QBSolv Loss [100k]'
-    },
-    {
-        'a3ng_v2_e1': 'AutoEncoder + Similarity Loss + QBSolv Loss [1M]'
+        'T': 'Solution Quality',
     }
 ]
-PLOT_NAMES = [
-    'a3_1',
-    'a3_3',
-    'a3ng',
-    'a3ng_v2_e1'
-]
-PLOT_LIMS = [
-    (-0.05, 1.01, 50000),
-    (5, 16, 50000),
-    (5, 16, 50000),
-    (5, 16, 50000)
-]
+PLOT_NAMES = ['tt1']
+PLOT_LIMS = [(0.0, 1.0, 180)]
+
+
+def gen_table(kv):
+    def calc_ci(key, arr):
+        arr = arr[~np.isnan(arr)]
+        arr = arr[arr != 0.] / 100.
+        mean = np.mean(arr, axis=0)
+        ci = st.t.interval(
+            0.95,
+            len(arr) - 1,
+            loc=np.mean(arr, axis=0),
+            scale=st.sem(arr, axis=0)
+        )
+
+        range_ = round(mean - ci[0], 4)
+        mean = round(mean, 4)
+        return mean, range_
+
+    for k, v in kv.items():
+        if not v:
+            continue
+        if len(v[0]) == 0:
+            continue
+        v = np.array(v)
+        mean, range_ = calc_ci(k, v[0][-1])
+        print(k, "MC", "%.3f" % mean, "+-", "%.3f" % range_)
 
 
 def plot(kv, tags, name, lims):
-    fig, axs = plt.subplots(1, 1, figsize=(5, 3.75))
+    fig, axs = plt.subplots(1, 1, figsize=(4, 3))
 
     def calc_ci(ax, key, arr):
         # arr = arr[~np.isnan(arr)]
         # arr = arr[arr != 0.]
-        mean = np.nanmean(arr, axis=0)
+        mean = np.mean(arr, axis=0)
         ci = st.t.interval(
             0.95,
             len(arr) - 1,
-            loc=np.nanmean(arr, axis=0),
+            loc=np.mean(arr, axis=0),
             scale=st.sem(arr, axis=0)
         )
 
         x = np.arange(len(mean))
 
-        print(mean[-1], "+-", mean[-1] - ci[0][-1])
-
         ax.plot(x, mean, label=tags[key])
         ax.fill_between(x, ci[0], ci[1], alpha=.2)
 
     for k in tags:
-        print(k)
         v = kv[k]
         v = np.array(v)
-        calc_ci(axs, k, v[1][:, :lims[-1]])  # train loss
+        calc_ci(axs, k, v[0][:, :lims[-1]] / 100.)  # MC
 
-        axs.legend()
-        axs.set_ylabel('Train Loss')
+        # axs.legend()
+        axs.set_ylabel(r'Misclassification rate')
         axs.set_xlabel("Epoch")
 
     # plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
-    plt.legend(frameon=False)
+    # plt.legend(frameon=False)
     plt.ylim(lims[0:2])
     plt.tight_layout()
     plt.show()
@@ -87,6 +91,7 @@ def plot(kv, tags, name, lims):
 def run():
     with open(NAME + '.pickle', 'rb') as f:
         kv = pickle.load(f)
+    gen_table(kv)
     for plot_tags, plot_name, lims in zip(PLOT_TAGS, PLOT_NAMES, PLOT_LIMS):
         plot(kv, plot_tags, plot_name, lims)
 
