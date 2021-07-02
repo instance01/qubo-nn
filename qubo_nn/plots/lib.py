@@ -46,6 +46,8 @@ def aggregate_single(paths, desired_tag, min_len, cutoff=None, req_len=None):
         if req_len is not None:
             if len(data) <= req_len:
                 continue
+        if np.isnan(data[-1]):
+            continue
         print(len(data), data[-1])
         if cutoff is not None:
             data = data[:cutoff]
