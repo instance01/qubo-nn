@@ -215,7 +215,7 @@ Lucas, Andrew. "Ising formulation of many NP-problems. Frontiers in Physics" (20
 Cristian S. Calude, Michael J. Dinneen and Richard Hua. "QUBO Formulations for the Graph Isomorphism Problem and Related Problems" (2017)
 ```
 
-## Related Work
+## Related Work / Blog Posts
 
 [Hadamard Gate Transformation for 3 or more QuBits](https://blog.xa0.de/post/Hadamard-Gate-Transformation-for-3-or-more-QuBits/)
 
@@ -227,4 +227,4 @@ Cristian S. Calude, Michael J. Dinneen and Richard Hua. "QUBO Formulations for t
 
 [Quantum Annealing Hamiltonian Example Calculation](https://blog.xa0.de/post/Quantum-Annealing-Hamiltonian-Example-Calculation/)
 
-[List of QUBO formulations (48)](https://blog.xa0.de/post/List-of-QUBO-formulations/)
+[List of QUBO formulations (61)](https://blog.xa0.de/post/List-of-QUBO-formulations/)
