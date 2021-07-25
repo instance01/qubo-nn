@@ -12,6 +12,7 @@ from qubo_nn.problems.tsp import TSP
 from qubo_nn.problems.graph_isomorphism import GraphIsomorphism
 from qubo_nn.problems.subgraph_isomorphism import SubGraphIsomorphism
 from qubo_nn.problems.max_clique import MaxClique
+from qubo_nn.problems.exact_cover import ExactCover
 
 
 PROBLEM_REGISTRY = {
@@ -28,5 +29,6 @@ PROBLEM_REGISTRY = {
     "TSP": TSP,
     "GI": GraphIsomorphism,
     "SGI": SubGraphIsomorphism,
-    "MCQ": MaxClique
+    "MCQ": MaxClique,
+    "EC": ExactCover
 }

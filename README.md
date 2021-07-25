@@ -34,7 +34,7 @@ pip install qubo-nn
 |pipeline.py|End to end training and testing of NNs on QUBO matrices.|
 |simulations.json|All experiments and configurations.|
 
-Problems implemented so far:
+Problems (15) implemented so far:
 
 * Number Partitioning
 * Maximum Cut
@@ -50,6 +50,7 @@ Problems implemented so far:
 * Graph Isomorphism
 * Sub-Graph Isomorphism
 * Maximum Clique
+* Exact Cover
 
 ## Setup
 
@@ -131,7 +132,8 @@ The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
     'TSP': <class 'qubo_nn.problems.tsp.TSP'>,
     'GI': <class 'qubo_nn.problems.graph_isomorphism.GraphIsomorphism'>,
     'SGI': <class 'qubo_nn.problems.subgraph_isomorphism.SubGraphIsomorphism'>,
-    'MCQ': <class 'qubo_nn.problems.max_clique.MaxClique'>
+    'MCQ': <class 'qubo_nn.problems.max_clique.MaxClique'>,
+    'EC': <class 'qubo_nn.problems.exact_cover.ExactCover'>
     ...
 }
 ```
@@ -194,6 +196,7 @@ Reversing some problems like Quadratic Knapsack might be possible - an algorithm
 |Graph Isomorphism|**+**|Adjacency matrix found in QUBO.|
 |Sub-Graph Isomorphism|**+**|Adjacency matrix found in QUBO.|
 |Maximum Clique|**+**|Adjacency matrix found in QUBO.|
+|Exact Cover|**?**|Not investigated.|
 
 ### Redundancy of QUBOs with AutoEncoders 
 
