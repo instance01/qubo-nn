@@ -3,7 +3,7 @@ from qubo_nn.problems.problem import Problem
 from qubo_nn.problems.util import gen_graph
 
 
-class MaxClique(Problem):
+class MaxIndependentSet(Problem):
     def __init__(self, cfg, graph):
         self.graph = graph
 
@@ -16,9 +16,10 @@ class MaxClique(Problem):
             for j in range(n):
                 if i == j:
                     Q[i][i] = -1
-                if i < j and (i, j) not in self.graph.edges:
-                    Q[i][j] = 2
-                    Q[j][i] = 2
+                # NOTE: Only difference to MaxClique is in the lines below:
+                if i < j and (i, j) in self.graph.edges:
+                    Q[i][j] = 1
+                    Q[j][i] = 1
 
         return Q
 

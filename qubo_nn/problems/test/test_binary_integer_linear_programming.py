@@ -9,7 +9,7 @@ class TestBinaryIntegerLinearProgramming(unittest.TestCase):
     def test_gen_qubo_matrix(self):
         """Test whether a correct QUBO is generated.
 
-        Test case from: https://arxiv.org/pdf/1811.11538.pdf
+        Test case from: My brain.
         """
         c = np.array([4, 5, 1, 2, 3])
         S = np.array([
