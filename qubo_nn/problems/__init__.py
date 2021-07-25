@@ -13,6 +13,7 @@ from qubo_nn.problems.graph_isomorphism import GraphIsomorphism
 from qubo_nn.problems.subgraph_isomorphism import SubGraphIsomorphism
 from qubo_nn.problems.max_clique import MaxClique
 from qubo_nn.problems.exact_cover import ExactCover
+from qubo_nn.problems.binary_integer_linear_programming import BinaryIntegerLinearProgramming  # noqa
 
 
 PROBLEM_REGISTRY = {
@@ -30,5 +31,6 @@ PROBLEM_REGISTRY = {
     "GI": GraphIsomorphism,
     "SGI": SubGraphIsomorphism,
     "MCQ": MaxClique,
-    "EC": ExactCover
+    "EC": ExactCover,
+    "BIP": BinaryIntegerLinearProgramming
 }
