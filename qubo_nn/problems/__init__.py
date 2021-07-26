@@ -15,6 +15,7 @@ from qubo_nn.problems.max_clique import MaxClique
 from qubo_nn.problems.exact_cover import ExactCover
 from qubo_nn.problems.binary_integer_linear_programming import BinaryIntegerLinearProgramming  # noqa
 from qubo_nn.problems.max_independent_set import MaxIndependentSet
+from qubo_nn.problems.minimum_maximum_matching import MinimumMaximumMatching
 
 
 PROBLEM_REGISTRY = {
@@ -34,5 +35,6 @@ PROBLEM_REGISTRY = {
     "MCQ": MaxClique,
     "EC": ExactCover,
     "BIP": BinaryIntegerLinearProgramming,
-    "MIS": MaxIndependentSet
+    "MIS": MaxIndependentSet,
+    "MMM": MinimumMaximumMatching
 }
