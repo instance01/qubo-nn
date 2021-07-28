@@ -1,4 +1,3 @@
-import random
 import unittest
 import numpy as np
 from qubo_nn.problems import KnapsackIntegerWeights
