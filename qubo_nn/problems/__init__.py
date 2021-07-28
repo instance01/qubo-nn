@@ -17,6 +17,7 @@ from qubo_nn.problems.binary_integer_linear_programming import BinaryIntegerLine
 from qubo_nn.problems.max_independent_set import MaxIndependentSet
 from qubo_nn.problems.minimum_maximum_matching import MinimumMaximumMatching
 from qubo_nn.problems.set_cover import SetCover
+from qubo_nn.problems.knapsack_integer_weights import KnapsackIntegerWeights
 
 
 PROBLEM_REGISTRY = {
@@ -38,5 +39,6 @@ PROBLEM_REGISTRY = {
     "BIP": BinaryIntegerLinearProgramming,
     "MIS": MaxIndependentSet,
     "MMM": MinimumMaximumMatching,
-    "SC": SetCover
+    "SC": SetCover,
+    "KIW": KnapsackIntegerWeights
 }

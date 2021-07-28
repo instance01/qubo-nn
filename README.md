@@ -34,7 +34,7 @@ pip install qubo-nn
 |pipeline.py|End to end training and testing of NNs on QUBO matrices.|
 |simulations.json|All experiments and configurations.|
 
-Problems (19) implemented so far:
+Problems (20) implemented so far:
 
 * Number Partitioning
 * Maximum Cut
@@ -55,6 +55,7 @@ Problems (19) implemented so far:
 * Maximum Independent Set
 * Minimum Maximum Matching
 * Set Cover
+* Knapsack with Integer Weights
 
 ## Setup
 
@@ -141,7 +142,8 @@ The list of problems can be found in `qubo_nn/problems/__init__.py`. Also:
     'BIP': <class 'qubo_nn.problems.binary_integer_linear_programming.BinaryIntegerLinearProgramming'>,
     'MIS': <class 'qubo_nn.problems.max_independent_set.MaxIndependentSet'>,
     'MMM': <class 'qubo_nn.problems.minimum_maximum_matching.MinimumMaximumMatching'>,
-    'SC': <class 'qubo_nn.problems.set_cover.SetCover'>
+    'SC': <class 'qubo_nn.problems.set_cover.SetCover'>,
+    'KIW': <class 'qubo_nn.problems.knapsack_integer_weights.KnapsackIntegerWeights'>
     ...
 }
 ```
@@ -209,6 +211,7 @@ Reversing some problems like Quadratic Knapsack might be possible - an algorithm
 |Maximum Independent Set|**?**|Not investigated.|
 |Minimum Maximum Matching|**?**|Not investigated.|
 |Set Cover|**?**|Not investigated.|
+|Knapsack with Integer Weights|**?**|Not investigated.|
 
 ### Redundancy of QUBOs with AutoEncoders 
 
