@@ -16260,5 +16260,390 @@
             "fc_sizes": [],
             "optimizer": "Adam"
         }
+    },
+
+    "-- ˜˜ --": "",
+
+    "v_mvc_gen1_b": {
+        "dataset_id": "v_mvc_gen1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 40000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {},
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.0002,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_mvc_gen2_b": {
+        "dataset_id": "v_mvc_gen2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 20000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.0002,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_mvc_gen3_b": {
+        "dataset_id": "v_mvc_gen3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 13333,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.0002,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_mvc_gen4_b": {
+        "dataset_id": "v_mvc_gen4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "MVC": {
+                "size": [64, 90]
+            },
+            "generalization": {
+                "MVC": [{"size": [24, 30]}, {"size": [32, 40]}, {"size": [48, 60]}]
+            },
+            "problems": ["MVC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.0002,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+
+    "v_gc_gen1_b": {
+        "dataset_id": "v_gc_gen1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 40000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {},
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.00005,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_gc_gen2_b": {
+        "dataset_id": "v_gc_gen2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 20000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.00005,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_gc_gen3_b": {
+        "dataset_id": "v_gc_gen3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 13333,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.00005,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_gc_gen4_b": {
+        "dataset_id": "v_gc_gen4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "qubo_size": 96,
+            "GC": {
+                "size": [16, 20],
+                "n_colors": 6
+            },
+            "generalization": {
+                "GC": [{"size": [16, 20], "n_colors": 3}, {"size": [16, 20], "n_colors": 4}, {"size": [16, 20], "n_colors": 5}]
+            },
+            "problems": ["GC"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 100,
+            "batch_size": 500,
+            "lr": 0.00005,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+
+    "v_np_gen1_b": {
+        "dataset_id": "v_np_gen1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 40000,
+            "NP": {
+                "size": 64
+            },
+            "generalization":{},
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_np_gen2_b": {
+        "dataset_id": "v_np_gen2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 20000,
+            "NP": {
+                "size": 64
+            },
+            "generalization":{
+                "NP": [{"size": 48}]
+            },
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_np_gen3_b": {
+        "dataset_id": "v_np_gen3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 13333,
+            "NP": {
+                "size": 64
+            },
+            "generalization": {
+                "NP": [{"size": 48}, {"size": 32}]
+            },
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_np_gen4_b": {
+        "dataset_id": "v_np_gen4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "n_problems": 10000,
+            "NP": {
+                "size": 64
+            },
+            "generalization": {
+                "NP": [{"size": 48}, {"size": 32}, {"size": 24}]
+            },
+            "problems": ["NP"]
+        },
+        "model": {
+            "activation": "ReLU",
+            "n_epochs": 300,
+            "batch_size": 500,
+            "lr": 0.0001,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+
+    "v_sp_gen1_b": {
+        "dataset_id": "v_sp_gen1",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 20,
+            "n_problems": 100000,
+            "SP": {
+                "sorting": true,
+                "size": [16, 20]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_sp_gen2_b": {
+        "dataset_id": "v_sp_gen2",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 20,
+            "n_problems": 50000,
+            "SP": {
+                "sorting": true,
+                "size": [16, 20]
+            },
+            "generalization": {
+                "SP": [{"size": [12, 16]}]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_sp_gen3_b": {
+        "dataset_id": "v_sp_gen3",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 20,
+            "n_problems": 33333,
+            "SP": {
+                "sorting": true,
+                "size": [16, 20]
+            },
+            "generalization": {
+                "SP": [{"size": [8, 12]}, {"size": [12, 16]}]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
+    },
+    "v_sp_gen4_b": {
+        "dataset_id": "v_sp_gen4",
+        "base_cfg": "23",
+        "problems": {
+            "scramble_qubos": false,
+            "qubo_size": 20,
+            "n_problems": 25000,
+            "SP": {
+                "sorting": true,
+                "size": [16, 20]
+            },
+            "generalization": {
+                "SP": [{"size": [4, 8]}, {"size": [8, 12]}, {"size": [12, 16]}]
+            },
+            "problems": ["SP"]
+        },
+        "model": {
+            "no_norm": true,
+            "activation": "LeakyReLU",
+            "n_epochs": 500,
+            "batch_size": 50,
+            "lr": 0.0001,
+            "fc_sizes": [100],
+            "optimizer": "Adam"
+        }
     }
 }
