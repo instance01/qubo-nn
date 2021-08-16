@@ -10,3 +10,4 @@ qubo_nn/datasets/*
 runs*/
 qubo_nn/models/*.pickle
 dist/
+bak/

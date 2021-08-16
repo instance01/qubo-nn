@@ -28,13 +28,15 @@ for i, item in enumerate(loader):
 
 print(X.shape, y.shape)
 
-# X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)  # test size was .25 per default.
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=.1)
-clf = DecisionTreeClassifier(random_state=0)
-clf.fit(X_train, y_train)
-y_pred = clf.predict(X_test)
-conf_matrix = confusion_matrix(y_test, y_pred)
-report = classification_report(y_test, y_pred)
+results = []
+for _ in range(10):
+    X_train, X_test, y_train, y_test = train_test_split(X, y)  # test size was .25 per default.
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.1)
+    clf = DecisionTreeClassifier()
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_test)
+    conf_matrix = confusion_matrix(y_test, y_pred)
+    report = classification_report(y_test, y_pred)
+    results.append((conf_matrix, report, clf))
 with open('decision_tree2.pickle', 'wb+') as f:
-    pickle.dump((conf_matrix, report, clf), f)
-print(clf.get_depth())
+    pickle.dump(results, f)
