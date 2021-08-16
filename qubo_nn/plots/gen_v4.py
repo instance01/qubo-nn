@@ -13,7 +13,7 @@ def aggregate(paths, min_len, max_len, req_len=None):
 
 def run():
     min_len = 1000
-    req_len = 20
+    req_len = 80
     base_paths = ['../runs/']
     problems = [
         ('v_mvc_gen1', 20000),
