@@ -28,6 +28,9 @@ def plot(small_size=False):
             s=6 if small_size else 8  # 9
         )
         plt.clim(-0.5, 13.5)
+        ax = plt.gca()
+        ax.axes.xaxis.set_ticks([])
+        ax.axes.yaxis.set_ticks([])
         # plt.title("Perplexity %d" % i)
         cbar = plt.colorbar(ticks=list(range(14)))
         cbar.ax.set_yticklabels(problems)

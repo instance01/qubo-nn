@@ -61,6 +61,8 @@ def plot_confusion(id_):
                 color="w",
                 fontsize=9
             )
+            if i == j:
+                print(i, mean[i][i], ci[i][i])
 
     problems = ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK", "M3SAT", "TSP", "GI", "SGI", "MCQ"]  # noqa
     plt.xticks(list(range(len(problems))), problems)

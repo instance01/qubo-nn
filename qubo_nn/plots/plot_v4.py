@@ -14,7 +14,8 @@ plt.rc('font', family='Raleway')
 # n = 6
 # color = plt.cm.Greens(np.linspace(.3, 1, n))[::-1]
 # mpl.rcParams['axes.prop_cycle'] = plt.cycler('color', color)
-plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.Set2.colors)
+# plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.Set2.colors)
+plt.rcParams["axes.prop_cycle"] = plt.cycler("color", plt.cm.tab20c.colors[:4][::-1])
 
 PLOT_TAGS = [
     {
@@ -46,10 +47,10 @@ PLOT_NAMES = [
     'mvc', 'np', 'gc', 'sp'
 ]
 PLOT_LIMS = [
-    (0.95, 1.01, 100),
-    (0.95, 1.01, 100),
-    (0.95, 1.01, 25),
-    (0.95, 1.01, 100)
+    (0.9, 1.01, 30),
+    (0.9, 1.01, 200),
+    (0.8, 1.01, 25),
+    (0.0, 0.6, 25)
 ]
 
 
@@ -95,7 +96,7 @@ def plot(kv, tags, name, lims):
 
         x = np.arange(len(mean))
 
-        ax.plot(x, mean, label=tags[key])
+        ax.plot(x, mean, label=tags[key], zorder=1)
         ax.fill_between(x, ci[0], ci[1], alpha=.2)
 
     for k in tags:
@@ -103,12 +104,15 @@ def plot(kv, tags, name, lims):
         v = np.array(v)
         calc_ci(axs, k, v[0][:, :lims[-1]])  # r2
 
-        axs.legend()
+        # axs.legend(facecolor='white')
         axs.set_ylabel(r'$R^2$')
         axs.set_xlabel("Epoch")
 
     # plt.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
-    plt.legend(frameon=False)
+    # plt.legend(frameon=False, prop={'size': 8})
+    legend = plt.legend(facecolor='white', prop={'size': 8})
+    # legend.set_zorder(10)
+    legend.get_frame().set_linewidth(0.0)
     plt.ylim(lims[0:2])
     plt.tight_layout()
     plt.show()

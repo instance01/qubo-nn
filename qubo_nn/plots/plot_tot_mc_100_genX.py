@@ -61,6 +61,8 @@ def plot_confusion(id_):
                 color="w",
                 fontsize=9
             )
+            if i == j:
+                print(i, mean[i][i], ci[i][i])
 
     problems = ["NP", "MC", "MVC", "SP", "M2SAT", "SPP", "GC", "QA", "QK", "M3SAT", "TSP", "GI", "SGI", "MCQ"]  # noqa
     plt.xticks(list(range(len(problems))), problems)
@@ -89,14 +91,18 @@ def plot(id_):
             scale=st.sem(arr, axis=0)
         )
 
-        ax.plot(x, mean, color=col)
+        ax.plot(x, mean, color=col, label='Neural Network')
         ax.fill_between(x, ci[0], ci[1], color=col, alpha=.1)
 
         print(mean[-1], "+-", mean[-1] - ci[0][-1])
 
     sub_plot(arr1, 'c')
+    plt.plot([0.00013294232] * arr1.shape[1], label='Decision Tree')
+    plt.ylim((-0.001, 0.025))
+    # plt.axhline(y=0.00013294232)
     plt.ylabel("Misclassification rate")
     plt.xlabel("Epoch")
+    plt.legend()
     plt.tight_layout()
     plt.show()
     fig.savefig('tot_mc_100_genX_%s.png' % id_)
