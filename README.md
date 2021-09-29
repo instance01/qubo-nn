@@ -245,4 +245,4 @@ Cristian S. Calude, Michael J. Dinneen and Richard Hua. "QUBO Formulations for t
 
 [Quantum Annealing Hamiltonian Example Calculation](https://blog.xa0.de/post/Quantum-Annealing-Hamiltonian-Example-Calculation/)
 
-[List of QUBO formulations (61)](https://blog.xa0.de/post/List-of-QUBO-formulations/)
+[List of QUBO formulations (80)](https://blog.xa0.de/post/List-of-QUBO-formulations/)
